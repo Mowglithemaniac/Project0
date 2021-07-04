@@ -15,12 +15,10 @@ Notice that '*' is used as a wildcard, so if I wanted to add more files, I'd wri
 to include additional files.
 
 
-
-
-git commit -m Message
-
-
-
+All I have to do to commit and push are follow these commands.
+> git add *
+> git commit -m "message thingy"
+> git push
 
 
 
