@@ -7,11 +7,17 @@
 
 git --help
 
+
+> git status
+
 Notice that '*' is used as a wildcard, so if I wanted to add more files, I'd write 
 > git add *
 to include additional files.
 
 
+
+
+git commit -m Message
 
 
 
