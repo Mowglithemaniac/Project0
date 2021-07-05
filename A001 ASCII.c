@@ -1,8 +1,8 @@
 /*
  ============================================================================
  Name        : A001.c
- Author      : Declined#8151 (Discord ID)
- Version     :
+ Author      : Declined#8151 (Discord ID), s090116
+ Version     : 1.00
  Copyright   : Your copyright notice
  Description : ASCII
  ============================================================================

@@ -1,6 +1,6 @@
 /*============================================================================
- Name        : 
- Author      : Declined#8151 (Discord ID)
+ Name        : ReadFile
+ Author      : Declined#8151 (Discord ID), s090116
  Version     : 
  Copyright   : Your copyright notice
  Description : Example of reading from a file.

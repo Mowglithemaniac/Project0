@@ -1,7 +1,6 @@
 /*============================================================================
  Name        : Test23.c
- Author      : s090116
- Edited by   : s090116
+ Author      : Declined#8151 (Discord ID), s090116
  Version     : v1.00
  Copyright   : 
  Description : Create a program that reads y, and calculate 𝑥 = √𝑦

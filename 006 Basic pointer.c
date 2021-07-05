@@ -1,6 +1,6 @@
 /*============================================================================
  Name        : Test6.c
- Author      : s090116
+ Author      : Declined#8151 (Discord ID), s090116
  Version     : v1.00
  Date        : 27/12-2020
  Copyright   : Your copyright notice

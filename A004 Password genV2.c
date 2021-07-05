@@ -1,8 +1,9 @@
 /*============================================================================
  Name        : A004 Password genv2.c
  Author      : Declined#8151 (Discord ID)
- Version     : 1.00
+ Version     : 1.02
  Copyright   : This is my file.
+ Date        : 5/7-2020
  Description : Password generator
  ============================================================================*/
 

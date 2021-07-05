@@ -1,7 +1,7 @@
 /*============================================================================
  Name        : Test011.c
  Author      : Dunno
- Edited by   : s090116
+ Author      : Declined#8151 (Discord ID), s090116
  Version     : v1.02
  Date        : 27/12-2020
  Copyright   : source: https://www.programiz.com/c-programming/c-pointer-functions
@@ -27,6 +27,11 @@ int main(){
         exampleArray[i];
     }
     printf("\n");
+
+
+    /**Sending the array through a function
+     *  
+     */
     T011(exampleArray, 5);
 
     printf("\n\nWhat happens if I do the same in main.\nAfter :\t\t");

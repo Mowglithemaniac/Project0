@@ -1,6 +1,6 @@
 /*============================================================================
  Name        : Test5.c
- Author      : Declined#8151 (Discord ID)
+ Author      : Declined#8151 (Discord ID), s090116
  Version     : v1.00
  Copyright   : Your copyright notice
  Description : strcat implementation, and how dangerous it can be. 

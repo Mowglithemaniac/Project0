@@ -16,6 +16,7 @@ int main(void) {
 
 	int i, h = 5, pid;
 	printf("Example of parent & child with fork.\n");
+
 	/** 
 	 * The 'fork' command, will create an almost identical copy of the same program,
 	 * the return value explains what happened.
@@ -32,7 +33,6 @@ int main(void) {
 	}
 	
 	if (pid>0) { // parent
-
 		wait(NULL); //wait for child to finish, so it can be reaped 
 		printf("Parent multiplication: %d with 2\n", h);
 		for (i=0;i<10;i++){

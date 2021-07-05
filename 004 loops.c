@@ -1,6 +1,6 @@
 /*============================================================================
  Name        : Test 004 Loops
- Author      : s090116
+ Author      : Declined#8151 (Discord ID), s090116
  Version     :
  Date        : 26/1-2021
  Copyright   : Your copyright notice

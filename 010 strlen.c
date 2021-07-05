@@ -1,6 +1,6 @@
 /*============================================================================
  Name        : Test 010.c
- Author      : s090116
+ Author      : Declined#8151 (Discord ID), s090116
  Version     :
  Copyright   : Your copyright notice
  Description : Main program of the folder that ties everything together

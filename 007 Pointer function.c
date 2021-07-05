@@ -1,6 +1,6 @@
 /*============================================================================
  Name        : Test7.c
- Author      : s090116
+ Author      : Declined#8151 (Discord ID), s090116
  Version     : v1.00
  Date        : 26/12-12
  Description : Forwarding pointers through functions.

@@ -1,6 +1,6 @@
 /*============================================================================
  Name        : Test19.c
- Author      : s090116
+ Author      : Declined#8151 (Discord ID), s090116
  Edited by   : s090116
  Version     : v1.01
  Copyright   : 

@@ -1,6 +1,6 @@
 /*============================================================================
- Name        : 
- Author      : s090116
+ Name        : 015 writeFile.c
+ Author      : Declined#8151 (Discord ID), s090116
  Version     : 1.01 (included a warning)
  Date        : 24/12-2020
  Copyright   : Your copyright notice
