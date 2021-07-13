@@ -1,0 +1,911 @@
+/*============================================================================
+ Name        : Bash commands.txt
+ Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
+ Version     : 2.4
+ Date        : 29/09-20
+ Last Updated: 13/07-21
+ Copyright   : Do not alter, copy or share this file without permission
+ Description : A rough guide for new users to understand bash console commmands
+             : Made for course 62588 Operating systems at DTU Denmark Fall 2020.
+             : To be used by the teacher at his discretion.
+             : Teacher Bhupjit Singh - bhsi@dtu.dk
+ ============================================================================*/
+Sections:
+    - Introduction
+    - General tips
+    - Elevated priveledge
+    - System Commands
+    - Permission explanation
+    - System/User Info
+    - Directory commands
+    - Help section
+    - File access, edit, format
+    - VARIABLES
+    - FUNCTIONS-(NOT COMMANDS)
+    - NAVIGATING COMMAND LINE
+    - Uncategorized
+    - Sources
+
+------------------------------------------------
+|                 Introduction                 |
+------------------------------------------------
+
+'$ ' is used to emulate a command line, specifically
+intended for examples of full commands.
+Notice that '$STUFF' refers to variables.
+
+From this point forward, this format will
+primarily be used, with commands to the left,
+and a description to the right.
+Commands                                         Description
+------------------------------------------------|---------------
+: Explanation of command
+- Command options
+[empty] is a pseudonum for not entering anything.
+[command] refers to commands themselves
+[operator] refers to '-operator' options.
+
+------------------------------------------------
+|                 General tips                 |
+------------------------------------------------
+Navigate to folder, then type 'bash'            : Open a terminal, which has already navigated to folder
+in the address field.                             Requires that Linux subsystem for Windows is activated
+                                                  and that a a linux distribution is virtually installed
+                                                  i.e. Microsoft store, Ubuntu (LTS version, which stands
+                                                  for 'Long Term Support')
+
+cd                                              : Change Directory, '..' to move up a directory
+                                                  When inside a directory and you've typed part of the name
+                                                  of a file. hit 'tab' to auto fill out the content.
+                                                  Double hit 'tab' to see a list of directories.
+                                                  Use '$ cd -' to go back to the directory you were just in
+                                                  Use '$ cd /' to go to root directory
+                                                  Use '$ cd ~' to go to HOME directory
+pwd                                             : Print Working directory
+
+something '>>' filename                         : Append content to file named filename
+something '>' filename                          : Overwrite content of file named filename
+                                                  This is a great option for pasting output into log files,
+                                                  when writing and testing C-programs
+
+(if intalled)Type 'code .' to open Visual Studio Code
+with that folder already being navigated to.
+
+To compile and run C code files
+$ gcc -o newfilename someCcodefile.c            : Will compile the file, and save the compiled version in 'newfilename'
+$ ./newfilename                                 : Executes the compiled file.
+
+Update/upgrade dependencies and installed content (use sudo)
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt-get build-essential
+
+After writing a command, you sometimes write '-'
+and then add an operator, such as
+$ ls -l -a
+This is equivalent to 
+$ ls -la
+Because using a single '-' means that each 
+character is considered a separate operator.
+If you use '--' the whole word is supplied
+as an argument.
+$ ls --help
+
+To terminate access, or close the console, 
+use the command 'exit'
+$ exit        
+
+If the commands are exceedingly long, use '\' as
+a method to break the line, and continue writing
+a command on  the following line.
+
+The 'grep' command print lines that match patterns
+Example:
+$ top | grep root                               : Will present the processes related to root.
+
+If you screw up somehow, terminate an active
+process with [CTRL + C], i.e. 'htop' or an
+infinitely running program.
+
+------------------------------------------------
+|              Elevated priveledge             |
+------------------------------------------------
+For some commands, you require root access,
+this section explains how to acquire that.
+
+sudo                                            : Super user access (creates a timer in the background,
+                                                  before requiring a password again)
+updatedb                                        - Update Database
+                -s                              - Disable the timer, and continue on as the super user
+                                                  (WARNING, DON'T FORGET to log out
+                exit                            - Will terminate the super user access
+
+sudos                                           : Super user access, for extended periods, (generally
+                                                  not a good idea unless you know what you're doing)
+
+su                                              : Switch user
+        [empty]                                 - Changing to root access ()
+        - [empty]                               - Changing to root user, but remains in the current users home directory
+        - [Username]                            - will change to other specified user on the username.
+        [username]                              - Will switch to other user, but remain in your own home directory
+
+------------------------------------------------
+|                System Commands               |
+------------------------------------------------
+chmod                                           : Change file mode bits. Permission for files and directories,
+                                                  look at the next section for details regarding bit setup.
+        +r [Filename]                           - Makes the file readable
+        +w [Filename]                           - Makes the file writeable
+        +x [Filename]                           - Makes the file executable
+
+[EXAMPLE section]
+$ chmod 600 [filename]                          : Where 6 is the user, 0 is group, 0 is everyone
+$ chmod 755 [directory]                         : 755 is recommended for directories
+$ chmod 744 [filename]                          : 644 is recommended for files. 
+
+echo <text>                                     : Prints echoes the <print> in the console
+                                                  Has lots of uses, example printing the content of
+                                                  a system variable .
+Example:
+$ echo $PATH                                    : Prints the entire path variable
+$ echo $PS1                                     : Prints the entire PS1 settings variable, for
+                                                  how to display your prompt
+killall                                         : Kill all processes that you have access to
+        [a-zA_Z]                                - terminates any process related to that name
+
+gcc                                             : Compile program from c language
+        -o                                      :
+[EXAMPLE section]
+$ gcc -o [newname] [c-file] 
+$ gcc -o derp /test_folder/test.c               : Here we navigate down a folder to find the test.c file,
+                                                  the 'derp' file, is placed in the current folder
+
+df [option] [file]                              : Something about 'report file system disk space usage'
+        -h                                      - Human readable
+        -H                                      - Print sizes in powers of 1000 (e.g., 1.1G)
+
+
+ip [option]                                     : 
+        addr
+
+whois                                           : shows some whois data about a website or ip
+        [ip or website]
+        | more/less
+
+pstree                                          : Display a tree of process
+
+alias                                           : Access to aliases
+Example:
+$alias                                          : Display a list of aliases
+$alias p='pwd ; ls -CF                          : Create a new alias 'p', which is 2 commands, followed by one another
+                                                  For the alias to be saved between shells and sessions, they need to
+                                                  stored in the configuration files
+
+Use 'unalias' to remove an alias
+Remember, that if an alias is set in a 
+configuration file, it will be set again when
+you open another shell.
+
+------------------------------------------------
+|            Permission explanation            |
+------------------------------------------------
+Permission explanation: https://youtu.be/oxuRxtrO2Ag?t=3490
+Set up in relation to bits.
+r = read                                        : [4]
+w = write                                       : [2]
+x = execute                                     : [1]
+
+Meaning that:
+7 = read, write, execute priveledge [111]
+6 = read and write priveledge       [110]
+5 = read and execute priveledge     [011]
+and so on
+
+When using the 'chmod' command, you  enter 3 numbers
+The first number represents the owner
+The second number representsthe group
+The 3rd number represents everybody else.
+
+With the 'ls -l' command, you can view permissions
+The first permission character have multiple meanings
+d                                              : Directory
+1                                              : Symbolic link
+b                                              : Block device
+c                                              : Character device
+s                                              : Socket
+p                                              : Named pipe
+
+------------------------------------------------
+|               System/User Info               |
+------------------------------------------------
+uname                                           : Print system information
+
+who                                             : Show who is logged on
+
+whoami                                          : Print effective userid
+
+users                                           : Print the user names of users currently logged in to the current host
+
+id                                              : ID number, and associated details with the user
+
+cal                                             : Calender
+        [month optional] [year]                 - month, and/or year. 
+Example:                                        :
+$ cal 2021                                      : Will display the calender for the year 2021
+
+df [OPTION]... [FILE]...                        : Report file system disk space usage
+
+top                                             : Provies a dynamic overview of the running processes
+
+htop                                            : Interactive process viewer
+
+tar                                             : An archiving utility
+
+date                                            : Display the date
+
+watch                                           : reruns a command every 2 seconds.
+        free -h                                 : Shows how much memory is in the system
+
+------------------------------------------------
+|              Directory commands              |
+------------------------------------------------
+pwd                                             : Print working directory (bash command)
+
+ls                                              : List content of current directory
+                                                  If there is a plus sign (+) at the end of permissions, it means that
+                                                  extended attributes, such as Access Control List (ACLs)
+                                                  If there is a dot at the end (.) it indicates that SELinuxis set on the file.
+                                                  If there is a t at the end of permissions for a directory, it indicates that
+                                                  the sticky bit is set for that directory.
+        -a                                      - Display hidden files
+        -l                                      - Provides extra information about each file, the left mode column regarding rw, concerns users priveledge
+        -la                                     - Extra details and hidden files
+        /[foldername]                           - List content of specified directory
+
+cd                                              : Change directory
+        [empty]                                 - Move to home directory
+        ~                                       - Move to home directory
+        ..                                      - Move up a directory
+        /                                       - Go to Root directory
+        -                                       - Go to previous directory
+        [Directory Name]/                       - Move to specific directory
+        [tab]                                   - Auto complete
+Example:
+$ cd ../../testfolder/                          - Move up two directories, and then down into the testfolder.
+
+file                                            : Display information about files
+        [Filename]                              - Display information about that specific file
+
+locate                                          : Able to locate specific command locations, and references
+                                                  Requires a database to work. (updatedb*)
+        [command]
+
+history                                         : shows a list of commands used so far.
+
+pushd                                           : Save directy into a LIFO stack
+
+popd                                            : Pop the directory from the LIFO stack
+
+mkdir                                           : Make directory (folder)
+        [Directory name]                        : new directory
+
+touch                                           : Update the date of a file, without making changes to the file
+        [file name]                             : Can create a new file, if that file does not exist
+                
+cp                                              : Copy from specific directoy into current directory
+        [folder/folder/file] [New name]
+
+mv                                              : Move a command/file, to some other location, but we can also rename
+        [Filename] [Filename]                   - rename, can also overwrite other files
+        
+rm                                              : Remove (PERMANENTLY)
+        ?                                       - Wildcard, for a single character
+        *                                       - Wildcard, will remove everything from current directory
+        [a_zA_Z]*                               - Will remove everything, starting with the specified name, from current directory
+        -r [directory]                          - will remove way too much, DO NOT USE
+
+rmdir                                           : Remove directory
+        *                                       : wildcard
+        [a_zA_Z]*                               - Remove directories starting with specified [a-zA_Z]
+        [directory name]                        - Remove specific directory
+mkdir [options] directories                     : Creates 1 or more directories
+
+
+
+------------------------------------------------
+|                 Help section                 |
+------------------------------------------------
+which                                           : Will show where a command is, or whether it is installed                
+        [command name]                          - Shows location of that command
+
+whatis                                          : Brief description of a command
+        [command]                               : tldr of that command
+
+man [operator] [command]                        : Manual page for Bash commands
+        [command]                               - Shows the manual page for that specific command
+        -k                                      - Works as 'apropos', so you can search through man pages,
+                                                  linked to the search word.
+                                                  Each manual page, has a number, that refers to a category
+                                                  To find out what the category means, look at the manual page for man
+Example:
+$ man man
+Examples:
+$ man pipe                                      - Manual page for the pipe command
+$man -k pipe                                    - Shows a list of commands and manual pages related to 'pipe'
+
+
+apropos [operator] [command]                    : Display information about commands and things that are related to the search
+                                                - Display commands related to that command
+
+info [command]                                  : Shows information about a chosen command
+
+Commands include a help method, referenced
+[command] --help
+Example:
+$ ls --help                                     : Lists a help category for 'ls' command.
+
+type [command]                                  : Display where a command is located.
+        -a                                      - Display all instances of where the command is located
+
+locate [detail]                                 : Locates a detail on the computer
+
+------------------------------------------------
+|           File access, edit, format          |
+------------------------------------------------
+VIM                                             : VIM text editor suite
+        [filename]                              - Access a specific file via the VIM suite
+
+cat [option] [filename]                         : 'Concatenate' Show content of file via the terminal
+        [Filename]                              : Display content of [Filename]
+        >>        [Filename]                    : Write something into the file (append), use 'Ctrl + D' to complete.
+        > [Filename]                            : create a new file
+        << EOF                                  :
+
+more                                            : Look at a file, one page at a time using the spacebar
+        [filename]                              - Open the specific file in the command prompt
+        q                                       : quits, and goes back to the prompt
+        
+less                                            : Same as 'more' just goes one line at a time, you can use spacebar to jump forward
+        [filename]                              - Open the specific file in the command prompt
+        q                                       - quits, and goes back to the prompt
+
+head                                            : View the first lines of a text file
+
+tail                                            : View the last lines of a text file
+
+Examples:
+$ cat file1.txt | more                          : Display file1.txt in the console, using 'more' format
+$ cat file1.txt | less                          : Display file1.txt in the console, using 'less' format
+$ cat file1.txt | head                          : Display the first 10 lines of file1.txt in the console
+$ cat file1.txt | tail                          : Display the first 10 lines of file1.txt in the console
+
+sort                                            : Sort via parameters, alphabetically as standard -r for reversed
+Example:
+$ ls -a | sort -r | less                        : List content of directory, in reversed alphabetical order, using 'less' format.
+
+Example:
+$ cat file1.txt | more                          : Display file1.txt in the console, using 'more' format
+
+strings                                         : Display text that's embedded in a binary file
+
+od [option] [filename]                          : Display a file in Octal or other formats (use option '-x' for Hex)
+
+nano                                            : text editor
+        [filename]                              - opens specific file
+        [empty]                                 - Open a new document in nano (unsaved version)
+        
+wc [behavior] [filename]                        : Word count - count the number of words in a file
+        -l                                      - Count lines, not words
+                
+wget [website link]                             : Download a file from the internet (pdf, rar, and so on)                
+
+diff                                            : Compare files line by line
+Example:
+$ diff <(wc file1) <(wc file2)                  : Compares the wordcount of 2 different files
+
+Depending on your desktop environment, specific
+commands may vary, for how to open folders
+Types: Gnome, KDE, Xfce, LXDE, 
+
+xdg-open [foldername]                           : Opens a folder, should work on a full linux distribution
+$ man -k xdg                                    - Use this command to check status of xdg commands in general
+
+------------------------------------------------
+|                   VARIABLES                  |
+------------------------------------------------
+For a complete list of varables, use command
+$ echo $<tab><tab>                              : Two tabs, for an auto complete
+
+:These are some general useful variables.
+$HOME                                           : Home directory
+                                                - It is your currentworking directory each time you log in
+                                                - or type the cd command with any option
+$PATH                                           : OS variable path.
+                                                - It is a colon-separated list of directories used to
+                                                - find commands that you type.
+$OSTYPE                                         : This name idenfies the current Operating System type
+$PWD                                            : Print working directory
+$BASH_VERSION                                   : Represents the current bash version.
+$USER                                           : Abbreviation of the username, this is a system variable
+
+These two are used in programming
+stdin                                           : Standard input (console), where the program reads from
+stdout                                          : Standard output (console/screen) where the info will be displayed
+
+
+------------------------------------------------
+|           FUNCTIONS-(NOT COMMANDS)           |
+------------------------------------------------
+
+Navigate command history
+[arrow up]                                      : Display previous command
+[arrow down]                                    : Display next command
+
+./[filename]                                    : Running an executable file (compiled file)
+
+$[expression]                                   : Arithmetic expression, direct
+Example:
+$ echo "Derp $[56 - 43]"
+
+$(expression)                                   : Arithmetic expression, via function
+Example:
+$ echo "Derp $(ls | wc -w)"                     : The content of ls is piped to wordcount command that prints
+                                                  the number of words
+
+|                                               : Pipeline character, Special circumstance(!!!)
+Example:
+$ history | less                                : Will show the history using the 'less' format
+
+/ > [filename]                                  :  Send the output of content (cat/ls/...) into a newly created file
+
+<('content')                                    : A method to condense the input, and use it as an argument
+Example;
+$ diff <(wc file1) <(wc file2)                  : Look at the difference between the wordcount of 2 files
+
+*                                               : Used as a wildcard for an string of undetermined length
+?                                               : Used a wildcard for a single character in strings.
+[...]                                           : Matches any one of the characters between the brackets, which can
+                                                  include a hyphen separated range of letters or numbers.
+
+;                                               : Combining commands to be run in a sequence
+Example:
+$ cd .. ; cd folder1/
+
+&&                                              : Run a sequence of commands, but stop execution if any of them fails,'
+Example:
+> command1 && command2 && command3
+
+||                                              : Run a sequence of commands, but stop when the first command is true
+
+!!                                              : Rerun previous command
+
+!?[string]?                                     : Reruns a previous command, containing the [string]
+Example:
+!?cal?                                          : Reruns a previous command containing 'cal' if founds
+
+!*                                              : Last parameter from previous command
+Example:
+$ ls z* && rm !*                                - here '!*' is treated as 'z*'
+
+clear                                           : Clears the bash terminal of text
+
+exit                                            : Terminates current access (Super User, bash, cmd, ...)
+
+logout                                          : Logs out, but recommended to use 'exit' instead.
+
+--                                              : "end of options", meaning that anything shown after that option will be
+                                                  disregarded.
+
+>> [filename]                                   : Append into the file (add at the end of the file)
+> [filename]                                    : Save content into file
+<                                               : Directs the standard output of a command to a file. If the file exists,
+                                                  the content of that file is overwritten
+2>                                              : Directs standard error(error messages) to the file.
+&>                                              : Directs both standard output and standard error to the file
+
+Example
+$ ./derp >> derpy.txt                           - Will send the content from the compiled program (derp) to be
+                                                  appended in the file 'derpy.txt' rather than shown on the console.
+$ ./derp > derpy.txt                            - Will send the content from the compiled program (derp) to 
+                                                  overwrite content of file 'derpy.txt' rather than shown on the console.
+
+------------------------------------------------
+|            NAVIGATING COMMAND LINE           |
+------------------------------------------------
+How to navigate the command console
+Mostly useful commands pasted first
+Rest unsorted.
+
+[ctrl + C]                                      : Kills a command, if a command is continously running (example: htop)
+[ctrl + D]                                      : Terminate command
+
+[ctrl + L]                                      : Clears the bash terminal of text
+[ctrl + K]                                      : Cut end of line, cut text to the end of the line
+[ctrl + U]                                      : Cut beginning of line, cut text to the beginning of the line.
+
+[ctrl + F]                                      : Character forward, go forward one character.
+[ctrl + B]                                      : Character backward, aka. go backward one character.
+[ctrl + A]                                      : Beginning of line, go to the beginning of the current line
+[ctrl + E]                                      : End of line, go to the end of the line
+
+[ctrl + D]                                      : Delete the current character (aka 'delete' key)
+[ctrl + T]                                      : Transpose words, switch positions of current and previous characters
+[ctrl + V]                                      : Insert special character, add a special character.
+                                                - For example, to add a Tab character, press [Ctrl+V+Tab]
+[ctrl + W]                                      : Cut previous word, cut the word located behin the cursor.
+[ctrl + Y]                                      : Paste recent text, paste most recently cut text.
+[alt + Y]                                       : Paste earlier text, rotate back to previously cut text and paste it.
+
+
+[alt + F]                                       : Word forward, go forward one word
+[alt + B]                                       : Word backward, go backward one word
+[alt + T]                                       : Transpose words, switch positions of current and previous character
+[alt + U]                                       : Uppercase word, change the current word to upper case
+[alt + L]                                       : Lowercase word, change the current word to lower case        
+[alt + C]                                       : Change the current word to an initial capital
+[alt + D]                                       : Cut the word following the ursor
+
+
+------------------------------------------------
+|                 Uncategorized                |
+------------------------------------------------
+sudo apt install <deb name>                        
+mkfifo pipeline                                  : Make fifo pipeline        
+
+vim [file]                                       : Access a file with the VIM
+
+make                                             : GNU make utility to maintain groups of programs
+                                                 : Requires additional knowledge to setup for projects via makefile
+
+rm .test.c.sw*                                   : Sletter begge sw filer for 'test.c' (i tilfælde af fejl)
+                                                   //compiler kurset
+
+pipe                                             : Pipe functionality, used within  C programs
+
+./[filename]                                     : running an executable file (compiled file)
+
+grep [search pattern]                            : Print lines that match patterns
+
+chage                                           : Change user password expiry information
+
+Details for accessing the LSF 10 cluster on DTU
+via a linux terminal
+http://www.cc.dtu.dk/?page_id=2501
+Example:
+$  ssh userid@login1.gbar.dtu.dk                 : Substitute userid with your student ID.
+                                                 - Type in your password, and you should now have acess to the LSF 10 cluster
+                                                 - Hit [CTRL + C] if you screw up
+If necessary, use this command to access a
+new node.
+$ linuxsh                                                 
+Use cd, pwd, ls -l commands, to navigate to
+the desired folder.
+
+-----------------------------------------------------------------------------
+|                               Sources                                     |
+-----------------------------------------------------------------------------
+Sources:
+- 62588 Operating Systems Lectures
+- https://www.youtube.com/watch?v=oxuRxtrO2Ag
+- Linux Pocket guide
+- Linux Bible by Christopher Negus (Once you get past the fluff, it's ok)
+- https://en.wikipedia.org/wiki/Linux_distribution
+- https://en.wikipedia.org/wiki/List_of_Linux_distributions
+
+/*============================================================================
+        Advanced topics : Creating your own shell environment
+                          -  Creating your own shell environment
+                          -  Setting your prompt
+                          -  Adding environment variables
+                        : Table list
+                          -  Table 1.1: Bash Configuration files 
+                          -  Table 1.2: Characters to add information to bash prompt
+                          -  Table 1.3: Manual page sections
+                          -  Table 1.4: (Some of) Linux directory information
+ ============================================================================*/
+
+------------------------------------------------
+|            Configuring your shell            |
+------------------------------------------------
+
+You can tune your shell to help you work more
+efficiently. You can set aliases to create
+shortcuts to your favorite command lines and
+environment variables to stoe bits of information.
+By adding those settings to shell configuration
+files, you can have the settings available every
+time you open a shell.
+
+* Configuring your shell
+Several configuration files support how your shell
+behaves. Some of the files are executed for every
+user and every shell, whereas others are specific
+to the user who creates the configuration file.
+
+Table list 1.1 shows the files that are of
+interest to anyone using the bash shell in Linux.
+(Notice the use of ~ in the filenames to indicate
+that the file is located in each user's home
+directory.)
+To change the /etc/profile or /etc/bashrc files,
+you must be the root user. It is better to create
+an /etc/profile.d/custom.sh file to add system/wide
+settings instead of editing those files directly,
+however. Users can change the information in the
+$HOME/.bash_profile, $HOME/.bashrc, and $HOME/.bash_logout
+files in their own home directories.
+
+Example:
+To edit the environment, we want to alter the
+configuration file $HOME/.bashrc, as a plaintext
+file via 'nano', we use the command
+$ nano $HOME/./bashrc
+To to the bottom and include an extra line
+alias derp='watch free -h
+To save the file press [CTRL + O]
+To exit the file press [CTRL + X]
+A new alias has now been set, to access the command
+without having to restart the console use this command
+$ source $HOME/.bashrc
+Alternatively, restart the console
+
+------------------------------------------------
+|              Setting your prompt             |
+------------------------------------------------
+Your prompt consists of a set of characters that
+appear each time the shell is ready to accept a
+command.
+The PS1 environment variable  sets what the prompt
+contains and is what you will interact with most
+of the time. If your shell requires additional
+input, it uses the values of PS2, PS3, and PS4.
+
+When your Linux system is installed, often a
+prompt is set to contain more than just a dollar
+sign or pound sign. For example in Fedora or Red
+Hat Enterprise Linux, your prompt is set to
+include the following information: your username,
+your hostname, andthe base name of your current
+working directory. That information is surrounded
+by and followed by a dollar sign (for regular
+users) or a pound sign (for the root user).
+The following is an example of that prompt:
+
+[declined@LAPTOP-E9IBLV7O: bin] $
+
+If you change directories, the bin name would
+change to the name of the new directory.
+Likewise, if you were to log in as a different
+user or to a different host,  that information
+would change.
+
+You can use several special characters
+(indicated by adding a backslash to a variety
+of letters) to include different information
+in your prompt. Special characters can be
+used to output your Terminal number the
+date, and the time as well as other pieces
+of information. Table 1.2 show some examples of
+characters to add information to Bash prompt.
+For additional info, see the bash man page.
+
+To make a change to your prompt permanent, add
+the value of PS1 to your .bashrc file in your
+home directory (assuming that you are using
+the bash shell). >There may already be a PS1
+value in that file, which you can modify.
+Link in refereces with a HOWTO for changing
+colors commands and other features of your
+bash shell prompt.
+
+------------------------------------------------
+|         Adding environment variables         |
+------------------------------------------------
+You might wnat to consider adding a few 
+environment variables to your .bashrv file.
+These can help make working with the shell more
+efficient and effective:
+
+[TMOUT]
+This sets how lnog the shell can be inactive
+before bash automatically exits. The value is
+the number of seconds for which the shell has
+not received input. This can be a nice security
+feature, in case you leave your desk while you
+are still logged in to Linux. To prevent being
+logged off while you are working, you may want
+to set the value to something like TMOUT=1800
+(30 minutes). You can use any Terminal session
+to close the current shell after a set number
+of seconds, for example, TMOUT=30.
+
+[PATH]
+As described earlier, the PATH variable sets
+the directories that are searched for the the
+commands that you use. If you often use
+directories of commands that are not in your
+path, you can permanently add them. >To do this,
+add a PATH variable to your .bashrc file.
+For example, to add a directory called
+/herpderp/bin, add the following:
+
+PATH=$PATH:/herpderp/bin ; export PATH
+
+This example first reads all of the current
+path directories into the new PATH ($PATH),
+adds the /herpderp/bin directory, and then
+exports the new PATH.
+
+[User defined]
+You can create your own environment variables
+to provide shortcuts in your work. Choose any
+name that is not being used and assign a useful
+value to it. For example, if you do lots of
+work with files in the /workspace/project1
+directory, you could set the following variable:
+
+DERP=/workspace/project1 ; export DERP
+
+You could make that your current directory with
+the command:
+$ cd $DERP
+You could run a program from that directory
+called derpina with the comand:
+$ $DERP/derpina
+You could edit a file from there called troll
+with the command:
+$ vi $DERP/troll
+
+------------------------------------------------
+|                  Table: 1.1                  |
+------------------------------------------------
+File                                             Description
+------------------------------------------------|---------------
+/etc/profile                                    : This sets up user environment information for every user.
+                                                - It is executed when you first log in. This file provides
+                                                  values for your path in addition to setting environment
+                                                  variables for such things as the location of your mailbox
+                                                  and the size of your history files. Finally /etc/profile
+                                                  gathers shell settings from configuration files in the
+                                                  /etc/profile.d directory.
+/etc/bashrc                                     : This executes for every user who runs the bash shell each
+                                                  time a bash shell is opened. It sets the default prompt
+                                                  and may add one or more aliases. Values in this file can
+                                                  be overridden by information in each user's ~/.bashrc file.
+~/.bash_profile                                 : This is used by each user to enter information that is
+                                                  specific to his or her use of the shell. It is executed
+                                                  only once (when the user logs in). By default, it sets
+                                                  a few environment variables and executes the users's
+                                                  .bashrc file. This is a good place to add environment
+                                                  variables because, once set, the are inherited by future
+                                                  shells.
+~/.bashrc                                       : This contains the inforamtion that is speific to your bash
+                                                  shells. It is read when you log in and also each time you
+                                                  open a new bash shell. This is the best location to add
+                                                  aliases so that your shell picks them up.
+~/.bash_logout                                  : This executes each time you log out. (exit the last bash
+                                                  shell)
+------------------------------------------------
+|                  Table: 1.2                  |
+------------------------------------------------
+Special character                                Description
+------------------------------------------------|---------------
+                                                
+\!                                              : This shows the current command history number. This includes
+                                                  all previuos commands stored for your username.
+\#                                              : This shows the command number of the current command.
+                                                  This includes only the commands for the active shell.
+\$                                              : This shows the user prompt ($) or root prompt (#), depending
+                                                  on which type of user you are.
+\w                                              : This shows only the current working directory base name.
+                                                  For example if the current working directory was
+                                                  /var/spool/mail, this value simply appears as mail.
+\[                                              : This precedes a sequence of nonprinting characters.
+                                                  This can be used to add a Terminal control sequence into
+                                                  the prompt for such things as changing colors, adding blink
+                                                  effects, or making characters bold. (Your Terminal determines
+                                                  the exact sequences available)
+\]                                              : This follows a sequence of nonprinting characters.
+\\                                              : This shows as backslash
+\d                                              : This displays the day name, month, and day number of the
+                                                  current date, for example, Wed Jul 21
+\h                                              : This shows the hostname of the computer running the shell.
+\n                                              : This causes a newline to occur.
+\nnn                                            : This shows the character that relates to the octal number
+                                                  replacing nnn.
+\s                                              : This diplays the current shell name. For the bash shell,
+                                                  the value would be bash.
+\t                                              : This prints the current time in hours, minutes and seconds,
+                                                  example 10:30:30
+\u                                              : This prints your current username
+\w                                              : This displays the full path to the current working directory
+
+------------------------------------------------
+|                  Table: 1.3                  |
+------------------------------------------------
+
+Number  Type                                     Description
+-------|----------------------------------------|---------------
+1       User Commands                           : Executable programs or shell commands
+                                                  Commands that can be run from the shell by a regular user
+                                                  (typically no administrative privilege is needed)
+2       System Calls                            : Functions provided by the kernel
+                                                  Programming functions used within an application
+                                                  to make calls to the kernel
+3       C library functions                     : Library calls (functions within program libraries)
+                                                  Programming functions that provide interface to specific
+                                                  programming libraries (such as those for certain graphical
+                                                  interfaces or other libraries that operate in user space)
+4       Devices and special files               : Special files (usually found in /dev)
+                                                  Filesystem nods that represent hardware devices (such as
+                                                  Terminals or CD drives) or software devices (such as
+                                                  random number generators)
+5       File formats and conventions            : Types of files (such as a graphics or word proessing file)
+        e.g. /etc/passwd                          or specific configuration files (such as the passwd or group file)
+6       Games                                   : Games available on the system
+7       Miscellaneous                           : Including macro packages and conventions, e.g. man(7), groff(7)
+                                                  Overviews of topics such as protocols, filesystems, character
+                                                  set standards, and so on
+8       System administration commands          : Commands that require root or other administrative privileges to use
+        - Tools and Daemons
+9       Kernel routines                         : Non standard
+
+------------------------------------------------
+|                  Table: 1.4                  |
+------------------------------------------------
+
+Directory                                        Description
+------------------------------------------------|---------------
+/bin                                            : Contains common Linux user commands, such as ls, sort, date and chmod
+/boot                                           : Has the bootable Linux kernel, initiam RAM disk, and boot loader
+                                                  configuration files (GRUB)
+/dev                                            : Contains files representing access points to devices on your system.
+                                                  These include terminal devices (tty*), hard disks (hd* or sd*), RAM
+                                                  (ram*), and CD-ROM (cd*). Users can access these devices directly
+                                                  through these device files; however applications often hide the actual
+                                                  device names to end users.
+/etc                                            : Contains administrative configuration files. Most fo these files are
+                                                  plain-text files that, given the user has proper permission, can be
+                                                  edited with any text editor
+/home                                           : Contains directories assigned to each regular user with a login account.
+                                                  (The root user is an exception, using /root as his or her home directory.)
+/media                                          : Provides a standard location for automounting devices (removable media in
+                                                  particular). If the medium has a volume name, that name is typically used
+                                                  as the mount point. For example, a USB drive with a volume name of myusb
+                                                  would be mounted on /media/myusb
+/lib                                            : Contains shred libraries needed by applicatiosn in /bin and /sbin to
+                                                  boot systems.
+/mnt                                            : A common mount point for many devices before it was supplanted by the 
+                                                  standard /media directory. Some bootable Linux systems still use this
+                                                  directory to mount hard disk partitions and remote filesystems.
+                                                  Many people still use this directory to temporarily mount local or remote
+                                                  filesystems, which are not mountned permanently.
+/misc                                           : A directory sometimes used to automount filesystem upon request
+/opt                                            : Directory structure available to store add-on application software.
+/proc                                           : Contains information about system resources
+/root                                           : Represents the root user's home diretory. The home directory for root
+                                                  does not reside beneath /home for seurity reasons.
+/sbin                                           : Contains administrative commands and daemon processes
+/sys                                            : Contains parameters for such things as tuning block storage and managing
+                                                  cgroups.
+/tmp                                            : Contains temporary files used by applications.
+/usr                                            : Contains user documentation, games, graphicalfiles (X11), libraries (lib),
+                                                  and a variety of other commands and files that are not needed during the
+                                                  boot process. The /usr directory is meant for files that don't change
+                                                  after installation (in theory, /usr could be mounted read-only).
+/var                                            : Contains directories of data used by various applications. In particular,
+                                                  this is where you would place files that you share as an FTP server
+                                                  (/var/ftp) or a web server (/var/www). It also contains all system log
+                                                  files (/var/log) and spool files in /var/spool (such as mail, cups, and
+                                                  news). The /var directory contains directories and files that are meant
+                                                  to change often. On server computers, it is common to create the /var
+                                                  directory as a separate filesystem, using a filesystem that that can be
+                                                  easily expnanded.
+
+------------------------------------------------
+|                  References                  |
+------------------------------------------------
+
+http://www.tlpd.org/HOWTO/Bash-Prompt-HOWTO     : Refer to this link for information on changing colors, commands and other
+                                                  features of your bash shell prompt
+

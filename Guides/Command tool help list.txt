@@ -1,0 +1,151 @@
+Made by: s090116
+This document is created to function as a guide
+for multiple command line functions.
+So far it includes:
+        - nslookup
+        - openssl * not finished
+        - MPI
+
+Commands					 Description
+------------------------------------------------|---------------
+: Explanation of command
+- Command options
+[xxx] is a pseudonum for XXX information
+[empty] is a pseudonum for not entering anything.
+						
+===================nslookup=====================:===============
+----------------nslookup explanation------------:---------------
+nslookup - a tool to query Internet name servers interactively
+nslookup [-option] [name | -] [server]
+nslookup –option1 –option2 host-to-find dns-server
+                                                : It is possible to supply 0, 1, 2 or more options
+                                                : as well as 2 servers, where the 1st will be queried
+                                                : and the 2nd is optional.
+                                                : If excluded it'll be sent to the default
+
+:Notice that these are identical, "type", "q", "query"
+Example:
+nslookup -type=mx dtu.dk                        : identical
+nslookup -q=mx dtu.dk                           : identical
+nslookup -query=mx dtu.dk                       : identical
+
+
+------nslookup commands-----:---------------
+nslookup [website]                              : Provides generic information about a website, such as IP and dns
+nslookup -[option] [website]: Provides information about a websited specified by the option
+
+:Example
+> nslookup -type=mx dtu.dk                      : Info about the mail exchange server for DTU
+
+:Example
+nslookup -query=hinfo  -timeout=10 [website]
+                                                : Generates a query, using the hinfo option, with timeout 10
+                                                : to dtu.dk
+
+:Example
+nslookup dtu.dk google.com	                : Here we send our query to google.com
+                                                : which will query dtu.dk on our behalf
+                                                : and then google will provide us with the result
+
+-----ALTERNATE version------:---------------
+Type in 'nslookup', and you'll get a '>'
+type in:
+> set q=[option]
+> [website]
+
+: Option list
+•     A                                         : Specifies a computer's IP address.
+•     ANY                                       : Specifies a computer's IP address.
+•     CNAME                                     : Specifies a canonical name for an alias.
+•     GID                                       : Specifies a group identifier of a group name.
+•     HINFO                                     : Specifies a computer's CPU and type of operating system.
+•     MB                                        : Specifies a mailbox domain name.
+•     MG                                        : Specifies a mail group member.
+•     MINFO                                     : Specifies mailbox or mail list information.
+•     MR                                        : Specifies the mail rename domain name.
+•     MX                                        : Specifies the mail exchanger.
+•     NS                                        : Specifies a DNS name server for the named zone. (authorative DNS server)
+•     PTR                                       : Specifies a computer name if the query is an IP address; otherwise, specifies the pointer to other information.
+•     SOA                                       : Specifies the start-of-authority for a DNS zone.
+•     TXT                                       : Specifies the text information.
+•     UID                                       : Specifies the user identifier.
+•     UINFO                                     : Specifies the user information.
+•     WKS                                       : Describes a well-known service.
+
+Example:
+nslookup [empty]
+	> set q=A
+	> dtu.dk
+
+====================openssl=====================:===============
+--------------openssl explanation---------------:---------------
+OpenSSL is a software library for applications that secure
+communications over computer networks against eavesdropping
+or need to identify the party at the other end. It is widely
+used by Internet servers, including the majority of HTTPS websites.
+
+---------------Library information--------------:---------------
+openssl version					: Will provide info about the version you're running
+
+openssl version -[option]
+:valid options
+•     help                                      : Display this summary
+•     a                                         : Show all data
+•     b                                         : Show build date
+•     d                                         : Show configuration directory
+•     e                                         : Show engines directory
+•     f                                         : Show compiler flags used
+•     o                                         : Show some internal datatype options
+•     p                                         : Show target build platform
+•     r                                         : Show random seeding options
+•     v                                         : Show library version
+
+openssl help					: Print all of the available commands
+openssl help [command]				: Print information about specific commands,
+        : 3 types
+        : - standard Commands
+        : - Message Digest commands ("dgst")
+        : - Cipher commands ("enc")
+
+openssl list [options]				: Provide details in list format
+: valid options
+•     help                                      : Display this summary
+•     1                                         : List in one column
+•     commands                                  : List of standard commands
+•     digest-commands                           : List of message digest commands
+•     digest-algorithms                         : List of message digest algorithms
+•     cipher-commands                           : List of cipher commands
+•     cipher-algorithms                         : List of cipher algorithms
+•     public-key-algorithms                     : List of public key algorithms
+•     public-key-methods                        : List of public key methods
+•     disabled                                  : List of disabled features
+•     missing-help                              : List missing detailed help strings
+•     options val				:List options for specified command
+------------------Key Generation----------------:---------------
+openssl pkey -in 
+
+=======================MPI======================:===============
+-----------------MPI Explanation----------------:---------------
+MPI stands for "Message Passing Interface"
+Installing on your own computer
+$ sudo apt update
+$ sudo apt install mpich
+To compile a code with MPI, you need to load an mpi module
+when using the LSF cluster
+> module load mpi
+After that you can compile using the same format as gcc
+Although instead of gcc, type 'mpicc'
+Example:
+> mpicc -o hello_world hello_world.c
+-----------------LSF Explanation----------------:---------------
+:For the LSF cluster, follow instructions here
+: http://www.cc.dtu.dk/?page_id=2501
+
+
+--------------Library Information---------------:---------------
+mpicc -o [compiledname] [filename.c]            : to compile a file using MPI
+mpiexec -n [number of processes] ./hello_world  : To run a compiled program with a
+                                                : specified number of processes
+
+
+
