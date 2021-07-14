@@ -294,6 +294,7 @@ touch                                           : Update the date of a file, wit
                 
 cp                                              : Copy from specific directoy into current directory
         [folder/folder/file] [New name]
+        -i                                      - Add a prompt before overwriting files.
 
 mv                                              : Move a command/file, to some other location, but we can also rename
         [Filename] [Filename]                   - rename, can also overwrite other files
@@ -355,6 +356,10 @@ locate [detail]                                 : Locates a detail on the comput
 VIM                                             : VIM text editor suite
         [filename]                              - Access a specific file via the VIM suite
 
+nano                                            : text editor
+        [filename]                              - opens specific file
+        [empty]                                 - Open a new document in nano (unsaved version)
+
 cat [option] [filename]                         : 'Concatenate' Show content of file via the terminal
         [Filename]                              : Display content of [Filename]
         >>        [Filename]                    : Write something into the file (append), use 'Ctrl + D' to complete.
@@ -389,10 +394,6 @@ $ cat file1.txt | more                          : Display file1.txt in the conso
 strings                                         : Display text that's embedded in a binary file
 
 od [option] [filename]                          : Display a file in Octal or other formats (use option '-x' for Hex)
-
-nano                                            : text editor
-        [filename]                              - opens specific file
-        [empty]                                 - Open a new document in nano (unsaved version)
         
 wc [behavior] [filename]                        : Word count - count the number of words in a file
         -l                                      - Count lines, not words
@@ -420,7 +421,7 @@ $ echo $<tab><tab>                              : Two tabs, for an auto complete
 $HOME                                           : Home directory
                                                 - It is your currentworking directory each time you log in
                                                 - or type the cd command with any option
-$PATH                                           : OS variable path.
+$PATH                                           : OS variable path.[ctrl + E]                                      : End of line, go to the end of the line
                                                 - It is a colon-separated list of directories used to
                                                 - find commands that you type.
 $OSTYPE                                         : This name idenfies the current Operating System type
@@ -456,7 +457,8 @@ $ echo "Derp $(ls | wc -w)"                     : The content of ls is piped to 
 Example:
 $ history | less                                : Will show the history using the 'less' format
 
-/ > [filename]                                  :  Send the output of content (cat/ls/...) into a newly created file
+something > [filename]                          : Send the output of content (cat/ls/...) into a newly created file
+                                                  or overwrite the content of the file. 
 
 <('content')                                    : A method to condense the input, and use it as an argument
 Example;
@@ -466,6 +468,14 @@ $ diff <(wc file1) <(wc file2)                  : Look at the difference between
 ?                                               : Used a wildcard for a single character in strings.
 [...]                                           : Matches any one of the characters between the brackets, which can
                                                   include a hyphen separated range of letters or numbers.
+                                                  Used for pattern matching
+{...}                                           : Pattern generation, strings are separated by comma, numbers by 2 dots (..)
+
+Examples:
+$ touch derp{1..4}                              : Creates 4 files, derp1, derp2, derp3, derp4
+$ touch derp{ty,ti}                             : Creates 2 files names derpty and derpti
+$ rm derp*                                      : Remove all files starting with the name "derp"
+$ ls [0A]*                                       : List all files starting with 0 or A
 
 ;                                               : Combining commands to be run in a sequence
 Example:
@@ -485,7 +495,8 @@ Example:
 
 !*                                              : Last parameter from previous command
 Example:
-$ ls z* && rm !*                                - here '!*' is treated as 'z*'
+$ ls z* && rm !*                                - Here '!*' is treated as 'z*', so first we list all files starting with z,
+                                                  Then delete those files
 
 clear                                           : Clears the bash terminal of text
 
@@ -518,6 +529,8 @@ Rest unsorted.
 
 [ctrl + C]                                      : Kills a command, if a command is continously running (example: htop)
 [ctrl + D]                                      : Terminate command
+[ctrl + A]                                      : Beginning of line, go to the beginning of the current line
+[ctrl + E]                                      : End of line, go to the end of the line
 
 [ctrl + L]                                      : Clears the bash terminal of text
 [ctrl + K]                                      : Cut end of line, cut text to the end of the line
@@ -525,9 +538,6 @@ Rest unsorted.
 
 [ctrl + F]                                      : Character forward, go forward one character.
 [ctrl + B]                                      : Character backward, aka. go backward one character.
-[ctrl + A]                                      : Beginning of line, go to the beginning of the current line
-[ctrl + E]                                      : End of line, go to the end of the line
-
 [ctrl + D]                                      : Delete the current character (aka 'delete' key)
 [ctrl + T]                                      : Transpose words, switch positions of current and previous characters
 [ctrl + V]                                      : Insert special character, add a special character.
