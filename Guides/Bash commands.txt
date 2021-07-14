@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.4
+ Version     : 2.5
  Date        : 29/09-20
- Last Updated: 13/07-21
+ Last Updated: 14/07-21
  Copyright   : Do not alter, copy or share this file without permission
  Description : A rough guide for new users to understand bash console commmands
              : Made for course 62588 Operating systems at DTU Denmark Fall 2020.
@@ -21,6 +21,7 @@ Sections:
     - Directory commands
     - Help section
     - File access, edit, format
+    - Networking
     - VARIABLES
     - FUNCTIONS-(NOT COMMANDS)
     - NAVIGATING COMMAND LINE
@@ -50,7 +51,7 @@ Apache                                          : Web server
 SAMBA                                           : A tool with multiple server and management option for Linux and Unix
                                                   It allowws windows to share files and printers on the Unix host
                                                   It also allows Unix users to access resources shared by Windows systems.
-Oracle, MySQL (MariaDB), Mongodb, etc.          : Database server
+Oracle, MySQL (MariaDB), Mongodb, etc.          : Database
 
 Additional server types.
 Mail/FTP/DNS/router/firewall and more           
@@ -60,11 +61,10 @@ introduction to what Linux is, and to become
 familiar with the command console.
 
 
-
 ------------------------------------------------
 |                 General info                 |
 ------------------------------------------------
-Information abou the format of this document
+Information about the format of this document
 
 '$ ' is used to emulate a command line, specifically
 intended for examples of full commands.
@@ -273,32 +273,26 @@ drwxr-xr-x 2 theckr theckr  4096 Jul 14 00:38  Guides
 |               System/User Info               |
 ------------------------------------------------
 uname                                           : Print system information
-
 who                                             : Show who is logged on
-
 whoami                                          : Print effective userid
-
 users                                           : Print the user names of users currently logged in to the current host
-
 id                                              : ID number, and associated details with the user
 
+date                                            : Display the date
 cal                                             : Calender
         [month optional] [year]                 - month, and/or year. 
 [Example]                                       :
 $ cal 2021                                      : Will display the calender for the year 2021
 
 df [OPTION]... [FILE]...                        : Report file system disk space usage
-
 top                                             : Provies a dynamic overview of the running processes
-
 htop                                            : Interactive process viewer
-
 tar                                             : An archiving utility
-
-date                                            : Display the date
-
-watch                                           : reruns a command every 2 seconds.
-        free -h                                 : Shows how much memory is in the system
+free                                            : Displays the total amount of free space available along with the
+                                                  amount of memory used and swap memory in the system, and also the
+                                                  buffers used by the kernel
+watch                                           : Reruns a command every 2 seconds.
+        free -h                                 - Shows how much memory is in the system
 
 ------------------------------------------------
 |              User administration             |
@@ -395,8 +389,10 @@ info [command]                                  : Shows information about a chos
 
 Commands include a help method, referenced
 [command] --help
-[Example]
-$ ls --help                                     - Lists a help category for 'ls' command.
+
+[Examples]
+$ ls --help                                     - List a help category for 'ls' command.
+$ chmod --help                                  - List a help category for 'chmod' command
 
 type [command]                                  : Display where a command is located.
         -a                                      - Display all instances of where the command is located
@@ -407,6 +403,7 @@ compgen [Operator] [word]                       : Display possible completions d
         -c                                      - List commands, if 'word' is supplied, list those starting with 'word'
 [Example]
 $ compgen -c gr                                 : List commands starting with 'gr'
+$ compgen -c | sort                             : List all commands sorted alphabetically
 
 ------------------------------------------------
 |           File access, edit, format          |
@@ -447,7 +444,8 @@ $ cat file1.txt | tail                          : Display the first 10 lines of 
 
 sort                                            : Sort via parameters, alphabetically as standard -r for reversed
 [Example]
-$ ls -a | sort -r | less                        : List content of directory, in reversed alphabetical order, using 'less' format.
+$ ls -a | sort -r | less                        : List content of directory, in reversed alphabetical
+                                                  order, using 'less' format.
 
 [Example]
 $ cat file1.txt | more                          : Display file1.txt in the console, using 'more' format
@@ -472,20 +470,20 @@ Types: Gnome, KDE, Xfce, LXDE,
 xdg-open [foldername]                           : Opens a folder, should work on a full linux distribution
 $ man -k xdg                                    - Use this command to check status of xdg commands in general
 
-
 ------------------------------------------------
 |                  NETWORKING                  |
 ------------------------------------------------
 netstat                                         : Printing network connections, routing tables, inteface statistics,
                                                   masquerade connections, and multicast memberships
-ip
+ip                                              : ip - show/manipulate routing, network devices, interfaces and tunnels
+ifconfig                                        : Configure a network interface
 nmap                                            : Network exploration tool and security/port scanner
 route                                           : Show/manipulate the IP routing table
 wget                                            : Retrieve web pages/files to disks
 ftp                                             : Copy files to/from a remote host
-whois                                           :
-ssh                                             :
-iptables
+whois                                           : Client for the whois directory service
+ssh                                             : OpenSSH remote login client, remote access to a host
+iptables                                        : administration tool for IPv4/IPv6 packet filtering and NAT
 
 ------------------------------------------------
 |                   VARIABLES                  |
@@ -495,11 +493,11 @@ $ echo $<tab><tab>                              : Two tabs, for an auto complete
 
 :These are some general useful variables.
 $HOME                                           : Home directory
-                                                - It is your currentworking directory each time you log in
-                                                - or type the cd command with any option
-$PATH                                           : OS variable path.[ctrl + E]                                      : End of line, go to the end of the line
-                                                - It is a colon-separated list of directories used to
-                                                - find commands that you type.
+                                                  It is your currentworking directory each time you log in
+                                                  or type the cd command with any option
+$PATH                                           : OS variable path.
+                                                  It is a colon-separated list of directories used to
+                                                  find commands that you type.
 $OSTYPE                                         : This name idenfies the current Operating System type
 $PWD                                            : Print working directory
 $BASH_VERSION                                   : Represents the current bash version.
@@ -508,7 +506,6 @@ $USER                                           : Abbreviation of the username, 
 These two are used in programming
 stdin                                           : Standard input (console), where the program reads from
 stdout                                          : Standard output (console/screen) where the info will be displayed
-
 
 ------------------------------------------------
 |           FUNCTIONS-(NOT COMMANDS)           |
@@ -629,29 +626,22 @@ Rest unsorted.
 ------------------------------------------------
 sudo apt install <deb name>                     : Install additional packages, such as 'nmap'
 
-
 mkfifo pipeline                                 : Make fifo pipeline        
 
-awk                                             : Awk is a scripting language used for manipulating data and generating reports
-                                                  By itself it goes beyond the scope of this file, and would thus require a
-                                                  guide by itself, even if the topic is relatively light weight.
-
+awk                                             : Awk is a scripting language used for manipulating data and
+                                                  generating reports. By itself it goes beyond the scope of
+                                                  this file, and would thus require a guide by itself, even
+                                                  if the topic is relatively light weight.
 make                                            : GNU make utility to maintain groups of programs
-                                                : Requires additional knowledge to setup for projects via makefile
-
+                                                  Requires additional knowledge to setup for projects via makefile
 rm .test.c.sw*                                  : Sletter begge sw filer for 'test.c' (i tilfælde af fejl)
                                                   //compiler kurset
-
 pipe                                            : Pipe functionality, used within  C programs
-
 ./[filename]                                    : running an executable file (compiled file)
-
 grep [search pattern]                           : Print lines that match patterns
-
 chage                                           : Change user password expiry information
 
 
-ssh [host]                                      : Remote access to a host
 [Example]
 Details for accessing the LSF 10 cluster on DTU
 via a linux terminal
