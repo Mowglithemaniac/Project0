@@ -1,0 +1,29 @@
+/*============================================================================
+ Name        : 000 template.c
+ Author      : Declined#8151 (Discord ID), s090116
+ Version     : 1.00
+ Date        : 11/07-2021
+ Copyright   : Your copyright notice
+ Description : Main program of the folder that ties everything together
+ ============================================================================*/
+//#include "filename.h"
+
+void main(){
+
+}
+
+/*============================================================================
+ Name        : Test1.c
+ Author      : Declined#8151 (Discord ID)
+ Version     :
+ Copyright   : Your copyright notice
+ Description : Hello World in C, Ansi-style
+============================================================================*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+	printf("Hello World"); /* prints !!!Hello World!!! */
+	return 0;
+}
