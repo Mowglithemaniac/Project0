@@ -13,6 +13,7 @@
 Sections:
     - Introduction
     - General tips
+    - General info
     - Elevated priveledge
     - System Commands
     - Permission explanation
@@ -29,6 +30,41 @@ Sections:
 ------------------------------------------------
 |                 Introduction                 |
 ------------------------------------------------
+Linux is incredibly powerfull for managing and
+setting up servers.
+
+The term 'distro' refers to distribution types.
+Distributions are organized based on the 
+"Pakcage management system".
+There are two primary distribution types
+RPM-based, and DEB-based.
+RPM uses the .rpm file format, most known distros
+are: Red Hat Linux, CentOS, Fedora
+DEB emphasizes 'free software' often referred
+to as 'debian type'
+Most known distros are: Ubuntu, Linux Mint, 
+Linux Kali
+
+Examples of server types and tools
+Apache                                          : Web server
+SAMBA                                           : A tool with multiple server and management option for Linux and Unix
+                                                  It allowws windows to share files and printers on the Unix host
+                                                  It also allows Unix users to access resources shared by Windows systems.
+Oracle, MySQL (MariaDB), Mongodb, etc.          : Database server
+
+Additional server types.
+Mail/FTP/DNS/router/firewall and more           
+
+This document is designed to give you an
+introduction to what Linux is, and to become
+familiar with the command console.
+
+
+
+------------------------------------------------
+|                 General info                 |
+------------------------------------------------
+Information abou the format of this document
 
 '$ ' is used to emulate a command line, specifically
 intended for examples of full commands.
@@ -100,7 +136,7 @@ a method to break the line, and continue writing
 a command on  the following line.
 
 The 'grep' command print lines that match patterns
-Example:
+[Example]
 $ top | grep root                               : Will present the processes related to root.
 
 If you screw up somehow, terminate an active
@@ -146,7 +182,7 @@ $ chmod 744 [filename]                          : 644 is recommended for files.
 echo <text>                                     : Prints echoes the <print> in the console
                                                   Has lots of uses, example printing the content of
                                                   a system variable .
-Example:
+[Examples]
 $ echo $PATH                                    : Prints the entire path variable
 $ echo $PS1                                     : Prints the entire PS1 settings variable, for
                                                   how to display your prompt
@@ -154,8 +190,8 @@ killall                                         : Kill all processes that you ha
         [a-zA_Z]                                - terminates any process related to that name
 
 gcc                                             : Compile program from c language
-        -o                                      :
-[EXAMPLE section]
+        -o                                      : Output, next argument will be the created filename
+[Examples]
 $ gcc -o [newname] [c-file] 
 $ gcc -o derp /test_folder/test.c               : Here we navigate down a folder to find the test.c file,
                                                   the 'derp' file, is placed in the current folder
@@ -164,6 +200,18 @@ df [option] [file]                              : Something about 'report file s
         -h                                      - Human readable
         -H                                      - Print sizes in powers of 1000 (e.g., 1.1G)
 
+ps                                              : Processor Status, it is a highly integrated part of Linux
+                                                  There are more than 80 options, most commonly known is 'aux'
+        aux                                     : Display processes of all users. VSZ stand for 'Virtual Memory Size'
+                                                  RSS stand for the size of the physical memory that the process is using
+                                                  STAT, the process state mode, such as;
+                                                  'Z' zombie,  'S' interruptible sleep,   't' stopped by debugger during tracing,
+                                                  'R' running, 'D' uninterruptible sleep, 'T' stopped by job control signal,
+                                                  'w' paging,  'l' is multi-threaded,     '<' high-priority (not nice)
+                                                  'x' dead,    's' is a session leader,   '+' is in the foreground process group,
+                                                 
+[Example]
+$ ps aux                                        : See all running processes
 
 ip [option]                                     : 
         addr
@@ -175,7 +223,7 @@ whois                                           : shows some whois data about a 
 pstree                                          : Display a tree of process
 
 alias                                           : Access to aliases
-Example:
+[Example]
 $alias                                          : Display a list of aliases
 $alias p='pwd ; ls -CF                          : Create a new alias 'p', which is 2 commands, followed by one another
                                                   For the alias to be saved between shells and sessions, they need to
@@ -185,6 +233,9 @@ Use 'unalias' to remove an alias
 Remember, that if an alias is set in a 
 configuration file, it will be set again when
 you open another shell.
+
+disown                                          : Can be used to remove jobs from the current shell, so that when you close
+                                                  the shell, the jobs will not be terminated as well.
 
 ------------------------------------------------
 |            Permission explanation            |
@@ -203,7 +254,7 @@ and so on
 
 When using the 'chmod' command, you  enter 3 numbers
 The first number represents the owner
-The second number representsthe group
+The second number represents the group
 The 3rd number represents everybody else.
 
 With the 'ls -l' command, you can view permissions
@@ -214,6 +265,9 @@ b                                              : Block device
 c                                              : Character device
 s                                              : Socket
 p                                              : Named pipe
+
+[Example output]
+drwxr-xr-x 2 theckr theckr  4096 Jul 14 00:38  Guides
 
 ------------------------------------------------
 |               System/User Info               |
@@ -230,7 +284,7 @@ id                                              : ID number, and associated deta
 
 cal                                             : Calender
         [month optional] [year]                 - month, and/or year. 
-Example:                                        :
+[Example]                                       :
 $ cal 2021                                      : Will display the calender for the year 2021
 
 df [OPTION]... [FILE]...                        : Report file system disk space usage
@@ -247,30 +301,30 @@ watch                                           : reruns a command every 2 secon
         free -h                                 : Shows how much memory is in the system
 
 ------------------------------------------------
+|              User administration             |
+------------------------------------------------
+passwd                                          : Used to change the password of users
+        -
+
+useradd                                         : Add a new user
+        -                                       :
+groupadd
+
+deluser                                         : Deletes user, Debian based distribution, for other types, use
+                                                  "userdel" command instead.
+        --remove-home [username]                - This syntax is for Debian Distributions
+                                                  Will delete the user
+
+[Example]
+$ sudo deluser --remove-home derp               : Removes user 'derp'
+
+------------------------------------------------
 |              Directory commands              |
 ------------------------------------------------
-pwd                                             : Print working directory (bash command)
-
-ls                                              : List content of current directory
-                                                  If there is a plus sign (+) at the end of permissions, it means that
-                                                  extended attributes, such as Access Control List (ACLs)
-                                                  If there is a dot at the end (.) it indicates that SELinuxis set on the file.
-                                                  If there is a t at the end of permissions for a directory, it indicates that
-                                                  the sticky bit is set for that directory.
-        -a                                      - Display hidden files
-        -l                                      - Provides extra information about each file, the left mode column regarding rw, concerns users priveledge
-        -la                                     - Extra details and hidden files
-        /[foldername]                           - List content of specified directory
-
-cd                                              : Change directory
-        [empty]                                 - Move to home directory
-        ~                                       - Move to home directory
-        ..                                      - Move up a directory
-        /                                       - Go to Root directory
-        -                                       - Go to previous directory
+ssh
         [Directory Name]/                       - Move to specific directory
         [tab]                                   - Auto complete
-Example:
+[Example]
 $ cd ../../testfolder/                          - Move up two directories, and then down into the testfolder.
 
 file                                            : Display information about files
@@ -328,9 +382,8 @@ man [operator] [command]                        : Manual page for Bash commands
                                                   linked to the search word.
                                                   Each manual page, has a number, that refers to a category
                                                   To find out what the category means, look at the manual page for man
-Example:
-$ man man
-Examples:
+[Example]
+$ man man                                       - Manual page for the manual command
 $ man pipe                                      - Manual page for the pipe command
 $man -k pipe                                    - Shows a list of commands and manual pages related to 'pipe'
 
@@ -342,13 +395,18 @@ info [command]                                  : Shows information about a chos
 
 Commands include a help method, referenced
 [command] --help
-Example:
-$ ls --help                                     : Lists a help category for 'ls' command.
+[Example]
+$ ls --help                                     - Lists a help category for 'ls' command.
 
 type [command]                                  : Display where a command is located.
         -a                                      - Display all instances of where the command is located
 
 locate [detail]                                 : Locates a detail on the computer
+
+compgen [Operator] [word]                       : Display possible completions depending on the operator
+        -c                                      - List commands, if 'word' is supplied, list those starting with 'word'
+[Example]
+$ compgen -c gr                                 : List commands starting with 'gr'
 
 ------------------------------------------------
 |           File access, edit, format          |
@@ -360,11 +418,14 @@ nano                                            : text editor
         [filename]                              - opens specific file
         [empty]                                 - Open a new document in nano (unsaved version)
 
+Additional text exditors:
+gedit, jed, joe, kate, kedit, mcedit, nedit
+
 cat [option] [filename]                         : 'Concatenate' Show content of file via the terminal
-        [Filename]                              : Display content of [Filename]
-        >>        [Filename]                    : Write something into the file (append), use 'Ctrl + D' to complete.
-        > [Filename]                            : create a new file
-        << EOF                                  :
+        [Filename]                              - Display content of [Filename]
+        >>        [Filename]                    - Write something into the file (append), use 'Ctrl + D' to complete.
+        > [Filename]                            - overwrite the content of a file, (also create the file if needed)
+        << EOF                                  - EOF End of file
 
 more                                            : Look at a file, one page at a time using the spacebar
         [filename]                              - Open the specific file in the command prompt
@@ -378,17 +439,17 @@ head                                            : View the first lines of a text
 
 tail                                            : View the last lines of a text file
 
-Examples:
+[Examples]
 $ cat file1.txt | more                          : Display file1.txt in the console, using 'more' format
 $ cat file1.txt | less                          : Display file1.txt in the console, using 'less' format
 $ cat file1.txt | head                          : Display the first 10 lines of file1.txt in the console
 $ cat file1.txt | tail                          : Display the first 10 lines of file1.txt in the console
 
 sort                                            : Sort via parameters, alphabetically as standard -r for reversed
-Example:
+[Example]
 $ ls -a | sort -r | less                        : List content of directory, in reversed alphabetical order, using 'less' format.
 
-Example:
+[Example]
 $ cat file1.txt | more                          : Display file1.txt in the console, using 'more' format
 
 strings                                         : Display text that's embedded in a binary file
@@ -401,7 +462,7 @@ wc [behavior] [filename]                        : Word count - count the number 
 wget [website link]                             : Download a file from the internet (pdf, rar, and so on)                
 
 diff                                            : Compare files line by line
-Example:
+[Example]
 $ diff <(wc file1) <(wc file2)                  : Compares the wordcount of 2 different files
 
 Depending on your desktop environment, specific
@@ -410,6 +471,21 @@ Types: Gnome, KDE, Xfce, LXDE,
 
 xdg-open [foldername]                           : Opens a folder, should work on a full linux distribution
 $ man -k xdg                                    - Use this command to check status of xdg commands in general
+
+
+------------------------------------------------
+|                  NETWORKING                  |
+------------------------------------------------
+netstat                                         : Printing network connections, routing tables, inteface statistics,
+                                                  masquerade connections, and multicast memberships
+ip
+nmap                                            : Network exploration tool and security/port scanner
+route                                           : Show/manipulate the IP routing table
+wget                                            : Retrieve web pages/files to disks
+ftp                                             : Copy files to/from a remote host
+whois                                           :
+ssh                                             :
+iptables
 
 ------------------------------------------------
 |                   VARIABLES                  |
@@ -445,65 +521,57 @@ Navigate command history
 ./[filename]                                    : Running an executable file (compiled file)
 
 $[expression]                                   : Arithmetic expression, direct
-Example:
-$ echo "Derp $[56 - 43]"
-
 $(expression)                                   : Arithmetic expression, via function
-Example:
+
+[Example]
+$ echo "Derp $[56 - 43]"                        : Echoes "Derp 13" in the console
 $ echo "Derp $(ls | wc -w)"                     : The content of ls is piped to wordcount command that prints
-                                                  the number of words
+                                                  the number of words in the folder
 
 |                                               : Pipeline character, Special circumstance(!!!)
-Example:
-$ history | less                                : Will show the history using the 'less' format
-
-something > [filename]                          : Send the output of content (cat/ls/...) into a newly created file
-                                                  or overwrite the content of the file. 
-
 <('content')                                    : A method to condense the input, and use it as an argument
-Example;
-$ diff <(wc file1) <(wc file2)                  : Look at the difference between the wordcount of 2 files
+
+[Example]
+$ history | less                                : Will show the history using the 'less' format
+$ diff <(wc file1) <(wc file2)                  : Compare at the difference between the wordcount of 2 files
 
 *                                               : Used as a wildcard for an string of undetermined length
 ?                                               : Used a wildcard for a single character in strings.
 [...]                                           : Matches any one of the characters between the brackets, which can
                                                   include a hyphen separated range of letters or numbers.
-                                                  Used for pattern matching
+                                                  Used for pattern matching, case sensitive.
 {...}                                           : Pattern generation, strings are separated by comma, numbers by 2 dots (..)
 
-Examples:
+[Examples]
 $ touch derp{1..4}                              : Creates 4 files, derp1, derp2, derp3, derp4
 $ touch derp{ty,ti}                             : Creates 2 files names derpty and derpti
 $ rm derp*                                      : Remove all files starting with the name "derp"
-$ ls [0A]*                                       : List all files starting with 0 or A
+$ ls [0A]*                                      : List all files starting with 0 or A
+$ ls ?[2A]*                                     : List all files where the 2nd character is either '2' or 'A'
 
 ;                                               : Combining commands to be run in a sequence
-Example:
-$ cd .. ; cd folder1/
-
-&&                                              : Run a sequence of commands, but stop execution if any of them fails,'
-Example:
-> command1 && command2 && command3
-
+&&                                              : Run a sequence of commands, but stop execution if any of them fails,
 ||                                              : Run a sequence of commands, but stop when the first command is true
 
+[Examples]
+$ command1 && command2 && command3 
+$ cd .. ; cd folder1/                           : Move up 1 directory, then move back down into another directory
+$ apt-get update || echo "Derped out"           : Without root access, this will derp out.
+
 !!                                              : Rerun previous command
-
-!?[string]?                                     : Reruns a previous command, containing the [string]
-Example:
-!?cal?                                          : Reruns a previous command containing 'cal' if founds
-
 !*                                              : Last parameter from previous command
-Example:
-$ ls z* && rm !*                                - Here '!*' is treated as 'z*', so first we list all files starting with z,
+!?[string]?                                     : Reruns a previous command, containing the [string]
+
+
+[Examples]
+$ !?cal?                                        : Reruns a previous command containing 'cal' if found
+$ sudo !!                                       : Redo last command as root user
+$ ls z* && rm !*                                : Here '!*' is treated as 'z*', so first we list all files starting with z,
                                                   Then delete those files
 
 clear                                           : Clears the bash terminal of text
-
 exit                                            : Terminates current access (Super User, bash, cmd, ...)
-
 logout                                          : Logs out, but recommended to use 'exit' instead.
-
 --                                              : "end of options", meaning that anything shown after that option will be
                                                   disregarded.
 
@@ -514,7 +582,7 @@ logout                                          : Logs out, but recommended to u
 2>                                              : Directs standard error(error messages) to the file.
 &>                                              : Directs both standard output and standard error to the file
 
-Example
+[Examples]
 $ ./derp >> derpy.txt                           - Will send the content from the compiled program (derp) to be
                                                   appended in the file 'derpy.txt' rather than shown on the console.
 $ ./derp > derpy.txt                            - Will send the content from the compiled program (derp) to 
@@ -559,32 +627,39 @@ Rest unsorted.
 ------------------------------------------------
 |                 Uncategorized                |
 ------------------------------------------------
-sudo apt install <deb name>                        
-mkfifo pipeline                                  : Make fifo pipeline        
+sudo apt install <deb name>                     : Install additional packages, such as 'nmap'
 
-vim [file]                                       : Access a file with the VIM
 
-make                                             : GNU make utility to maintain groups of programs
-                                                 : Requires additional knowledge to setup for projects via makefile
+mkfifo pipeline                                 : Make fifo pipeline        
 
-rm .test.c.sw*                                   : Sletter begge sw filer for 'test.c' (i tilfælde af fejl)
-                                                   //compiler kurset
+awk                                             : Awk is a scripting language used for manipulating data and generating reports
+                                                  By itself it goes beyond the scope of this file, and would thus require a
+                                                  guide by itself, even if the topic is relatively light weight.
 
-pipe                                             : Pipe functionality, used within  C programs
+make                                            : GNU make utility to maintain groups of programs
+                                                : Requires additional knowledge to setup for projects via makefile
 
-./[filename]                                     : running an executable file (compiled file)
+rm .test.c.sw*                                  : Sletter begge sw filer for 'test.c' (i tilfælde af fejl)
+                                                  //compiler kurset
 
-grep [search pattern]                            : Print lines that match patterns
+pipe                                            : Pipe functionality, used within  C programs
+
+./[filename]                                    : running an executable file (compiled file)
+
+grep [search pattern]                           : Print lines that match patterns
 
 chage                                           : Change user password expiry information
 
+
+ssh [host]                                      : Remote access to a host
+[Example]
 Details for accessing the LSF 10 cluster on DTU
 via a linux terminal
 http://www.cc.dtu.dk/?page_id=2501
-Example:
-$  ssh userid@login1.gbar.dtu.dk                 : Substitute userid with your student ID.
-                                                 - Type in your password, and you should now have acess to the LSF 10 cluster
-                                                 - Hit [CTRL + C] if you screw up
+[Example]
+$  ssh userid@login1.gbar.dtu.dk                : Substitute userid with your student ID.
+                                                - Type in your password, and you should now have acess to the LSF 10 cluster
+                                                - Hit [CTRL + C] if you screw up
 If necessary, use this command to access a
 new node.
 $ linuxsh                                                 
@@ -601,6 +676,9 @@ Sources:
 - Linux Bible by Christopher Negus (Once you get past the fluff, it's ok)
 - https://en.wikipedia.org/wiki/Linux_distribution
 - https://en.wikipedia.org/wiki/List_of_Linux_distributions
+- https://www.howtogeek.com/656549/how-to-delete-a-user-on-linux-and-remove-every-trace/
+- https://acloudguru.com/blog/engineering/conditions-in-bash-scripting-if-statements
+- https://www.geeksforgeeks.org/awk-command-unixlinux-examples/
 
 /*============================================================================
         Advanced topics : Creating your own shell environment
@@ -645,7 +723,7 @@ however. Users can change the information in the
 $HOME/.bash_profile, $HOME/.bashrc, and $HOME/.bash_logout
 files in their own home directories.
 
-Example:
+[Example]
 To edit the environment, we want to alter the
 configuration file $HOME/.bashrc, as a plaintext
 file via 'nano', we use the command
