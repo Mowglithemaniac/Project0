@@ -44,7 +44,14 @@ are: Red Hat Linux, CentOS, Fedora
 DEB emphasizes 'free software' often referred
 to as 'debian type'
 Most known distros are: Ubuntu, Linux Mint, 
-Linux Kali
+Linux Kali.
+
+Because of this distinction, and modular setup,
+Some commands may not be natively installed on 
+a distro, which means you have to install them
+yourself, or the version of a command you have
+might work slightly differently in your distro
+compared to another.
 
 Examples of server types and tools
 Apache                                          : Web server
