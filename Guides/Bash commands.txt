@@ -16,7 +16,8 @@ Sections:
     - General info
     - Elevated priveledge
     - System Commands
-    - Permission explanation
+      - Permission explanation
+      - Process details
     - System/User Info
     - Directory commands
     - Help section
@@ -158,13 +159,12 @@ this section explains how to acquire that.
 
 sudo                                            : Super user access (creates a timer in the background,
                                                   before requiring a password again)
-updatedb                                        - Update Database
-                -s                              - Disable the timer, and continue on as the super user
-                                                  (WARNING, DON'T FORGET to log out
-                exit                            - Will terminate the super user access
-
+updatedb                                        - Creates or updates a database used by 'locate(1)'
 sudos                                           : Super user access, for extended periods, (generally
                                                   not a good idea unless you know what you're doing)
+        -s                                     - Disable the timer, and continue on as the super user
+                                                  (WARNING, DON'T FORGET to log out)
+                exit                            - Will terminate the super user access
 
 su                                              : Switch user
         [empty]                                 - Changing to root access ()
@@ -208,17 +208,16 @@ df [option] [file]                              : Something about 'report file s
         -H                                      - Print sizes in powers of 1000 (e.g., 1.1G)
 
 ps                                              : Processor Status, it is a highly integrated part of Linux
-                                                  There are more than 80 options, most commonly known is 'aux'
-        aux                                     : Display processes of all users. VSZ stand for 'Virtual Memory Size'
-                                                  RSS stand for the size of the physical memory that the process is using
-                                                  STAT, the process state mode, such as;
-                                                  'Z' zombie,  'S' interruptible sleep,   't' stopped by debugger during tracing,
-                                                  'R' running, 'D' uninterruptible sleep, 'T' stopped by job control signal,
-                                                  'w' paging,  'l' is multi-threaded,     '<' high-priority (not nice)
-                                                  'x' dead,    's' is a session leader,   '+' is in the foreground process group,
-                                                 
+                                                  There are more than 80 options, most commonly used is 'aux'
+        aux                                     : Display processes of all users.
+        -o                                      : User defined format       
+        -e                                      : Select all processes, identical to -A
+        
 [Example]
 $ ps aux                                        : See all running processes
+$ ps -eo pid,user,uid,gid,vsz,rss,comm --sort=-vsz
+                                                : Showing the selected categories, sorted descending by vsz
+$ ps -eo pid,user,vsz,rss,comm --sort=rss       : Showing the selected categories, sorted ascending by rss
 
 ip [option]                                     : 
         addr
@@ -266,15 +265,44 @@ The 3rd number represents everybody else.
 
 With the 'ls -l' command, you can view permissions
 The first permission character have multiple meanings
-d                                              : Directory
-1                                              : Symbolic link
-b                                              : Block device
-c                                              : Character device
-s                                              : Socket
-p                                              : Named pipe
-
-[Example output]
+d                                               : Directory
+1                                               : Symbolic link
+b                                               : Block device
+c                                               : Character device
+s                                               : Socket
+p                                               : Named pipe
+                                                
+[Example output of ls -l]
 drwxr-xr-x 2 theckr theckr  4096 Jul 14 00:38  Guides
+
+------------------------------------------------
+|                Process details               |
+------------------------------------------------
+Each process have some information related to it.
+This is primarily to help you understand the
+output of the 'ps' command. 
+
+ADDR                                            : Memory address of the process
+C or CP                                         : CPU usage and scheduling information
+USER or UID                                     : The user who the process is tied to.
+%CPU                                            : How much of the CPU the process is using 
+%MEM                                            : How much memory the process is using 
+PID                                             : Processor ID, each process has a unique ID
+PPID                                            : ID number of the process's parent process
+PRI                                             : Priority of the process            
+VSZ or SZ                                       : 'Virtual Memory Size'
+RSS                                             : Resident Set Size, it stand for the size of the
+                                                  physical memory that the process is using
+STAT                                            : The process state mode, such as;
+                                                  'Z' zombie,  'S' interruptible sleep,   't' stopped by debugger during tracing,
+                                                  'R' running, 'D' uninterruptible sleep, 'T' stopped by job control signal,
+                                                  'w' paging,  'l' is multi-threaded,     '<' high-priority (not nice)
+                                                  'x' dead,    's' is a session leader,   '+' is in the foreground process group,
+START or STIME                                  : At what time the processs was started
+TTY or TT                                       : "TeleTYpewriter", aka. the console that executed the command
+COMMAND                                         : Name of the process, including arguments, if any
+                                                  (COMMAND name is often abbreviated)
+WCHAN                                           : Memory address of the event the process is waiting for
 
 ------------------------------------------------
 |               System/User Info               |
@@ -365,8 +393,6 @@ rmdir                                           : Remove directory
         [a_zA_Z]*                               - Remove directories starting with specified [a-zA_Z]
         [directory name]                        - Remove specific directory
 mkdir [options] directories                     : Creates 1 or more directories
-
-
 
 ------------------------------------------------
 |                 Help section                 |
@@ -675,7 +701,8 @@ Sources:
 - https://en.wikipedia.org/wiki/List_of_Linux_distributions
 - https://www.howtogeek.com/656549/how-to-delete-a-user-on-linux-and-remove-every-trace/
 - https://acloudguru.com/blog/engineering/conditions-in-bash-scripting-if-statements
-- https://www.geeksforgeeks.org/awk-command-unixlinux-examples/
+- https://www.geeksforgeeks.org/awk-command-unixlinux-examples/                : AWK 
+- https://man7.org/linux/man-pages/man1/ps.1.html                              : Man page for ps
 
 /*============================================================================
         Advanced topics : Creating your own shell environment
