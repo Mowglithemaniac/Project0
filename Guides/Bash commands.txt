@@ -37,7 +37,7 @@ setting up servers.
 
 The term 'distro' refers to distribution types.
 Distributions are organized based on the 
-"Pakcage management system".
+"Package management system".
 There are two primary distribution types
 RPM-based, and DEB-based.
 RPM uses the .rpm file format, most known distros
@@ -193,8 +193,18 @@ echo <text>                                     : Prints echoes the <print> in t
 $ echo $PATH                                    : Prints the entire path variable
 $ echo $PS1                                     : Prints the entire PS1 settings variable, for
                                                   how to display your prompt
-killall                                         : Kill all processes that you have access to
+killall                                         : Kill all processes that you have access to,
+                                                  use with care, as you may terminate more processes
+                                                  than you intended
         [a-zA_Z]                                - terminates any process related to that name
+kill                                            : By default, send a SIGKILL signal to a process
+       -[SIGNAL]                                - Optional. Use signal number or signal name, to
+                                                  send a specific signal
+-       [PID/%JOB_SPEC]                         - Which process to kill, JOB_SPEC is for background
+                                                  processes, so you need to look up the PID.
+nice                                            : Run a program with modified scheduling priority
+                                                  Used for determining the 'nice' value upon process creation
+renice                                          : Alter the priority of running processes
 
 gcc                                             : Compile program from c language
         -o                                      : Output, next argument will be the created filename
@@ -320,8 +330,9 @@ the system for the past 1, 5, 10 minutes.
 The 'NI' column, stands for 'nice', which is
 a parameter used to detemine how nice a process
 is towards others, it ranges from -20 to 19.
-The value directly relates to how much resource
-the process want to take up.
+The value directly relates to how nice the
+process is to others, by default the value
+is '0'.
 
 Shortcuts for 'top' is somewhat different, as
 you need to press the shortcuts while the
@@ -761,12 +772,15 @@ Sources:
                           -  Setting your prompt
                           -  Adding environment variables
                           -  Background processes
+                          -  Managing groups
+                          -  Shell scripting
                         : Table list
                           -  Table 1.1: Bash Configuration files 
                           -  Table 1.2: Characters to add information to bash prompt
                           -  Table 1.3: Manual page sections
                           -  Table 1.4: (Some of) Linux directory information
                           -  Table 1.5: Signals available in Linux
+                          -  Table 1.6: Control group limiting options
  ============================================================================*/
 
 ------------------------------------------------
@@ -926,18 +940,129 @@ $ vi $DERP/troll
 ------------------------------------------------
 Processes can be run in the background or
 foreground.
+
+Foreground jobs are ones that don’t return you
+to the command prompt until you exit out of the
+job or the job finishes.
+Background jobs run exactly the as if it were
+in the foreground, except that it does not 
+receive user input, and output is still
+processed accordingly.
+There is technically a 3rd type, 'stopped'.
+They do not receive user input, and do not
+produce an output.
+They don't do anything, and will continue
+not doing anything until they're resumed or
+killed.
+
+Be aware that background processes can still
+output something, despite running in the
+background, so you can redraw the screen
+with [CTRL + L].
+
 To see a list of processes running in the
 background use the command 'jobs'.
+To access specific jobs, use the '%'
+percentage sign, followed by the number.
+
+Accessing background jobs:
+%JOB_SPEC                                       : Refers to a specific job.
+%                                               : Refers to the most recent command put into the background
+                                                  (indicated by the plus sign when you type the jobs command).
+                                                  This action brings the command to the foreground
+%string                                         : Refers to a job where the command begins with a particular
+                                                  string of characters. The string must be unambiguous. (there
+                                                  mustn't be multiple commands starting wit the same string)
+%?string                                        : Refers to a job where the command line contains a string at
+                                                  any point. The string must be unambiguous or the match fails.
+%--                                             : Refers to the job stopped before the one most recently stopped
 
 There  are 3 primary ways (that I know of) to
 send jobs to the background.
-[CTRL + Z]                                      : Method 1
-$ bg                                            : Method 2
-Add an ampersand '&' at the end of a command    : Method 3
+[CTRL + Z]                                      : Send a SIGTSTP signal, forcing the job to the background
+$ bg                                            : Move jobs to the background. 
+                                                  Place the jobs identified by each JOB_SPEC in the background,
+                                                  as if they had been started with `&'.  If JOB_SPEC is not
+                                                  present, the shell's notion of the current job is used.
+Add an ampersand '&' at the end of a command    : Automatically sends the process to the background when
+                                                  the process is created, and then display 2 numbers, first
+                                                  number is the JOB_SPEC, the second number is the Processor
+                                                  ID (PID).
 
 
+Use the commands 'fg' and 'bg' to manage/access
+the processes, and commands like 'kill' to 
+terminate, remember to use %JOB_SPEC to access 
+the specific process directly.
+
+[Examples]
+$ watch free -h & 
+$ htop [CTRL + Z]
+$ jobs -l
+
+Now we can use the command 'fg' to bring a process
+to the foreground, kill it or something else.
+$ kill -9 %1
+$ fg %2
+$ [CTRL + C]
+$ jobs
+
+If the 1st processed that we killed exists try
+to access it with the command
+$ fg %1
+
+------------------------------------------------
+|                Managing groups               |
+------------------------------------------------
+If you're new to Linux, never ever try managing
+creating, or working with groups for a very
+simple reason.
+
+It can cause your computer to become unbootable
+
+Table 1.6 lists a number of options that can
+be used to manage groups.
+
+------------------------------------------------
+|                Shell scripting               |
+------------------------------------------------
+Shell scripting are primarily used for task
+automation. It is capable of executing multiple
+commands, take input, customizing administrative
+tasks and so on.
+
+There are 2 ways to execute shell scripts.
+By using the 'bash' command, or running the file
+as an executable.
+
+[Example]
+$ bash test.sh
+$ ./test.sh
+
+This link explains a lot of the syntax involved
+https://linuxhint.com/30_bash_script_examples/
+
+The 1st line of a shell script should be:
+#!/bin/bash
+
+It's possible to create variables. Variable
+names are case sensitive. 
+Variables can contain a number of things such as
+numeric, strings, output of functions, and so on.
+To create them, there must NOT be a space between
+the variable name, and the content.
+For functions, use a dollar sign, then parenthesis
 
 
+[Examples]
+VAR1=6465.7270
+VAR2="derp"
+VAR3=$(date)
+
+Some characters have special meaning in the shell
+'enclosedwithin'                                : ' ', literal translation of content within brackets
+\followingcharacter                             : Backslash, literal translation of the following character
+"STRING"                                        : Content within "" is parsed as a string.
 
 
 ------------------------------------------------
@@ -1085,22 +1210,107 @@ Directory                                        Description
                                                   news). The /var directory contains directories and files that are meant
                                                   to change often. On server computers, it is common to create the /var
                                                   directory as a separate filesystem, using a filesystem that that can be
-                                                  easily expnanded.
+                                                  easily expanded.
 
 ------------------------------------------------
 |                  Table: 1.5                  |
 ------------------------------------------------
-
+Use this command, to see a list of supported
+signals:
+$ kill -l
 Signal          Number                           Description
 ---------------|--------------------------------|---------------
-SIGHUP          1                               : Hang-up detected on controlling terminal or death of controlling process 
-SIGINT          2                               : Interrupt from keyboard.
-SIGQUIT         3                               : Quit from keyboard.
-SIGABRT         6                               : Abort signal from abort(3)
-SIGKILL         9           ½-                    : Kill signal.
+SIGHUP           1                              : Hang-up detected on controlling terminal or death of
+                                                  controlling process.
+SIGINT           2                              : Interrupt from keyboard.¨
+SIGQUIT          3                              : Quit from keyboard.
+SIGILL           4                              : 
+SIGTRAP          5                              :
+SIGABRT          6                              : Abort signal from abort(3)
+SIGBUS           7                              : 
+SIGFPE           8                              : 
+SIGKILL          9                              : Kill signal.
+SIGUSR1         10                              : 
+SIGSEGV         11                              : 
+SIGUSR2         12                              :
+SIGPIPE         13                              : 
+SIGALRM         14                              : 
 SIGTERM         15                              : Termination signal
-SIGCONT         18,19,25                        : Continue if stopped
-SIGSTOP         17,19,23                        : Stop process
+SIGSTKFLT       16                              : 
+SIGSTOP         17,(19,23)                      : The SIGSTOP signal stops the process. It cannot be handled,
+                                                  ignored, or blocked.
+SIGCONT         18,(19,25)                      : Continue if stopped
+SIGSTOP         19                              : 
+SIGTSTP         20                              : An interactive stop signal. Unlike SIGSTOP, this signal can
+                                                  be handled and ignored. 
+SIGTTIN         21                              : 
+SIGTTOU         22                              :
+SIGURG          23                              :
+SIGXCPU         24                              :
+SIGXFSZ         25                              :
+SIGVTALRM       26                              :
+SIGPROF         27                              :
+SIGWINCH        28                              :
+SIGIO           29                              :
+SIGPWR          30                              :
+SIGSYS          31                              :
+SIGRTMIN        34                              :
+SIGRTMIN+1      35                              :
+SIGRTMIN+2      36                              :
+SIGRTMIN+3      37                              :
+SIGRTMIN+4      38                              :
+SIGRTMIN+5      39                              :
+SIGRTMIN+6      40                              :
+SIGRTMIN+7      41                              :
+SIGRTMIN+8      42                              :
+SIGRTMIN+9      43                              :
+SIGRTMIN+10     44                              :
+SIGRTMIN+11     45                              :
+SIGRTMIN+12     46                              :
+SIGRTMIN+13     47                              :
+SIGRTMIN+14     48                              :
+SIGRTMIN+15     49                              :
+SIGRTMAX-14     50                              :
+SIGRTMAX-13     51                              :
+SIGRTMAX-12     52                              :
+SIGRTMAX-11     53                              :
+SIGRTMAX-10     54                              :
+SIGRTMAX-9      55                              :
+SIGRTMAX-8      56                              :
+SIGRTMAX-7      57                              :
+SIGRTMAX-6      58                              :
+SIGRTMAX-5      59                              :
+SIGRTMAX-4      60                              :
+SIGRTMAX-3      61                              :
+SIGRTMAX-2      62                              :
+SIGRTMAX-1      63                              :
+SIGRTMAX        64                              :
+
+------------------------------------------------
+|                  Table: 1.6                  |
+------------------------------------------------
+Storage (blkio)                                 : Limits total input and output access to storage devices (such as hard
+                                                  disks, USB drives, and so on)
+Processor scheduling (cpu)                      : Assigns the amount of access a cgroup has to be scheduled for
+                                                  processing power.
+Process accounting (cpuacct)                    : Reports on CPU usage. This information can be leveraged to charge
+                                                  clients for the amount of processing power they use.
+CPU assignment (cpuset)                         : On systems with multiple CPU cores, assigns a task to a particular set
+                                                  of processors and assiciated memory.
+Device access (devices)                         : Allows tasks in a cgroup to open or create (mknod) selected device
+                                                  types.
+Suspend/resume (freezer)                        : Suspends and resumes cgroup tasks
+Memory usage (memory)                           : Limits memory usage by task. It also creates reports on memory
+                                                  resources used.
+Network bandwidth (net_cls)                     : Limits network access to selected cgroup tasks. This is done by
+                                                  tagging network packets to identify the cgroup task that originated
+                                                  the packet and having the Linux traffic controller monitor and restrict
+                                                  packets coming from each group.
+Network traffic (net_prio)                      : Sets priorities of network traffic coming from selected cgroups and
+                                                  lets administrators change these priorites on the fly.
+Name spaces (ns)                                : Separates cgroups into namespaces, so processes in one cgroup can only
+                                                  see the namespaces associated with the cgroup. Namespaces can include
+                                                  separate process tables, mount tables, and network interfaces.
 
 ------------------------------------------------
 |                  References                  |
@@ -1108,4 +1318,6 @@ SIGSTOP         17,19,23                        : Stop process
 
 http://www.tlpd.org/HOWTO/Bash-Prompt-HOWTO     : Refer to this link for information on changing colors, commands and other
                                                   features of your bash shell prompt
-
+https://chrisjean.com/multitasking-from-the-linux-command-line-plus-process-prioritization/
+                                                : Background, foreground, job priority
+https://linuxhint.com/30_bash_script_examples/  : Bash scripting
