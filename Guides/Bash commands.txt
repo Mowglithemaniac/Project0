@@ -1062,7 +1062,17 @@ VAR3=$(date)
 Some characters have special meaning in the shell
 'enclosedwithin'                                : ' ', literal translation of content within brackets
 \followingcharacter                             : Backslash, literal translation of the following character
-"STRING"                                        : Content within "" is parsed as a string.
+"STRING"                                        : Content within "" is parsed as a string, variables are
+                                                  still considered as such.
+$STRING                                         : Name of a variable.
+
+Commonly used parameter expansions in bash
+shell scripting:
+${var:-value}                                   : If variable is unset or empty expand this to value.
+${var#pattern}                                  : Chop the shortest match for pattern from the front of var's value.
+${var##pattern}                                 : Chop the longest match for pattern from the front of var's value.
+${var%pattern}                                  : Chop the shortest match for pattern from the end of var's value.
+${var%%pattern}                                 : Chop the longest match for pattern from the end of var's value.
 
 
 ------------------------------------------------
