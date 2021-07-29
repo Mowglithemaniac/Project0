@@ -26,6 +26,8 @@ Sections:
     - VARIABLES
     - FUNCTIONS-(NOT COMMANDS)
     - NAVIGATING COMMAND LINE
+    - Hardware
+    - VIM tutorial
     - Uncategorized
     - Sources
 
@@ -51,13 +53,14 @@ Because of this distinction, and modular setup,
 Some commands may not be natively installed on 
 a distro, which means you have to install them
 yourself, or the version of a command you have
-might work slightly differently in your distro
+might work slightly diffe
+rently in your distro
 compared to another.
 
 Examples of server types and tools
 Apache                                          : Web server
 SAMBA                                           : A tool with multiple server and management option for Linux and Unix
-                                                  It allowws windows to share files and printers on the Unix host
+                                                  It allows windows to share files and printers on the Unix host
                                                   It also allows Unix users to access resources shared by Windows systems.
 Oracle, MySQL (MariaDB), Mongodb, etc.          : Database
 
@@ -68,14 +71,14 @@ This document is designed to give you an
 introduction to what Linux is, and to become
 familiar with the command console.
 
-
 ------------------------------------------------
 |                 General info                 |
 ------------------------------------------------
 Information about the format of this document
 
-'$ ' is used to emulate a command line, specifically
-intended for examples of full commands.
+'$ ' is used to emulate a command line,
+specifically intended for examples of full
+commands.
 Notice that '$STUFF' refers to variables.
 
 From this point forward, this format will
@@ -89,7 +92,6 @@ This will be the max width of this file-----------------------------------------
 [empty] is a pseudonum for not entering anything.
 [command] refers to commands themselves
 [operator] refers to '-operator' options.
-
 
 ------------------------------------------------
 |                 General tips                 |
@@ -270,16 +272,15 @@ disown                                          : Can be used to remove jobs fro
 fsck                                            : Check and repair a Linux filesystem
 parted                                          : A partition manipulation program
 
-
-
 ------------------------------------------------
 |            Permission explanation            |
 ------------------------------------------------
 Permission explanation: https://youtu.be/oxuRxtrO2Ag?t=3490
-Set up in relation to bits.
-r = read                                        : [4]
-w = write                                       : [2]
-x = execute                                     : [1]
+Set up in relation to separate bits, from right
+to left:
+r = read                                        : [4] Decimal value #4, == 0x4, == 0b100
+w = write                                       : [2] Decimal value #2, == 0x2, == 0b010
+x = execute                                     : [1] Decimal value #1, == 0x1, == 0b001
 
 Meaning that:
 7 = read, write, execute priveledge [111]
@@ -291,6 +292,18 @@ When using the 'chmod' command, you  enter 3 numbers
 The first number represents the owner
 The second number represents the group
 The 3rd number represents everybody else.
+
+-rwxrwxrwx
+|||||||||!------------------------------------> : Execute bit, for 'everyone'
+||||||||! ------------------------------------> : Write bit, for 'everyone'
+|||||||! -------------------------------------> : Read bit, for 'everyone'
+||||||! --------------------------------------> : Execute bit, for 'Group'
+|||||! ---------------------------------------> : Write bit, for 'Group'
+||||! ----------------------------------------> : Read bit, for 'Group'
+|||! -----------------------------------------> : Execute bit, for 'Owner'
+||! ------------------------------------------> : Write bit, for 'Owner'
+|! -------------------------------------------> : Read bit, for 'Owner'
+! --------------------------------------------> : {d, 1, b, c, s, p}
 
 With the 'ls -l' command, you can view permissions
 The first permission character have multiple meanings
@@ -739,6 +752,86 @@ Rest unsorted.
 [alt + C]                                       : Change the current word to an initial capital
 [alt + D]                                       : Cut the word following the ursor
 
+------------------------------------------------
+|                   HARDWARE                   |
+------------------------------------------------
+Managing the hardware details, such as removable
+USB drives, hardware plugged in during boot, 
+and more.
+
+dmesg                                           : Print or control the kernel ring buffers
+                                                  Used to view or alter which hardware was detected and which
+                                                  drivers were loaded by the kernel at boot time.
+journalctl                                      : Query the systemd journal
+                                                  Can be used to view boot messages, and show messages
+                                                  messages associated with a particular boot instance.
+lspci                                           : List all PCI devices
+lsusb                                           : List all USB devices
+lscpu                                           : List all PCU devices
+lsmod                                           : Show the status of modules in the Linux kernel
+modinfo                                         : Show information about a Linux Kernel module
+rmmod                                           : Simple program to remove a module from the linux Kernel
+modprobe                                        : Add and remove modules from the Linux Kernel
+
+------------------------------------------------
+|                 VIM tutorial                 |
+------------------------------------------------
+'Vi' is often the default text editor for Linux,
+VIM is the upgraded version, and an editor of
+choice for many.
+It is a "modal" text editor, meaning that it has
+different modes available, such as:
+command(default), insert, last-line, and 
+possibly more, depending on who you ask.
+
+In command mode, you have access to very
+different tools, such as saving, exiting, 
+highlighting, and so on,
+Whereas 'insert'-mode is about editing the 
+content of the file directly.
+
+If you're in 'insert'-mode, hit the ESC
+key, to go to the Command mode.
+
+Obviously arrow keys work the same.
+
+These are some of the most common
+shortcuts that you are going to need.
+
+Shortcuts:
+Command-mode                                     Description
+------------------------------------------------|---------------
+i                                               : Switch to 'Insert' mode.
+[CTrL + V]                                      : Highlight 1 column at a time
+v                                               : Highlight one character at a time
+:q                                              : Quit the file (adds a prompt if changes were made to the file)
+:q!                                             : Force quit the file
+:wq                                             : Save and quit
+p                                               : paste text after the current line
+                                                : paste text on the current line
+y                                               : Yank text into the coby buffer
+u                                               : Undo
+[CTRL + r]                                      : Undo an undo (redoing your last undo)
+?text                                           : Search for 'text', then use '/' to move forward, and '?' to move backward.
+
+Character movement                               Description
+------------------------------------------------|---------------
+h                                               : Moves the cursor one character to the left.
+j                                               : Moves the cursor down one line.
+k                                               : Moves the cursor up one line.
+l                                               : Moves the cursor one character to ther right.
+0                                               : Moves the cursor to the beginning of the line.
+$                                               : Moves the cursor to the end of the line.
+w                                               : Move forward one word.
+b                                               : Move backward one word.
+G                                               : Move to the end of the file.
+gg                                              : Move to the beginning of the file
+`.                                              : Move to the last edit.
+
+Some of these commands can be 'prefaced',
+meaning that if you use the command 10b, you
+move back 10 words. Or if you use 11w move
+forward 11 words.
 
 ------------------------------------------------
 |                 Uncategorized                |
@@ -759,7 +852,6 @@ pipe                                            : Pipe functionality, used withi
 ./[filename]                                    : running an executable file (compiled file)
 grep [search pattern]                           : Print lines that match patterns
 chage                                           : Change user password expiry information
-
 
 [Example]
 Details for accessing the LSF 10 cluster on DTU
@@ -787,12 +879,14 @@ Sources:
 - https://en.wikipedia.org/wiki/List_of_Linux_distributions
 - https://www.howtogeek.com/656549/how-to-delete-a-user-on-linux-and-remove-every-trace/
 - https://acloudguru.com/blog/engineering/conditions-in-bash-scripting-if-statements
-- https://www.geeksforgeeks.org/awk-command-unixlinux-examples/                : AWK 
-- https://man7.org/linux/man-pages/man1/ps.1.html                              : Man page for ps
-- https://www.computerhope.com/unix/visudo.htm                                 : Editing using the visudo command
-- https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/                : Makefile explanation, by extension, the next
+- https://www.geeksforgeeks.org/awk-command-unixlinux-examples/                 : AWK 
+- https://man7.org/linux/man-pages/man1/ps.1.html                               : Man page for ps
+- https://www.computerhope.com/unix/visudo.htm                                  : Editing using the visudo command
+- https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/                 : Makefile explanation, by extension, the next
                                                                                  link as well.
 - http://www.gnu.org/software/make/manual/make.html
+- https://www.linux.com/training-tutorials/vim-101-beginners-guide-vim/         : VIM tutorial
+- https://vim.rtorr.com/                                                        : VIM shortcuts
 
 /*============================================================================
         Advanced topics : Creating your own shell environment
@@ -1344,7 +1438,7 @@ Directory                                        Description
 |                  Table: 1.5                  |
 ------------------------------------------------
 Use this command, to see a list of supported
-signals:
+signals on your system:
 $ kill -l
 Signal          Number                           Description
 ---------------|--------------------------------|---------------
