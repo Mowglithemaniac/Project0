@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.5
+ Version     : 2.7
  Date        : 29/09-20
- Last Updated: 22/07-21
+ Last Updated: 31/07-21
  Copyright   : Do not alter, copy or share this file without permission
  Description : A rough guide for new users to understand bash console commmands
              : Made for course 62588 Operating systems at DTU Denmark Fall 2020.
@@ -25,7 +25,7 @@ Sections:
     - Networking
     - VARIABLES
     - FUNCTIONS-(NOT COMMANDS)
-    - NAVIGATING COMMAND LINE
+    - Command line shortcuts
     - Hardware
     - VIM tutorial
     - Uncategorized
@@ -336,7 +336,7 @@ PID                                             : Processor ID, each process has
 PPID                                            : ID number of the process's parent process
 PRI                                             : Priority of the process            
 VSZ or SZ                                       : 'Virtual Memory Size'
-RSS                                             : Resident Set Size, it stand for the size of the
+RSS                                             : Resident Set Size, it stands for the size of the
                                                   physical memory that the process is using
 STAT                                            : The process state mode, such as;
                                                   'Z' zombie,  'S' interruptible sleep,   't' stopped by debugger during tracing,
@@ -421,12 +421,8 @@ jobs                                            : Display a list of jobs running
 |              User administration             |
 ------------------------------------------------
 passwd                                          : Used to change the password of users
-        -
-
 useradd                                         : Add a new user
-        -                                       :
 groupadd
-
 deluser                                         : Deletes user, Debian based distribution, for other types, use
                                                   "userdel" command instead.
         --remove-home [username]                - This syntax is for Debian Distributions
@@ -438,23 +434,34 @@ $ sudo deluser --remove-home derp               : Removes user 'derp'
 ------------------------------------------------
 |              Directory commands              |
 ------------------------------------------------
-ssh
+pwd 						: Print working directory (bash command)
+
+ls                                              : List content of current directory
+        -a                                     - Display hidden files
+        -l                                      - Provides extra information about each file, the left mode column regarding rw, concerns users priveledge
+        -la                                     - Extra details and hidden files
+        /[foldername]                           - List content of specified directory
+
+CD                                              : Change directory
+       [empty]                         - Move to home directory
+        ~                                       - Move to home directory
+        ..                                      - Move up a directory
         [Directory Name]/                       - Move to specific directory
         [tab]                                   - Auto complete
+
 [Example]
 $ cd ../../testfolder/                          - Move up two directories, and then down into the testfolder.
+$ cd test<tab><tab>                             - Will auto complete the name of a folder starting with 'test' (if it exist)
+$ ls -d */                                      - Shows directory names from within that folder.
+$ ls */                                         - Show the name and content of the directories, located within the folder.
 
-file                                            : Display information about files
-        [Filename]                              - Display information about that specific file
 
 locate                                          : Able to locate specific command locations, and references
                                                   Requires a database to work. (updatedb*)
         [command]
 
 history                                         : shows a list of commands used so far.
-
-pushd                                           : Save directy into a LIFO stack
-
+pushd                                           : Save directory into a LIFO stack
 popd                                            : Pop the directory from the LIFO stack
 
 mkdir                                           : Make directory (folder)
@@ -540,6 +547,14 @@ nano                                            : text editor
 Additional text exditors:
 gedit, jed, joe, kate, kedit, mcedit, nedit
 
+file [option] [file]                            : Determine file type
+stat                                            : Display file or file system status
+     [option] [FILE]
+     -f [FILE]                                  : File system status
+
+[Example]
+$ stat --printf='%n\n%a\n%b\n' [FILE]           : Prints 3 options, %n, %a, %b, with line breaks.
+
 cat [option] [filename]                         : 'Concatenate' Show content of file via the terminal
         [Filename]                              - Display content of [Filename]
         >>        [Filename]                    - Write something into the file (append), use 'Ctrl + D' to complete.
@@ -595,6 +610,7 @@ $ man -k xdg                                    - Use this command to check stat
 ------------------------------------------------
 |                  NETWORKING                  |
 ------------------------------------------------
+ssh                                             : OpenSSH remote login client
 netstat                                         : Printing network connections, routing tables, interface statistics,
                                                   masquerade connections, and multicast memberships
 ip                                              : ip - show/manipulate routing, network devices, interfaces and tunnels
@@ -716,7 +732,7 @@ $ ./derp > derpy.txt                            - Will send the content from the
                                                   overwrite content of file 'derpy.txt' rather than shown on the console.
 
 ------------------------------------------------
-|            NAVIGATING COMMAND LINE           |
+|            Command line shortcuts            |
 ------------------------------------------------
 How to navigate the command console
 Mostly useful commands pasted first
@@ -756,7 +772,7 @@ Rest unsorted.
 Managing the hardware details, such as removable
 USB drives, hardware plugged in during boot, 
 and more.
-
+lshw                                            : List hardware (warning, should be run as a super user)
 dmesg                                           : Print or control the kernel ring buffers
                                                   Used to view or alter which hardware was detected and which
                                                   drivers were loaded by the kernel at boot time.
@@ -780,7 +796,7 @@ choice for many.
 It is a "modal" text editor, meaning that it has
 different modes available, such as:
 command(default), insert, last-line, and 
-possibly more, depending on who you ask.
+possibly more, depending on whom you ask.
 
 In command mode, you have access to very
 different tools, such as saving, exiting, 
@@ -800,7 +816,7 @@ Shortcuts:
 Command-mode                                     Description
 ------------------------------------------------|---------------
 i                                               : Switch to 'Insert' mode.
-[CTrL + V]                                      : Highlight 1 column at a time
+[CTLR + V]                                      : Highlight 1 column at a time
 v                                               : Highlight one character at a time
 :q                                              : Quit the file (adds a prompt if changes were made to the file)
 :q!                                             : Force quit the file
@@ -841,7 +857,7 @@ mkfifo pipeline                                 : Make fifo pipeline
 awk                                             : Awk is a scripting language used for manipulating data and
                                                   generating reports. By itself it goes beyond the scope of
                                                   this file, and would thus require a guide by itself, even
-                                                  if the topic is relatively light weight.
+                                                  if the topic is relatively lightweight.
 make                                            : GNU make utility to maintain groups of programs
                                                   Requires additional knowledge to setup for projects via makefile
 rm .test.c.sw*                                  : Sletter begge sw filer for 'test.c' (i tilfælde af fejl)
@@ -1590,3 +1606,6 @@ http://www.tlpd.org/HOWTO/Bash-Prompt-HOWTO     : Refer to this link for informa
 https://chrisjean.com/multitasking-from-the-linux-command-line-plus-process-prioritization/
                                                 : Background, foreground, job priority
 https://linuxhint.com/30_bash_script_examples/  : Bash scripting
+https://github.com/vossenjp/bashcookbook-examples
+                                                : Github repository of some shell scripts (although a lot of them are poorly
+                                                  explained)
