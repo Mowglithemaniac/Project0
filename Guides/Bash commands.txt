@@ -3,7 +3,7 @@
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
  Version     : 2.7
  Date        : 29/09-20
- Last Updated: 31/07-21
+ Last Updated: 02/08-21
  Copyright   : Do not alter, copy or share this file without permission
  Description : A rough guide for new users to understand bash console commmands
              : Made for course 62588 Operating systems at DTU Denmark Fall 2020.
@@ -97,7 +97,7 @@ This will be the max width of this file-----------------------------------------
 ------------------------------------------------
 Navigate to folder, then type 'bash'            : Open a terminal, which has already navigated to folder
 in the address field.                             Requires that Linux subsystem for Windows is activated
-                                                  and that a a linux distribution is virtually installed
+                                                  and that a linux distribution is virtually installed
                                                   i.e. Microsoft store, Ubuntu (LTS version, which stands
                                                   for 'Long Term Support')
 
@@ -583,20 +583,16 @@ sort                                            : Sort via parameters, alphabeti
 [Example]
 $ ls -a | sort -r | less                        : List content of directory, in reversed alphabetical
                                                   order, using 'less' format.
-
-[Example]
 $ cat file1.txt | more                          : Display file1.txt in the console, using 'more' format
 
 strings                                         : Display text that's embedded in a binary file
 
 od [option] [filename]                          : Display a file in Octal or other formats (use option '-x' for Hex)
-        
 wc [behavior] [filename]                        : Word count - count the number of words in a file
         -l                                      - Count lines, not words
-                
 wget [website link]                             : Download a file from the internet (pdf, rar, and so on)                
-
 diff                                            : Compare files line by line
+
 [Example]
 $ diff <(wc file1) <(wc file2)                  : Compares the wordcount of 2 different files
 
@@ -823,7 +819,7 @@ v                                               : Highlight one character at a t
 :wq                                             : Save and quit
 p                                               : paste text after the current line
                                                 : paste text on the current line
-y                                               : Yank text into the coby buffer
+y                                               : Yank text into the copy buffer 
 u                                               : Undo
 [CTRL + r]                                      : Undo an undo (redoing your last undo)
 ?text                                           : Search for 'text', then use '/' to move forward, and '?' to move backward.
@@ -953,7 +949,7 @@ $HOME/.bash_profile, $HOME/.bashrc, and
 $HOME/.bash_logout files in their own home
 directories.
 
-[Example]
+[Example 1]
 To edit the environment, we want to alter the
 configuration file $HOME/.bashrc, as a plaintext
 file via 'nano', we use the command
@@ -1012,11 +1008,24 @@ For additional info, see the bash man page.
 To make a change to your prompt permanent, add
 the value of PS1 to your .bashrc file in your
 home directory (assuming that you are using
-the bash shell). >There may already be a PS1
+the bash shell). There may already be a PS1
 value in that file, which you can modify.
 Link in refereces with a HOWTO for changing
 colors commands and other features of your
 bash shell prompt.
+
+[Example 2]
+Alter the PS1 variable, remember to store it
+first, and know that it is only valid until
+you restart the shell.
+$ temp=$PS1
+[For debian]
+$ PS1='\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+[For RHEL]
+$ PS1='\e[33;1m\u@\h: \e[31m\w\e[0m\$ '
+
+You can restart the shell with the command:
+$ exec bash
 
 ------------------------------------------------
 |         Adding environment variables         |
@@ -1181,7 +1190,7 @@ $ bash test.sh
 $ ./test.sh
 
 This link explains a lot of the syntax involved
-https://linuxhint.com/30_bash_script_examples/
+https://linuxhint.com/30_bash_scPS1ript_examples/
 
 The 1st line of a shell script should be:
 #!/bin/bash
