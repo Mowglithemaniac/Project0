@@ -460,7 +460,8 @@ locate                                          : Able to locate specific comman
                                                   Requires a database to work. (updatedb*)
         [command]
 
-history                                         : shows a list of commands used so far.
+history                                         : Shows a list of commands used so far.
+        -c                                      - Reset the the history
 pushd                                           : Save directory into a LIFO stack
 popd                                            : Pop the directory from the LIFO stack
 
@@ -592,9 +593,12 @@ wc [behavior] [filename]                        : Word count - count the number 
         -l                                      - Count lines, not words
 wget [website link]                             : Download a file from the internet (pdf, rar, and so on)                
 diff                                            : Compare files line by line
+rev [filename]                                  : reverse lines characterwise
 
 [Example]
 $ diff <(wc file1) <(wc file2)                  : Compares the wordcount of 2 different files
+$ cp a.txt b.txt ; rev b.txt > a.txt ; rm b.txt : Reversing the content of a file, line by line.
+
 
 Depending on your desktop environment, specific
 commands may vary, for how to open folders
@@ -649,7 +653,7 @@ Navigate command history
 [arrow up]                                      : Display previous command
 [arrow down]                                    : Display next command
 
-./[filename]                                    : Running an executable file (compiled file)
+./[filename]                                    : Running an executable file (compiled file, or shell file)
 
 $[expression]                                   : Arithmetic expression, direct
 $(expression)                                   : Arithmetic expression, via function
@@ -899,7 +903,8 @@ Sources:
 - https://vim.rtorr.com/                                                        : VIM shortcuts
 
 /*============================================================================
-        Advanced topics : Creating your own shell environment
+        Advanced topics : Well beyond the scope of users new to the
+                          command console.
                           -  Creating your own shell environment
                           -  Setting your prompt
                           -  Adding environment variables
@@ -923,7 +928,7 @@ Sources:
 You can tune your shell to help you work more
 efficiently. You can set aliases to create
 shortcuts to your favorite command lines and
-environment variables to stoe bits of
+environment variables to store bits of
 information. By adding those settings to shell
 configuration files, you can have the settings
 available every time you open a shell.
@@ -962,6 +967,8 @@ A new alias has now been set, to access the
 command without having to restart the console
 use this command $ source $HOME/.bashrc
 Alternatively, restart the console.
+Can be done with the command 
+$ exec bash
 
 ------------------------------------------------
 |              Setting your prompt             |
