@@ -455,7 +455,6 @@ $ cd test<tab><tab>                             - Will auto complete the name of
 $ ls -d */                                      - Shows directory names from within that folder.
 $ ls */                                         - Show the name and content of the directories, located within the folder.
 
-
 locate                                          : Able to locate specific command locations, and references
                                                   Requires a database to work. (updatedb*)
         [command]
@@ -670,7 +669,6 @@ $ echo "Derp $(ls | wc -w)"                     : The content of ls is piped to 
 $ history | less                                : Will show the history using the 'less' format
 $ diff <(wc file1) <(wc file2)                  : Compare at the difference between the word count of 2 files
 
-
 [Wildcard types:]
 *                                               : Used as a wildcard for an string of undetermined length
 ?                                               : Used a wildcard for a single character in strings.
@@ -704,7 +702,6 @@ $ apt-get update || echo "Derped out"           : Without root access, this will
 !!                                              : Rerun previous command
 !*                                              : Last parameter from previous command
 !?[string]?                                     : Reruns a previous command, containing the [string]
-
 
 [Examples]
 $ !?cal?                                        : Reruns a previous command containing 'cal' if found

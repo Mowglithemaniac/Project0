@@ -8,12 +8,10 @@
              : into nodes in a Doubly Linked List.
  ============================================================================*/
 
-
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <assert.h>
 #include <string.h>
-
 
 //Doubly Linked List
 struct Node {
@@ -44,18 +42,14 @@ void main(){
         }
         push();
         tail->data = strdup(tempArray);
-
 //        printf("%s", tempArray);
     }
     fclose(fp);
     printList();
     printf("\n");
-
 }
 
-
 void push(){
-	    
     if(head != NULL){
         struct Node* temp1 = malloc(sizeof(struct Node));
         temp1->next = NULL; 
@@ -71,7 +65,6 @@ void push(){
         tail = head;
         printf("Node specific addr: %p\n", head);
     }
-
 } 
 
 void pop(){
@@ -98,12 +91,11 @@ void pop(){
 
 /* Use this function to print out the current contents of memory. */
 void printList(){
-	
 	printf("------------------------------------"	
 		   "\n------------------------------------"
 		   "\nThis function will print info from all the nodes.\n");
 	struct Node* Derpina = head;
-	int derp =1;
+	int derp = 1;
 	while (1==1){
 		printf("Node data         : %s\n", Derpina->data);
 		if(Derpina->next == NULL){ // reached the last node, so stop iterating
@@ -114,5 +106,4 @@ void printList(){
 	}	
 	return;
 }
-
 
