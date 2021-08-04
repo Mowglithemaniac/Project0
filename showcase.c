@@ -4,7 +4,7 @@
  Version     : v1.00
  Copyright   : 
  Dato        : 01/06-21
- Description : Combined version of 014 and A017, to read the content of a file
+ Description : Combined version of 014 and A007, to read the content of a file
              : into nodes in a Doubly Linked List.
  ============================================================================*/
 
