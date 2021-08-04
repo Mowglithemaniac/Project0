@@ -3,6 +3,7 @@
  Author      : Declined#8151 (Discord ID), s090116
  Edited by   : s090116
  Version     : v1.01
+ Date        : 28/12-2020
  Copyright   : 
  Description : minor assignment for 62507 Hardware-nær programmering
 			 : Type in 4 numbers between 1-100 to determine the final grade.

@@ -3,6 +3,7 @@
  Author      : Assignment from course 62507, assignment 6
  Edited by   : s090116
  Version     : v1.00
+ Date        : 8/10-2019
  Copyright   : 
  Description : Calculate the integral of a sinus curve, using a Taylor series.
  Taylor 	 : https://en.wikipedia.org/wiki/Taylor_series

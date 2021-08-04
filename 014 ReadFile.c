@@ -2,6 +2,7 @@
  Name        : ReadFile
  Author      : Declined#8151 (Discord ID), s090116
  Version     : 
+ Date        : 28/12-2020
  Copyright   : Your copyright notice
  Description : Example of reading from a file.
  ============================================================================*/

@@ -2,8 +2,8 @@
  Name        : A002 Password generator.c
  Author      : Declined#8151 (Discord ID), s090116
  Version     : 1.00
- Copyright   : Your copyright notice
  Date        : 24/12-2020
+ Copyright   : Your copyright notice
  Description : Password generator
  ============================================================================*/
 

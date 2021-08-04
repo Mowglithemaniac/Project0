@@ -3,8 +3,8 @@
  Name        : Test3.c
  Author      : Declined#8151 (Discord ID)
  Version     :
- Copyright   : Your copyright notice
  Date        : 24/12-2020
+ Copyright   : Your copyright notice
  Description : Prime numbers
  ============================================================================
  */
