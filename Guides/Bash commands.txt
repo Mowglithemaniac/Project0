@@ -754,7 +754,6 @@ Rest unsorted.
 [ctrl + Y]                                      : Paste recent text, paste most recently cut text.
 [alt + Y]                                       : Paste earlier text, rotate back to previously cut text and paste it.
 
-
 [alt + F]                                       : Word forward, go forward one word
 [alt + B]                                       : Word backward, go backward one word
 [alt + T]                                       : Transpose words, switch positions of current and previous character
@@ -970,55 +969,53 @@ $ exec bash
 ------------------------------------------------
 |              Setting your prompt             |
 ------------------------------------------------
-Your prompt consists of a set of characters that
-appear each time the shell is ready to accept a
-command.
-The PS1 environment variable  sets what the
-prompt contains and is what you will interact
-with most of the time. If your shell requires
-additional input, it uses the values of PS2,
-PS3, and PS4.
+The prompt, are the characters that appear on 
+the command line on the shell, to the left of
+when you enter commands.
+The details for how that is set up, is found 
+within the PS1 environment variable.
+The PS2-PS4 variables are used for additional
+input.
 
-When your Linux system is installed, often a
-prompt is set to contain more than just a dollar
-sign or pound sign. For example in Fedora or Red
-Hat Enterprise Linux, your prompt is set to
-include the following information: your
-username, your hostname, and the base name of
-your current working directory. That information
-is surrounded by and followed by a dollar sign
-(for regular users) or a pound sign (for the
-root user). 
+When installed, the prompt is usually set up
+to contain {Your username, your hostname, 
+the base name of your current working directory}
+For regular users, they're followed by a dollar
+sign, and pound sign (#) for the root user.
 
-The following is an example of that prompt:
-[declined@LAPTOP-E9IBLV7O: bin] $
+Here is an example of that prompt:
+[declined@LAPTOP-E9IBLV7O: folderA] $
 
-If you change directories, the bin name would
+By changing directory, the folderA name would
 change to the name of the new directory.
-Likewise, if you were to log in as a different
-user or to a different host,  that information
-would change.
+If we were to switch to a different user, or
+system that information would change as well.
 
-You can use several special characters
-(indicated by adding a backslash to a variety
-of letters) to include different information
-in your prompt. Special characters can be
-used to output your Terminal number the
-date, and the time as well as other pieces
-of information. Table 1.2 show some examples of
-characters to add information to Bash prompt.
+It's possible to alter the prompt significantly
+to even include a date, terminal number and 
+additional pieces of information.
+
+Table 1.2 show some examples of characters to
+add information to Bash prompt.
 For additional info, see the bash man page.
 
-To make a change to your prompt permanent, add
-the value of PS1 to your .bashrc file in your
-home directory (assuming that you are using
-the bash shell). There may already be a PS1
-value in that file, which you can modify.
-Link in refereces with a HOWTO for changing
-colors commands and other features of your
-bash shell prompt.
+Changing to the PS1 variable directly, is only
+valid until the prompt is restarted.
+To make it permanent, you need to alter the
+value within the .bashrc file found in your
+home directory.
+There may already be a PS1 variable, within
+that file which can be modified, although
+a safer solution would be to uncomment the 
+setence, and write your own custom settings.
+So that you can revert easily to a prior 
+setting.
 
-[Example 2]
+There is a link in references with a HOWTO
+for changing colors commands and other
+features of your bash shell prompt.
+
+[Example]
 Alter the PS1 variable, remember to store it
 first, and know that it is only valid until
 you restart the shell.
@@ -1034,33 +1031,31 @@ $ exec bash
 ------------------------------------------------
 |         Adding environment variables         |
 ------------------------------------------------
-You might want to consider adding a few 
-environment variables to your .bashrv file.
-These can help make working with the shell more
-efficient and effective:
+You can make working with the shell more
+efficient and effective, by making changes to
+the .bashrc file.
+This can be done by altering or defining the
+variables.
 
 [TMOUT]
-This sets how lnog the shell can be inactive
-before bash automatically exits. The value is
-the number of seconds for which the shell has
-not received input. This can be a nice security
-feature, in case you leave your desk while you
-are still logged in to Linux. To prevent being
-logged off while you are working, you may want
-to set the value to something like TMOUT=1800
-(30 minutes). You can use any Terminal session
-to close the current shell after a set number
-of seconds, for example, TMOUT=30.
+This variable determine how how long the shell
+can be inactive before bash automatically exits.
+The value is defined in seconds, and it is a
+nice security feature, in case you leave the
+desk while still logged into Linux.
+To close the shell after a set number of seconds
+set the TMOUT value to the desired amount of
+time. Example TMOUT=1800 means 30 minutes.
+
 
 [PATH]
-As described earlier, the PATH variable sets
-the directories that are searched for the the
-commands that you use. If you often use
-directories of commands that are not in your
-path, you can permanently add them. >To do this,
-add a PATH variable to your .bashrc file.
-For example, to add a directory called
-/herpderp/bin, add the following:
+the PATH variable sets the directories that are
+searched for, for the commands that you use.
+If you often use directories of commands that
+are not in your path, you can permanently add
+them. To do this, add a PATH variable to your
+.bashrc file. For example, to add a directory
+called /herpderp/bin, add the following:
 
 PATH=$PATH:/herpderp/bin ; export PATH
 
@@ -1312,7 +1307,6 @@ until [condition]
 do
    ...
 done
-
 
 ------------------------------------------------
 |                  Table: 1.1                  |
