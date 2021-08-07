@@ -3,7 +3,7 @@
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
  Version     : 2.7
  Date        : 29/09-20
- Last Updated: 02/08-21
+ Last Updated: 05/08-21
  Copyright   : Do not alter, copy or share this file without permission
  Description : A rough guide for new users to understand bash console commmands
              : Made for course 62588 Operating systems at DTU Denmark Fall 2020.
@@ -123,11 +123,33 @@ $ gcc -o newfilename someCcodefile.c            : Will compile the file, and sav
 $ ./newfilename                                 : Executes the compiled file.
 
 Update/upgrade dependencies and installed
-content (use sudo)
+content (use sudo), theres' a massive difference
+between debian and .rpm based distros.
 $ sudo apt-get update                           : debian based distros
 $ sudo apt-get upgrade                          : debian based distros
 $ sudo apt-get build-essential                  : debian based distros
-$ yum                                           : (For RPM distros) Install, Uninstall, Update Packages 
+
+
+yum [option] [command]                          : (For RPM distros) Install, Uninstall, Update Packages
+                                                  Now outdated 
+dnf [option] [command]                          : (For RPM distros) 'Dandified YUM', it is an upgraded version of YUM,
+                                                  available since version 18 of Fedora. Syntax somewhat identical to YUM
+
+[Example]
+$ yum provides dvdrecord                        : A method to search for packages, if you know either the 'configuration file',
+                                                  'library name' or 'command', but don't known which package it is located in.
+$ yum search [partial name]                     : Looks for the partial name in the description of packages.
+$ yum info emacs                                : Shows info about a package
+$ yum history                                   : Has an undo option, where you can undo package installations.
+$ yum list emacs                                : List package names in different ways, to find the version and repository of
+                                                  a package.
+$ yum install emacs                             : Install the emacs package (May require additional dependency installations)
+$ yum reinstall emacs                           : Reinstalling a package if you messed something up
+$ yum check-update
+$ yum update                                    : Update a single package or to get updates to all packages that are installed
+                                                  and have an update available.
+$ yum grouplist                                 : Show a list of package groups
+$ yum groupinstall [name]                       : Installing a package group
 
 After writing a command, you sometimes write '-'
 and then add an operator, such as
@@ -163,7 +185,7 @@ infinitely running program.
 For some commands, you require root access,
 this section explains how to acquire that.
 
-The prompt symbol for regular users is dolla
+The prompt symbol for regular users is a dollar
 sign ($), the prompt symbol for superuser
 is hashtag (#), use this as an indicator
 to see if you've got root access.
@@ -273,7 +295,8 @@ parted                                          : A partition manipulation progr
 ------------------------------------------------
 |            Permission explanation            |
 ------------------------------------------------
-Permission explanation: https://youtu.be/oxuRxtrO2Ag?t=3490
+Permission explanation:
+https://youtu.be/oxuRxtrO2Ag?t=3490
 Set up in relation to separate bits, from right
 to left:
 r = read                                        : [4] Decimal value #4, == 0x4, == 0b100
@@ -422,7 +445,8 @@ jobs                                            : Display a list of jobs running
 ------------------------------------------------
 passwd                                          : Used to change the password of users
 useradd                                         : Add a new user
-groupadd
+usermod                                         : Modify a user account
+groupadd                                        : Add a new group
 deluser                                         : Deletes user, Debian based distribution, for other types, use
                                                   "userdel" command instead.
         --remove-home [username]                - This syntax is for Debian Distributions
@@ -430,6 +454,26 @@ deluser                                         : Deletes user, Debian based dis
 
 [Example]
 $ sudo deluser --remove-home derp               : Removes user 'derp'
+
+There is a utility called 'Access Control List'
+which can be used to set permissions on files
+for different users. In order to access the
+commands, ACL must be enabled when the
+filesystem is mounted.
+
+setfacl                                         : Setting the ACL status of a file
+getfacl                                         : Getting the ACL status of a file 
+
+[Example]
+$ setfacl -m u:username:rwx filename            : -m option, modify permission, for username, to rwx, on file filename
+$ getfacl temp.txt                              :
+
+To see whether the ACL status is available on an
+ext4 file system use the 'tune2fs -l' command, 
+to view the implemnted mount options.
+
+[Example]
+# mount 
 
 ------------------------------------------------
 |              Directory commands              |
@@ -442,7 +486,7 @@ ls                                              : List content of current direct
         -la                                     - Extra details and hidden files
         /[foldername]                           - List content of specified directory
 
-CD                                              : Change directory
+cd                                              : Change directory
        [empty]                         - Move to home directory
         ~                                       - Move to home directory
         ..                                      - Move up a directory
@@ -921,19 +965,20 @@ Sources:
 |            Configuring your shell            |
 ------------------------------------------------
 
-You can tune your shell to help you work more
-efficiently. You can set aliases to create
-shortcuts to your favorite command lines and
-environment variables to store bits of
-information. By adding those settings to shell
-configuration files, you can have the settings
-available every time you open a shell.
+It is possible to make alterations to the shell
+to work more efficently.
+Such as: Setting new aliases to store
+information, shortcuts to folders, favorite 
+commands, and more.
+By adding these alterations to the right 
+configuration files, you can ensure they're
+always available whenever you open a new shell.
 
 * Configuring your shell
-Several configuration files support how your
-shell behaves. Some of the files are executed
-for every user and every shell, whereas others
-are specific to the user who creates the
+There are seveval configuration files that
+determine how you shell behaves. Some are tied
+to every user and every shell, but others are
+tied to the specific user who created the
 configuration file.
 
 Table list 1.1 shows the files that are of
@@ -953,12 +998,10 @@ directories.
 [Example 1]
 To edit the environment, we want to alter the
 configuration file $HOME/.bashrc, as a plaintext
-file via 'nano', we use the command
-$ nano $HOME/./bashrc
-To to the bottom and include an extra line
-alias derp='watch free -h
-To save the file press [CTRL + O]
-To exit the file press [CTRL + X]
+file via 'vim', we use the command
+$ vim $HOME/./bashrc
+Go to the bottom and include an extra line
+alias derp='watch free -h'
 A new alias has now been set, to access the
 command without having to restart the console
 use this command $ source $HOME/.bashrc
@@ -1046,7 +1089,6 @@ desk while still logged into Linux.
 To close the shell after a set number of seconds
 set the TMOUT value to the desired amount of
 time. Example TMOUT=1800 means 30 minutes.
-
 
 [PATH]
 the PATH variable sets the directories that are
@@ -1189,7 +1231,7 @@ $ bash test.sh
 $ ./test.sh
 
 This link explains a lot of the syntax involved
-https://linuxhint.com/30_bash_scPS1ript_examples/
+https://linuxhint.com/30_bash_script_examples/
 
 The 1st line of a shell script should be:
 #!/bin/bash

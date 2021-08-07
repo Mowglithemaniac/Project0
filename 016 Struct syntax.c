@@ -38,7 +38,7 @@ typedef struct {
 
 
 int main( ) {
-   //very atypical format, we've created a struct type BookD, and also initialiezd a pointer to the struct called 'Book6'
+   //very atypical format, we've created a struct type BookD, and also initialized a pointer to the struct called 'Book6'
    struct BookD {
       char  title[50];
       char  author[50];
@@ -58,10 +58,10 @@ int main( ) {
    //Create instances of books, as needed.
    struct BookA Book2;                                   // Direct declaration of type BookA, called Book1 
    struct BookA* Book3 =  &Book1;                        // Indirect reference to Book1 (type BookA) via pointer declaration of type BookB
-   struct BookB Book3;                                   // Direct declaration of Book4 of type BookBB (same as BookB, just no need for the struct part)
-   BookBB Book4;
-   BookC Book5;                                          // Direct declaration Book5 of type BookB
-   struct BookD Book6;
+   struct BookB Book4;                                   // Direct declaration of Book4 of type BookB 
+   BookBB Book5;                                         // Direct declaration Book5 of type BookBB (same as BookB, just no need for the struct part)
+   Book6;                                                // Already declared                                             
+   struct BookD Book7;
 
    // Book 1 specification
    strcpy( Book1.title, "Java for dummies");

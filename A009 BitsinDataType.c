@@ -8,13 +8,9 @@
  Description : How many bits are used for a specific datatype.
  ============================================================================*/
 
-
 //#include <iostream>													//C++ functionality
 #include <stdio.h>
 #include <string.h>
-
-
-
 
 int Method1();
 void Method2();

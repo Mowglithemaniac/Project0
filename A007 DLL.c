@@ -8,11 +8,9 @@
              : featuring push, pop operations.
  ============================================================================*/
 
-
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <assert.h>
-
 
 //Doubly Linked List
 struct Node {
@@ -58,7 +56,7 @@ void push(int value){
         head->next = NULL;
         head->data = value;
         tail = head;
-        printf("Node specific addr: %p\n", head);
+//        printf("Node specific addr: %p\n", head);
     }
 
 } 
