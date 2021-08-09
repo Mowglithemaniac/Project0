@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.7
+ Version     : 2.8
  Date        : 29/09-20
- Last Updated: 05/08-21
+ Last Updated: 08/08-21
  Copyright   : Do not alter, copy or share this file without permission
  Description : A rough guide for new users to understand bash console commmands
              : Made for course 62588 Operating systems at DTU Denmark Fall 2020.
@@ -22,6 +22,7 @@ Sections:
     - Directory commands
     - Help section
     - File access, edit, format
+    - Packages and installations
     - Networking
     - VARIABLES
     - FUNCTIONS-(NOT COMMANDS)
@@ -42,8 +43,8 @@ Distributions are organized based on the
 "Package management system".
 There are two primary distribution types
 RPM-based, and DEB-based.
-RPM uses the .rpm file format, most known distros
-are: Red Hat Linux, CentOS, Fedora
+RPM uses the .rpm file format, most known
+distros are: Red Hat Linux, CentOS, Fedora
 DEB emphasizes 'free software' often referred
 to as 'debian type'
 Most known distros are: Ubuntu, Linux Mint, 
@@ -90,7 +91,7 @@ This will be the max width of this file-----------------------------------------
 - Command options
 [empty] is a pseudonym for not entering anything.
 [command] refers to commands themselves
-[operator] refers to '-operator' options.
+[option] refers to '-operator' options.
 
 ------------------------------------------------
 |                 General tips                 |
@@ -122,34 +123,6 @@ To compile and run C code files
 $ gcc -o newfilename someCcodefile.c            : Will compile the file, and save the compiled version in 'newfilename'
 $ ./newfilename                                 : Executes the compiled file.
 
-Update/upgrade dependencies and installed
-content (use sudo), theres' a massive difference
-between debian and .rpm based distros.
-$ sudo apt-get update                           : debian based distros
-$ sudo apt-get upgrade                          : debian based distros
-$ sudo apt-get build-essential                  : debian based distros
-
-
-yum [option] [command]                          : (For RPM distros) Install, Uninstall, Update Packages
-                                                  Now outdated 
-dnf [option] [command]                          : (For RPM distros) 'Dandified YUM', it is an upgraded version of YUM,
-                                                  available since version 18 of Fedora. Syntax somewhat identical to YUM
-
-[Example]
-$ yum provides dvdrecord                        : A method to search for packages, if you know either the 'configuration file',
-                                                  'library name' or 'command', but don't known which package it is located in.
-$ yum search [partial name]                     : Looks for the partial name in the description of packages.
-$ yum info emacs                                : Shows info about a package
-$ yum history                                   : Has an undo option, where you can undo package installations.
-$ yum list emacs                                : List package names in different ways, to find the version and repository of
-                                                  a package.
-$ yum install emacs                             : Install the emacs package (May require additional dependency installations)
-$ yum reinstall emacs                           : Reinstalling a package if you messed something up
-$ yum check-update
-$ yum update                                    : Update a single package or to get updates to all packages that are installed
-                                                  and have an update available.
-$ yum grouplist                                 : Show a list of package groups
-$ yum groupinstall [name]                       : Installing a package group
 
 After writing a command, you sometimes write '-'
 and then add an operator, such as
@@ -443,6 +416,10 @@ jobs                                            : Display a list of jobs running
 ------------------------------------------------
 |              User administration             |
 ------------------------------------------------
+In general, unless you know exactly what you're
+doing, I HIGHLY recommend not touching anything
+because of how easily something can go wrong.
+
 passwd                                          : Used to change the password of users
 useradd                                         : Add a new user
 usermod                                         : Modify a user account
@@ -470,10 +447,11 @@ $ getfacl temp.txt                              :
 
 To see whether the ACL status is available on an
 ext4 file system use the 'tune2fs -l' command, 
-to view the implemnted mount options.
+to view the implemented mount options.
 
 [Example]
-# mount 
+mount -t ext3 -o acl [device-name] [partition]
+$ mount -t ext3 -o acl /dev/VolGroup00/LogVol02 /work 
 
 ------------------------------------------------
 |              Directory commands              |
@@ -481,17 +459,17 @@ to view the implemnted mount options.
 pwd 						: Print working directory (bash command)
 
 ls                                              : List content of current directory
-        -a                                     - Display hidden files
+        -a                                      - Display hidden files
         -l                                      - Provides extra information about each file, the left mode column regarding rw, concerns users priveledge
         -la                                     - Extra details and hidden files
         /[foldername]                           - List content of specified directory
 
 cd                                              : Change directory
-       [empty]                         - Move to home directory
+       [empty]                                  - Move to home directory
         ~                                       - Move to home directory
         ..                                      - Move up a directory
         [Directory Name]/                       - Move to specific directory
-        [tab]                                   - Auto complete
+        <tab><tab>                              - Auto complete
 
 [Example]
 $ cd ../../testfolder/                          - Move up two directories, and then down into the testfolder.
@@ -649,6 +627,46 @@ Types: Gnome, KDE, Xfce, LXDE,
 
 xdg-open [foldername]                           : Opens a folder, should work on a full linux distribution
 $ man -k xdg                                    - Use this command to check status of xdg commands in general
+
+------------------------------------------------
+|          Packages and installations          |
+------------------------------------------------
+
+Update/upgrade dependencies and installed
+content (use sudo), theres' a massive difference
+between debian and .rpm based distros.
+Debian based distributions handle dependencies
+directly when you acquire and install packages.
+Wish I could say the same for .rpm distros.
+
+$ sudo apt-get update                           : debian based distros
+$ sudo apt-get upgrade                          : debian based distros
+$ sudo apt-get build-essential                  : debian based distros
+
+And for .rpm distros.
+
+yum [option] [command]                          : (For RPM distros) Install, Uninstall, Update Packages
+                                                  Now outdated 
+dnf [option] [command]                          : (For RPM distros) 'Dandified YUM', it is an upgraded version of YUM,
+                                                  available since version 18 of Fedora. Syntax somewhat identical to YUM
+
+[Example]
+$ yum provides dvdrecord                        : A method to search for packages, if you know either the 'configuration file',
+                                                  'library name' or 'command', but don't known which package it is located in.
+$ yum search [partial name]                     : Looks for the partial name in the description of packages.
+$ yum info emacs                                : Shows info about a package
+$ yum history                                   : Has an undo option, where you can undo package installations.
+$ yum list emacs                                : List package names in different ways, to find the version and repository of
+                                                  a package.
+$ yum install emacs                             : Install the emacs package (May require additional dependency installations)
+$ yum reinstall emacs                           : Reinstalling a package if you messed something up
+$ yum check-update
+$ yum update                                    : Update a single package or to get updates to all packages that are installed
+                                                  and have an update available.
+$ yum grouplist                                 : Show a list of package groups
+$ yum groupinstall [name]                       : Installing a package group
+
+
 
 ------------------------------------------------
 |                  NETWORKING                  |
@@ -827,6 +845,39 @@ modinfo                                         : Show information about a Linux
 rmmod                                           : Simple program to remove a module from the linux Kernel
 modprobe                                        : Add and remove modules from the Linux Kernel
 
+Disk partitions, such as hard drives, are
+handled automatically in Windows, you need a
+good understanding of the method for Linux.
+For Windows OS, drives are added to the top
+directory. On Linux they're added directly into
+the existing directory stucture. Usually at
+/mnt/... for regular drives, or 
+
+
+First is the formatted file system on a drive.
+VFAT                                            : Lowest common denominator between Linux and Windows.
+                                                  Often used by USB-drives
+exFAT                                           : Often used by USB-drives
+                                                  Linux may support it, if not requires additional kernel drivers
+NTFS                                            : Standard file system for Windows
+                                                  Linux may support it, if not requires additional kernel drivers
+
+
+To add a new physical storage medium (usb, hdd,
+ssd, or similar), to your computer, so that it
+can be used by Linux, you need to connect it
+physically, and then partition it.
+Usually done this way.
+1. Install the new hard drive or insert the new
+   USB flash drive.
+2. Partition the new disk.
+3. Create the file system on the new disk.
+4. Mount the filesystems
+
+
+You can view disk partitions with the command:
+$ parted -l 
+
 ------------------------------------------------
 |                 VIM tutorial                 |
 ------------------------------------------------
@@ -920,6 +971,14 @@ new node.
 $ linuxsh                                                 
 Use cd, pwd, ls -l commands, to navigate to
 the desired folder.
+
+You can forward shell scripts to be run on the
+server with the bsub command.
+[Example]
+$ bsub < example.sh
+
+To look at the job queue, use the command
+'bjobs'
 
 -----------------------------------------------------------------------------
 |                               Sources                                     |
@@ -1213,6 +1272,18 @@ It can cause your computer to become unbootable
 
 Table 1.6 lists a number of options that can
 be used to manage groups.
+
+If you're running a full distribution of Fedora
+or RHEL distros, there is a graphical tool
+called "Cockpit"
+It can be installed like this.
+[Example]
+$ yum install cockpit -y
+$ systemctl enable --now cockpit.socket
+Then open the cockpit interface via the web
+browser. In the address field, type in:
+(hostname:9090)
+From there you can manage accounts.
 
 ------------------------------------------------
 |                Shell scripting               |
