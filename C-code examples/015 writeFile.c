@@ -36,5 +36,4 @@ void main(){
     char *test = "test1\ntest2\ntest3";
     fprintf(fp, "%s", test);
     fclose(fp);
-
 }

@@ -32,7 +32,7 @@
         if(derp_pid > 0){
             int status;
             status = wait(NULL);
-            printf("Parent here closing down: \n%d", status);
+            printf("Parent here closing down: %d\n", status);
         }
 
 

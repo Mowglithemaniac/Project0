@@ -7,12 +7,15 @@
  ============================================================================*/
 
 #include <stdio.h>
+void displaySwap();
+void displayNoGo();
 void swap(int *n1, int *n2);
 void NoGo(int n1, int *n2);
 
 int main(){
-    displaySwap();
     displayNoGo();
+    displaySwap();
+
     return 0;
 }
 
@@ -37,7 +40,10 @@ void displayNoGo(){
 
 void displaySwap(){
     int num1 = 5, num2 = 10;
-    printf("===========================\n");
+    printf("===========================\n"
+           "Here we try again, but this time\n"
+           "we're only going to switch the value\n");
+
     printf("Initial values:\n");
     printf("num1 = %d\n", num1);
     printf("num2 = %d\n", num2);
@@ -48,6 +54,7 @@ void displaySwap(){
     printf("num2 = %d\n", num2);
 
 }
+
 
 void swap(int* n1, int* n2)
 {

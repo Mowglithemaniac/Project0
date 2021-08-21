@@ -1,57 +1,51 @@
-Made by: s090116
-This document is created to function as a guide
-for multiple command line functions.
-So far it includes:
+/*============================================================================
+ Name        : Bash commands.txt
+ Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
+ Version     : 2.9
+ Date        : 15/02-21
+ Last Updated: 20/08-21
+ Copyright   : Do not alter, copy or share this file without permission
+ Description : This document is created to function as a guide
+             : for multiple specific command line functions.
+
+ ============================================================================*/
+Sections: (so far)
+        - Introduction
         - nslookup
         - openssl * not finished
-        - MPI
+        - MPI (Bash)
+        - GIT (Bash)
 
-Commands					 Description
+================================================
+|                Introduction                  |
+================================================
+This is the format of this guide.
+Commands                                        Description
 ------------------------------------------------|---------------
 : Explanation of command
 - Command options
 [xxx] is a pseudonum for XXX information
 [empty] is a pseudonum for not entering anything.
-						
-===================nslookup=====================:===============
-----------------nslookup explanation------------:---------------
-nslookup - a tool to query Internet name servers interactively
+'$ ' represents the command line, used for
+examples.
+
+================================================
+|                  nslookup                    |
+================================================
+'nslookup' is tool to query Internet name
+servers interactively.
+As far as I can make out, this command syntax is
+ identical in both cmd and Bash.
+
+: nslookup syntax
+nslookup [website]                              : Provides generic information about a website, such as IP and dns
+nslookup -[option] [website]                    : Provides information about a websited specified by the option
 nslookup [-option] [name | -] [server]
-nslookup –option1 –option2 host-to-find dns-server
+nslookup –option1 –option2 host-to-find simulated-dns-server
                                                 : It is possible to supply 0, 1, 2 or more options
                                                 : as well as 2 servers, where the 1st will be queried
                                                 : and the 2nd is optional.
-                                                : If excluded it'll be sent to the default
-
-:Notice that these are identical, "type", "q", "query"
-Example:
-nslookup -type=mx dtu.dk                        : identical
-nslookup -q=mx dtu.dk                           : identical
-nslookup -query=mx dtu.dk                       : identical
-
-
-------nslookup commands-----:---------------
-nslookup [website]                              : Provides generic information about a website, such as IP and dns
-nslookup -[option] [website]: Provides information about a websited specified by the option
-
-:Example
-> nslookup -type=mx dtu.dk                      : Info about the mail exchange server for DTU
-
-:Example
-nslookup -query=hinfo  -timeout=10 [website]
-                                                : Generates a query, using the hinfo option, with timeout 10
-                                                : to dtu.dk
-
-:Example
-nslookup dtu.dk google.com	                : Here we send our query to google.com
-                                                : which will query dtu.dk on our behalf
-                                                : and then google will provide us with the result
-
------ALTERNATE version------:---------------
-Type in 'nslookup', and you'll get a '>'
-type in:
-> set q=[option]
-> [website]
+                                                : If excluded it'll be sent to the default DNS server
 
 : Option list
 •     A                                         : Specifies a computer's IP address.
@@ -72,21 +66,49 @@ type in:
 •     UINFO                                     : Specifies the user information.
 •     WKS                                       : Describes a well-known service.
 
+Notice that these syntaxes cause an identical,
+response,  {"type", "q", "query]
 Example:
-nslookup [empty]
-	> set q=A
-	> dtu.dk
+nslookup -type=mx dtu.dk                        : identical
+nslookup -q=mx dtu.dk                           : identical
+nslookup -query=mx dtu.dk                       : identical
 
-====================openssl=====================:===============
---------------openssl explanation---------------:---------------
-OpenSSL is a software library for applications that secure
-communications over computer networks against eavesdropping
-or need to identify the party at the other end. It is widely
-used by Internet servers, including the majority of HTTPS websites.
+: ALTERNATE syntax
+Type in 'nslookup', and you'll get a '>'
+type in:
+> set q=[option]
+> [website]
 
----------------Library information--------------:---------------
+:Examples
+$ nslookup -type=mx dtu.dk                      : Info about the mail exchange server for DTU
+$ nslookup -query=hinfo  -timeout=10 [website]  : Generates a query, using the hinfo option, with timeout 10
+                                                : to dtu.dk
+$ nslookup dtu.dk google.com                    : Here we send our query to google.com
+                                                : which will query dtu.dk on our behalf
+                                                : and then google will provide us with the result
+
+================================================
+|                    openssl                   |
+================================================
+: openssl explanation
+OpenSSL is a software library for applications
+that secure communications over computer
+networks against eavesdropping or need to
+identify the party at the other end. It is
+widely used by Internet servers.
+
+It includes a wide range of cryptographic tools
+such as public and private key generation, 
+encryption and decryption with Ciphers,
+generate certificates of authenticity and more.
+For a complete list see the manual.
+$ man openssl                                   : Linux command line, Bash.
+ 
+: Syntax
+openssl command [command_opts] [command_args]
+
+: Library information
 openssl version					: Will provide info about the version you're running
-
 openssl version -[option]
 :valid options
 •     help                                      : Display this summary
@@ -107,7 +129,7 @@ openssl help [command]				: Print information about specific commands,
         : - Message Digest commands ("dgst")
         : - Cipher commands ("enc")
 
-openssl list [options]				: Provide details in list format
+openssl list -[options]				: Provide details in list format
 : valid options
 •     help                                      : Display this summary
 •     1                                         : List in one column
@@ -120,9 +142,42 @@ openssl list [options]				: Provide details in list format
 •     public-key-methods                        : List of public key methods
 •     disabled                                  : List of disabled features
 •     missing-help                              : List missing detailed help strings
-•     options val				:List options for specified command
-------------------Key Generation----------------:---------------
-openssl pkey -in 
+•     options val				: List options for specified command
+
+[Example]
+$ openssl list -commands
+
+: Examples
+- File encryption
+$ touch plain.txt && echo "Hello World!" > plain.txt
+$ openssl enc -aes-256-cbc -in plain.txt -out encrypted.bin
+//enter aes-256-cbc encryption password: example
+//Verifying - enter aes-256-cbc encryption password: example
+
+- File en-/decryption
+$ openssl enc -aes-256-cbc -d -in encrypted.bin -pass pass:example
+                                                : Simple encryption of a file, using 
+                                                : cbc mode (chain block chaining)
+$ openssl pkeyutl -encrypt -in <input_file> -inkey <key.pem> -out <output_file>
+                                                : Encrypts a file, using a private key.
+                                                : (keep in mind that since we're using RSA the file can't exceed 116 bytes)
+$ openssl pkeyutl -decrypt -in <input_file> -inkey <key.pem> -out <output_file>
+                                                : Decrypts the file you just encrypted, remember to switch input/output files
+
+- Key generation
+$ openssl genrsa -out key.pem 1024              : Generates a RSA key of 1024 bits
+                                                : Result is placed in key.pem
+                                                : It contains the private key.
+                                                : The private key is coded using the
+                                                  'Privacy Enhanced Email' or PEM.
+$ openssl rsa -in key.pem -text -noout          : Provides some information about how the key was generated
+
+- Key en-/decryption
+$ openssl rsa -in key.pem -des3 -out enc-key.pem
+                                                : Encrypts the key
+$ openssl rsa -in key.pem -pubout -out pub-key.pem
+                                                : Extracts the public key
+ openssl pkey -in 
 
 =======================MPI======================:===============
 -----------------MPI Explanation----------------:---------------
