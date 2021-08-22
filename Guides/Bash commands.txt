@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.10
+ Version     : 2.11
  Date        : 29/09-20
- Last Updated: 21/08-21
+ Last Updated: 22/08-21
  Copyright   : Do not alter, copy or share this file without permission
  Description : A rough guide for new users to understand bash console commmands
                Made for course 62588 Operating systems at DTU Denmark Fall 2020.
@@ -51,16 +51,16 @@ Distributions are organized based on the
 There are two primary distribution types
 RPM-based, and DEB-based.
 RPM uses the .rpm file format, most known
-distros are: Red Hat Linux, CentOS, Fedora
+distros are: Red Hat Linux, CentOS, Fedora.
 DEB emphasizes 'free software' often referred
-to as 'debian type'
+to as 'debian type'.
 Most known distros are: Ubuntu, Linux Mint, 
 Linux Kali.
 
 Because of this distinction, and modular setup,
 Some commands may not be natively installed on 
 a distro, which means you have to install them
-yourself, or the version of a command you have
+yourself, or the version of a command you have, 
 might work slightly differently in your distro
 compared to another.
 
@@ -91,14 +91,14 @@ Notice that '$STUFF' refers to variables.
 This will be the max width of this file---------------------------------------------------------------------------------------->|
 : Explanation of command
 - Command options, or continuations of the
-  previous colon (:).
+  previous colon (:) explanation.
 [empty] is a pseudonym for not entering anything.
 [command] refers to commands themselves
 [option] refers to '-operator' options.
 
 From this point forward, this format will
 primarily be used, with commands to the left,
-and a description to the right.
+and a description of said command to the right.
 
 Commands                                         Description
 ------------------------------------------------|---------------
@@ -191,6 +191,9 @@ su                                              : Switch user
         - [empty]                               - Changing to root user, but remains in the current users home directory
         - [Username]                            - will change to other specified user on the username.
         [username]                              - Will switch to other user, but remain in your own home directory
+
+[Example]
+$ sudo apt-get update                           : Update packages, a command that require Root access.
 
 ================================================
 |                System Commands               |
@@ -298,7 +301,7 @@ x = execute                                     : [1] Decimal value #1, == 0x1, 
 Meaning that:
 7 = read, write, execute privilege [111]
 6 = read and write privilege       [110]
-5 = read and execute privilege     [011]
+5 = read and execute privilege     [101]
 and so on
 
 When using the 'chmod' command, you  enter 3 numbers
@@ -333,7 +336,7 @@ This part refers primarily to the output of the
 contain all of these, or even with the same
 format or name.
 
-ps column name                                   Description
+Command [ps] column names                        Description
 ------------------------------------------------|------------------------
 ADDR                                            : Memory address of the process
 C or CP                                         : CPU usage and scheduling information
@@ -604,7 +607,7 @@ tail                                            : View the last lines of a text 
 $ cat file1.txt | more                          : Display file1.txt in the console, using 'more' format
 $ cat file1.txt | less                          : Display file1.txt in the console, using 'less' format
 $ cat file1.txt | head                          : Display the first 10 lines of file1.txt in the console
-$ cat file1.txt | tail                          : Display the first 10 lines of file1.txt in the console
+$ cat file1.txt | tail                          : Display the last 10 lines of file1.txt in the console
 
 sort                                            : Sort via parameters, alphabetically as standard -r for reversed
 [Example]
@@ -627,7 +630,7 @@ Depending on your desktop environment, specific
 commands may vary, for how to open folders
 Types: Gnome, KDE, Xfce, LXDE.
 
-xdg-open [foldername]                           : Opens a folder, should work on a full linux distribution
+xdg-open [foldername]                           : Opens a folder, should work on a full Linux distribution
 $ man -k xdg                                    - Use this command to check status of xdg commands in general
 
 ================================================
@@ -1050,6 +1053,7 @@ Sources:
                 -  Job control
                 -  Managing groups
                 -  Shell scripting
+                -  System calls
                 -  [Command] nslookup
            : Table list
                 -  Table 1.0: Useful abbreviations
@@ -1499,6 +1503,118 @@ do
 done
 
 ================================================
+|                 System calls                 |
+================================================
+In order to function, most user level commands
+and services require access to operations that
+are only processed at kernel level.
+An example of these kernel operations would be:
+Creating processes, network and file IO,
+hardware access, and more.
+
+'System calls' are the intermediate point
+that allow programs to request limited access
+to the kernel.
+Essentially an API to allow low level, and user
+level programs and services, access to the
+kernel.
+
+The specific implemenation varies somewhat based
+on cpu architecture and OS, but for now assume
+it is all combined within wrapper functions,
+such as those supplied by glibc on Linux.       : C library, https://en.wikipedia.org/wiki/Glibc
+
+Services Provided by System Calls:
+•    Process creation and management
+•    Main memory management
+•    File Access, Directory and File system
+     management
+•    Device handling(I/O)
+•    Protection
+•    Networking, etc.
+
+For Linux, the most common system calls are:
+open, close, fork, wait, read, write, pipe,
+kill, exit, exec.
+In order to understand what these mean, I'll
+provide a brief explanation for each of these.
+
+Most of these aren't just C-functions, or
+commands on a command line.
+Look at the manual page for each of these, and
+see the category they belong to.
+
+System call                                      Description
+------------------------------------------------|---------------
+open                                            : open, openat, creat - Open and possibly create a file
+close                                           : Close a file descriptor
+                                                - File descriptor is integer that uniquely identifies an open file of the process.
+fork                                            : Create a child process.
+                                                  The child process is almost identical to the calling process, the 'fork' function return
+                                                  a PID, which is set to 0 in the child, but for the parent it is the PID of the child.
+                                                  If it returns -1, it means that no child was created.
+wait                                            : Wait for process to change state.
+                                                  This is specifically used, to reap child processes who becomes zombies.
+                                                  When a child process end, rather than dying and releasing all data, it turn into a zombie,
+                                                  where associated data is released, but the PID still remain, and is tied to the child.
+                                                  Using kill on a zombie won't remove it, and there is a limited amount of PID available on a
+                                                  Linux OS, which is why it is imperative for programs to reap their zombie children.
+read                                            : Read from a file descriptor
+write                                           : Send a message to another user
+pipe                                            : Create a pipe, a unidirectional data channel that can be used for interprocess communication. 
+exec                                            : Execute a file.
+                                                - The whole exec family (execl, execlp, execle, execv, execvp, execvpe) of commands, turns the
+                                                  executing program into a zombie, which is why you need to create a child, who can execute the
+                                                  command, without affecting the parent.
+kill                                            : Send a signal to a process. This is a command.
+exit                                            : Cause normal process elimination.
+
+
+There are 5 types of system calls.
+•   Process control: end, abort, create,
+                     terminate, allocate
+                     and free memory.
+•   File management: create, open, close,
+                     delete, read file etc.
+•   Device management
+•   Information maintenance
+•   Communication
+
+Now knowing all of this, when you execute a
+command, a lot of stuff is happening under the
+hood that you aren't aware of, including quite
+a few system calls.
+
+In order to test this for yourself, there are a
+number of commands, and manual pages you can
+read.
+
+Commands                                         Manual description
+------------------------------------------------|---------------
+syscall                                         : Indirect system call
+syscalls                                        : Linux system calls
+strace                                          : Trace system calls and signals
+ltrace                                          : A library call tracer
+ptrace                                          : Process trace
+ftrace                                          : Runs the frysk systemcall tracing utility.
+                                                - Something about a similar manner to strace, and based on RHEL, rather than DEB.
+truss                                           : Trace system calls and signals
+
+[Example]
+$ strace ls -la */                              : Display system calls, made during the 'ls' command.
+$ ltrace -S ls -la */                           : Also display system and library calls, made during the 'ls' command.
+
+To give you a sense of the scale, there are:    : Source https://en.wikipedia.org/wiki/System_call
+More than 300 system calls on Linux,
+NetBSD has close to 500,
+FreeBSD has over 500,
+Windows has close to 2000, (divided between
+        win32k (graphical) and ntdll (core)
+        system calls).
+'Plan 9' has 51.
+No details about Mac.
+
+================================================
 |                   nslookup                   |
 ================================================
 'nslookup' is tool to query Internet name
@@ -1506,37 +1622,39 @@ servers interactively.
 As far as I can make out, this command syntax is
 identical for both cmd and Bash.
 
-: nslookup syntax
+Command syntax                                   Description
+------------------------------------------------|---------------
 nslookup [website]                              : Provides generic information about a website, such as IP and dns
 nslookup -[option] [website]                    : Provides information about a websited specified by the option
 nslookup [-option] [name | -] [server]
 nslookup –option1 –option2 host-to-find simulated-dns-server
                                                 : It is possible to supply 0, 1, 2 or more options
-                                                : as well as 2 servers, where the 1st will be queried
-                                                : and the 2nd is optional.
-                                                : If excluded it'll be sent to the default DNS server
+                                                  as well as 2 servers, where the 1st will be queried
+                                                  and the 2nd is optional.
+                                                  If excluded it'll be sent to the default DNS server
 
-: Option list
-•     A                                         : Specifies a computer's IP address.
-•     ANY                                       : Specifies a computer's IP address.
-•     CNAME                                     : Specifies a canonical name for an alias.
-•     GID                                       : Specifies a group identifier of a group name.
-•     HINFO                                     : Specifies a computer's CPU and type of operating system.
-•     MB                                        : Specifies a mailbox domain name.
-•     MG                                        : Specifies a mail group member.
-•     MINFO                                     : Specifies mailbox or mail list information.
-•     MR                                        : Specifies the mail rename domain name.
-•     MX                                        : Specifies the mail exchanger.
-•     NS                                        : Specifies a DNS name server for the named zone. (authorative DNS server)
-•     PTR                                       : Specifies a computer name if the query is an IP address; otherwise, specifies the pointer to other information.
-•     SOA                                       : Specifies the start-of-authority for a DNS zone.
-•     TXT                                       : Specifies the text information.
-•     UID                                       : Specifies the user identifier.
-•     UINFO                                     : Specifies the user information.
-•     WKS                                       : Describes a well-known service.
+Option list                                       Description
+------------------------------------------------|---------------
+A                                               : Specifies a computer's IP address.
+ANY                                             : Specifies a computer's IP address.
+CNAME                                           : Specifies a canonical name for an alias.
+GID                                             : Specifies a group identifier of a group name.
+HINFO                                           : Specifies a computer's CPU and type of operating system.
+MB                                              : Specifies a mailbox domain name.
+MG                                              : Specifies a mail group member.
+MINFO                                           : Specifies mailbox or mail list information.
+MR                                              : Specifies the mail rename domain name.
+MX                                              : Specifies the mail exchanger.
+NS                                              : Specifies a DNS name server for the named zone. (authorative DNS server)
+PTR                                             : Specifies a computer name if the query is an IP address; otherwise, specifies the pointer to other information.
+SOA                                             : Specifies the start-of-authority for a DNS zone.
+TXT                                             : Specifies the text information.
+UID                                             : Specifies the user identifier.
+UINFO                                           : Specifies the user information.
+WKS                                             : Describes a well-known service.
 
 Notice that these syntaxes cause an identical,
-response,  {"type", "q", "query]
+response,  {"type", "q", "query}
 Example:
 nslookup -type=mx dtu.dk                        : Identical
 nslookup -q=mx dtu.dk                           : Identical
@@ -1550,14 +1668,13 @@ type in:
 
 :Examples
 $ nslookup -type=mx dtu.dk                      : Info about the mail exchange server for DTU
-$ nslookup -query=hinfo  -timeout=10 [website]  : Generates a query, using the hinfo option, with timeout 10
-                                                : to dtu.dk
-$ nslookup dtu.dk google.com                    : Here we send our query to google.com
-                                                : which will query dtu.dk on our behalf
-                                                : and then google will provide us with the result
+$ nslookup -query=hinfo  -timeout=10 [website]  : Generates a query, using the hinfo option, with timeout 10 to dtu.dk.
+$ nslookup dtu.dk google.com                    : Here we send our query to google.com which will query dtu.dk on our behalf
+                                                  and then google will provide us with the result.
 ================================================
 |                  Table: 1.0                  |
 ================================================
+Abbreviation list.
 Word                                             Description
 ------------------------------------------------|---------------
 Bash                                            : The name of a specific shell.
@@ -1574,7 +1691,8 @@ Kernel                                          : Controls hardware, and makes t
                                                 - Example: Linux kernel
 Linux                                           : An operating system
 Prompt                                          : A symbol on a display screen indicating that the computer is waiting for input.
-                                                  Once the computer has displayed a prompt, it waits for you to enter some information.
+                                                  Once the computer has displayed a prompt, it waits for you to enter some
+                                                  information.
                                                 - Shell prompt, are the characters that appear on the command line on
                                                   the shell, to the left of when you enter commands.
                                                 - 'Commmand prompt' is the symbol that appear at the end of the prompt.
@@ -1585,13 +1703,17 @@ Service                                         : Program that runs as a backgro
 Shell                                           : Command line interpreter, that interprets the command line inputs
                                                   and instructs the operating system to perform any necessary tasks and commands.
                                                 - Example: Bash, tcsh, and zsh
-X Window system                                 : An open source, cross platform, client-server computer software system that provides
-                                                  a GUI in a distributed network environment.
+System calls                                    : A way for programs and services to get specific and restricted access to the
+                                                  kernel, via predefined commands. For Linux these commands are most often
+                                                  {open, read, write, close, wait, exec, fork, exit, kill, exec, pipe} 
+X Window system                                 : An open source, cross platform, client-server computer software system that
+                                                  provides a GUI in a distributed network environment.
                                                 - (client server architecture)
 
 ================================================
 |                  Table: 1.1                  |
 ================================================
+Bash Configuration files.
 File                                             Description
 ------------------------------------------------|---------------
 /etc/profile                                    : This sets up user environment information for every user.
@@ -1622,7 +1744,7 @@ File                                             Description
 ================================================
 |                  Table: 1.2                  |
 ================================================
-
+Characters to add information to bash prompt.
 Special character                                Description
 ------------------------------------------------|---------------
 \!                                              : This shows the current command history number. This includes
@@ -1657,7 +1779,7 @@ Special character                                Description
 ================================================
 |                  Table: 1.3                  |
 ================================================
-
+Manual page categories
 Number  Type                                     Description
 -------|----------------------------------------|---------------
 1       User Commands                           : Executable programs or shell commands
@@ -1687,7 +1809,7 @@ Number  Type                                     Description
 ================================================
 |                  Table: 1.4                  |
 ================================================
-
+ (Some of) Linux directory information
 Directory                                        Description
 ------------------------------------------------|---------------
 /bin                                            : Contains common Linux user commands, such as ls, sort, date and chmod
@@ -1739,6 +1861,8 @@ Directory                                        Description
 ================================================
 |                  Table: 1.5                  |
 ================================================
+Signals available in Linux.
+
 Use this command, to see a list of supported
 signals on your system:
 $ kill -l
@@ -1814,6 +1938,7 @@ SIGRTMAX        64                              :
 ================================================
 |                  Table: 1.6                  |
 ================================================
+Control group limiting options.
 
 Topics                                           Description
 ------------------------------------------------|---------------
@@ -1843,6 +1968,8 @@ Name spaces (ns)                                : Separates cgroups into namespa
 ================================================
 |                  Table: 1.7                  |
 ================================================
+Operators for test expressions(Shell scripting)
+
 Shell scripting if/else statements operators.
 These can be found using the bash command:
 $ help test
@@ -1898,3 +2025,7 @@ https://linuxhint.com/30_bash_script_examples/  : Bash scripting
 https://github.com/vossenjp/bashcookbook-examples
                                                 : Github repository of some shell scripts (although a lot of them are poorly
                                                   explained)
+https://opensource.com/article/19/10/strace     : Understanding System calls
+https://en.wikipedia.org/wiki/System_call       : System calls
+https://www.geeksforgeeks.org/introduction-of-system-call/
+                                                : System calls
