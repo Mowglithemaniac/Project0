@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.11
+ Version     : 2.11.1
  Date        : 29/09-20
- Last Updated: 22/08-21
+ Last Updated: 26/08-21
  Copyright   : Do not alter, copy or share this file without permission
  Description : A rough guide for new users to understand bash console commmands
                Made for course 62588 Operating systems at DTU Denmark Fall 2020.
@@ -476,7 +476,7 @@ $ mount -t ext3 -o acl /dev/folderA/folderAA /work
 ================================================
 |              Directory commands              |
 ================================================
-pwd 						: Print working directory
+pwd                                             : Print working directory
 ls                                              : List content of current directory
         -a                                      - Display hidden files
         -l                                      - Provides extra information about each file, the left mode column regarding rwx,
@@ -1033,8 +1033,10 @@ Sources:
 - https://en.wikipedia.org/wiki/List_of_Linux_distributions
 - https://www.howtogeek.com/656549/how-to-delete-a-user-on-linux-and-remove-every-trace/
 - https://acloudguru.com/blog/engineering/conditions-in-bash-scripting-if-statements
-- https://www.geeksforgeeks.org/awk-command-unixlinux-examples/                 : AWK 
-- https://man7.org/linux/man-pages/man1/ps.1.html                               : Man page for ps
+- https://www.geeksforgeeks.org/awk-command-unixlinux-examples/
+                                                : AWK 
+- https://man7.org/linux/man-pages/man1/ps.1.html
+                               : Man page for ps
 - https://www.computerhope.com/unix/visudo.htm                                  : Editing using the visudo command
 - https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/                 : Makefile explanation, by extension, the next
                                                                                  link as well.
@@ -1519,10 +1521,11 @@ Essentially an API to allow low level, and user
 level programs and services, access to the
 kernel.
 
-The specific implemenation varies somewhat based
-on cpu architecture and OS, but for now assume
-it is all combined within wrapper functions,
-such as those supplied by glibc on Linux.       : C library, https://en.wikipedia.org/wiki/Glibc
+The specific implementation varies somewhat
+<based on cpu architecture and OS, but for now
+assume it is all combined within wrapper
+functions, such as those supplied by glibc on   : C library, https://en.wikipedia.org/wiki/Glibc
+Linux. This allow a higher abstraction level.
 
 Services Provided by System Calls:
 •    Process creation and management
@@ -1548,24 +1551,29 @@ System call                                      Description
 ------------------------------------------------|---------------
 open                                            : open, openat, creat - Open and possibly create a file
 close                                           : Close a file descriptor
-                                                - File descriptor is integer that uniquely identifies an open file of the process.
+                                                - File descriptor is integer that uniquely identifies an open file of
+                                                  the process.
 fork                                            : Create a child process.
-                                                  The child process is almost identical to the calling process, the 'fork' function return
-                                                  a PID, which is set to 0 in the child, but for the parent it is the PID of the child.
-                                                  If it returns -1, it means that no child was created.
+                                                  The child process is almost identical to the calling process, the 'fork'
+                                                  function return
+                                                  a PID, which is set to 0 in the child, but for the parent it is the PID of
+                                                  the child. If it returns -1, it means that no child was created.
 wait                                            : Wait for process to change state.
                                                   This is specifically used, to reap child processes who becomes zombies.
-                                                  When a child process end, rather than dying and releasing all data, it turn into a zombie,
-                                                  where associated data is released, but the PID still remain, and is tied to the child.
-                                                  Using kill on a zombie won't remove it, and there is a limited amount of PID available on a
-                                                  Linux OS, which is why it is imperative for programs to reap their zombie children.
+                                                  When a child process end, rather than dying and releasing all data, it turn
+                                                  into a zombie, where associated data is released, but the PID still remain,
+                                                  and is tied to the child.
+                                                  Using kill on a zombie won't remove it, and there is a limited amount of PID
+                                                  available on a Linux OS, which is why it is imperative for programs to reap
+                                                  their zombie children.
 read                                            : Read from a file descriptor
 write                                           : Send a message to another user
-pipe                                            : Create a pipe, a unidirectional data channel that can be used for interprocess communication. 
+pipe                                            : Create a pipe, a unidirectional data channel that can be used for interprocess
+                                                  communication. 
 exec                                            : Execute a file.
-                                                - The whole exec family (execl, execlp, execle, execv, execvp, execvpe) of commands, turns the
-                                                  executing program into a zombie, which is why you need to create a child, who can execute the
-                                                  command, without affecting the parent.
+                                                - The whole exec family (execl, execlp, execle, execv, execvp, execvpe) of
+                                                  commands, turns the executing program into a zombie, which is why you need to
+                                                  create a child, who can execute the command, without affecting the parent.
 kill                                            : Send a signal to a process. This is a command.
 exit                                            : Cause normal process elimination.
 
@@ -1646,7 +1654,8 @@ MINFO                                           : Specifies mailbox or mail list
 MR                                              : Specifies the mail rename domain name.
 MX                                              : Specifies the mail exchanger.
 NS                                              : Specifies a DNS name server for the named zone. (authorative DNS server)
-PTR                                             : Specifies a computer name if the query is an IP address; otherwise, specifies the pointer to other information.
+PTR                                             : Specifies a computer name if the query is an IP address; otherwise, specifies
+                                                  the pointer to other information.
 SOA                                             : Specifies the start-of-authority for a DNS zone.
 TXT                                             : Specifies the text information.
 UID                                             : Specifies the user identifier.

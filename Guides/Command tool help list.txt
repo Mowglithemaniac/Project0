@@ -7,18 +7,21 @@
  Copyright   : Do not alter, copy or share this file without permission
  Description : This document is created to function as a guide
              : for multiple specific command line functions.
-
- ============================================================================*/
+=============================================================================*/
 Sections: (so far)
         - Introduction
+        - C-code, compile and debugging
         - nslookup
         - openssl * not finished
         - MPI (Bash)
         - GIT (Bash)
-
 ================================================
 |                Introduction                  |
 ================================================
+This document will highlight syntax for specific
+functions, to the point where you should be able
+to interact with the topic fluently.
+
 This is the format of this guide.
 Commands                                        Description
 ------------------------------------------------|---------------
@@ -28,6 +31,74 @@ Commands                                        Description
 [empty] is a pseudonum for not entering anything.
 '$ ' represents the command line, used for
 examples.
+
+Max width of this document.
+----------------------------------------------------------------------------------------------------------------------------------------------->
+                                                                                                                                                
+================================================
+|                   C-code                     |
+================================================
+For the Bash console.
+
+C-code programs are compiled with 'gcc'.
+C++ uses 'g++' command and it accepts mostly the
+same options as gcc.
+
+Commands                                        Description
+------------------------------------------------|---------------
+ gcc [-c|-S|-E] [-std=standard]                 : There are a ton of options, but only a few to worry about.
+        [-g] [-pg] [-Olevel]
+        [-Wwarn...] [-Wpedantic]
+        [-Idir...] [-Ldir...]
+        [-Dmacro[=defn]...] [-Umacro]
+        [-foption...] [-mmachine-option...]
+        [-o outfile] [@file] infile...
+
+gcc -o outputfile infile.c                      : Standard usecase
+                                                  Uses the input file (aka. code) to create a compiled version
+        -w                                      - supress warnings
+        -Wall                                   - enables all compiler's warning messages
+        -g                                      - Generates debug information to be used by the GDB debugger
+
+
+For debugging, there's a command called 'gdb'
+Once you've used the command "gdb file", you're
+sent to the gdb mode, where you can enter
+additional commands, to start the debugging
+process.
+
+ gdb [-help] [-nh] [-nx] [-q] [-batch]          : The GNU debugger
+        [-cd=dir] [-f] [-b bps]  [-tty=dev]
+        [-s symfile] [-e prog] [-se prog]
+        [-c core] [-p procID] [-x cmds]
+        [-d dir] [prog|prog procID|prog core]
+
+gdb mode commands                                Description
+------------------------------------------------|---------------
+layout next                                     : Opens the layout menu
+run                                             : start the program
+q                                               : Quit
+next | n                                        : Next line in the immediate scope
+step | s                                        : Step into
+                                                  Will step will go into functions, to see what's going on inside of it.
+b                                               : Breakpoint
+                                                  Enter a line, or name of a function, to set a breakpoint there
+print [variable name]                           :
+        @NUMBER                                 - Print array
+watch [variable name]                           : Keep watch on a variable
+                                                  Every time it changes, we will be notified about it.
+refresh                                         : Refreshes the console text
+clear [b-name]                                  : Clears the specified breakpoint
+set args [input]                                : Define argc/argv
+backtrace                                       : 
+whatis [variable]                               : Display the variable type, i.e. char, int, ... and so on
+
+[Example]
+print array@10                                  : Pretends that 'array' is an array with 10 slots
+print *array@10                                 : Dereferences it first.
+print *argv@2                                   : Prints the entire set of arguments
+print argv[1]                                   : Prints the second argument
+print derp=10                                   : Set variable derp to 10.
 
 ================================================
 |                  nslookup                    |
@@ -59,7 +130,8 @@ nslookup –option1 –option2 host-to-find simulated-dns-server
 •     MR                                        : Specifies the mail rename domain name.
 •     MX                                        : Specifies the mail exchanger.
 •     NS                                        : Specifies a DNS name server for the named zone. (authorative DNS server)
-•     PTR                                       : Specifies a computer name if the query is an IP address; otherwise, specifies the pointer to other information.
+•     PTR                                       : Specifies a computer name if the query is an IP address; otherwise, specifies
+                                                  the pointer toother information.
 •     SOA                                       : Specifies the start-of-authority for a DNS zone.
 •     TXT                                       : Specifies the text information.
 •     UID                                       : Specifies the user identifier.
@@ -179,8 +251,10 @@ $ openssl rsa -in key.pem -pubout -out pub-key.pem
                                                 : Extracts the public key
  openssl pkey -in 
 
-=======================MPI======================:===============
------------------MPI Explanation----------------:---------------
+
+================================================
+|                      MPI                     |
+================================================
 MPI stands for "Message Passing Interface"
 Installing on your own computer
 $ sudo apt update
