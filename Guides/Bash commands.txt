@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.11.1
+ Version     : 2.11.3
  Date        : 29/09-20
- Last Updated: 26/08-21
+ Last Updated: 03/09-21
  Copyright   : Do not alter, copy or share this file without permission
  Description : A rough guide for new users to understand bash console commmands
                Made for course 62588 Operating systems at DTU Denmark Fall 2020.
@@ -654,7 +654,7 @@ yum [option] [command]                          : (For RPM distros) Install, Uni
 dnf [option] [command]                          : (For RPM distros) 'Dandified YUM', it is an upgraded version of YUM,
                                                   available since version 18 of Fedora. Syntax somewhat identical to YUM
 
-[Example]
+[Example .rpm]
 $ yum provides dvdrecord                        : A method to search for packages, if you know either the 'configuration file',
                                                   'library name' or 'command', but don't known which package it is located in.
 $ yum search [partial name]                     : Looks for the partial name in the description of packages.
@@ -669,6 +669,12 @@ $ yum update                                    : Update a single package or to 
                                                   and have an update available.
 $ yum grouplist                                 : Show a list of package groups
 $ yum groupinstall [name]                       : Installing a package group
+
+
+[Example DEB based]
+$ sudo apt search music                         : Find packages related to music
+$ sudo apt-get install [PACKAGENAME]            : Install a specific package, i.e. nmap
+$ sudo apt install nmap                         : install nmap
 
 ================================================
 |                  NETWORKING                  |
@@ -767,6 +773,8 @@ $ touch derp{ty,ti}                             : Creates 2 files names derpty a
 $ rm derp*                                      : Remove all files starting with the name "derp"
 $ ls [0A]*                                      : List all files starting with 0 or A
 $ ls ?[2A]*                                     : List all files where the 2nd character is either '2' or 'A'
+$ sudo dmidecode | grep -A20 '^System Information'
+						: Display 20 lines, starting from the line 'System Information'
 
 [Boolean operators]
 ;                                               : Combining commands to be run in a sequence
@@ -1177,6 +1185,10 @@ $ PS1='\e[33;1m\u@\h: \e[31m\w\e[0m\$ '
 You can restart the shell with the command:
 $ exec bash
 
+If you want to try this in practice, login to
+the LSF 10 cluster on DTU, and change the PS1
+variable, in the .bashrc file.
+
 ================================================
 |         Adding environment variables         |
 ================================================
@@ -1312,7 +1324,8 @@ process directly.
 
 jobs                                            : Display background jobs (hint use -l operator to view PID as well as status)
 bg                                              : Move jobs to the background.
-                                                  Simulates running in the foreground, same as if it had been started with ' &'                                                  Place the jobs identified by each JOB_SPEC in the background,
+                                                  Simulates running in the foreground, same as if it had been started with ' &' 
+                                                 Place the jobs identified by each JOB_SPEC in the background,
                                                   If JOB_SPEC is not present, the shell's notion of the current job is used.
 fg                                              : Brings a job from the background, to the foreground.
                                                   Located with jobspec
