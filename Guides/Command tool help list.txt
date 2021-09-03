@@ -1,5 +1,5 @@
 /*============================================================================
- Name        : Bash commands.txt
+ Name        : Command tool help List.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
  Version     : 2.9
  Date        : 15/02-21
