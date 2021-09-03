@@ -1,0 +1,133 @@
+/*============================================================================
+ Name        : cmd commands.txt
+ Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
+ Version     : 2.9
+ Date        : 15/02-21
+ Last Updated: 20/08-21
+ Copyright   : Do not alter, copy or share this file without permission
+ Description : Created to provide a rough overview of some usefull
+             : cmd commands
+=============================================================================*/
+Sections: 
+        - Introduction
+        - Navigation
+        - System controls
+        - Networking
+        - Help
+        - Functions (not commands)
+================================================
+|                Introduction                  |
+================================================
+The format of this document is pretty
+straightforward.
+
+Paragraphs and commands to the left,
+descriptions to the right.
+
+This is the format of this guide.
+Commands                                        Description
+------------------------------------------------|---------------
+: Explanation of command
+- Command options
+[xxx] is a pseudonum for XXX information
+[empty] is a pseudonum for not entering anything.
+'> ' represents the command line, used for
+examples.
+
+Max width of this document.
+------------------------------------------------------------------------------------------------------------------------------->|
+
+================================================
+|                  Navigation                  |
+================================================
+You can move around directories using the 'cd'
+command, and display the content of said
+directory with the 'dir' command.
+Together you can use them to navigate between
+directories
+
+Commands                                        Description
+------------------------------------------------|---------------
+cd                                              : Change Directory
+    ..                                          - Navigate up a directory
+    %USERPROFILE%                               - Variable name, for your own user profile
+dir                                             : Show content of directory
+
+[Example]
+> cd /FOLDERNAME                                : Move into 'FOLDERNAME'
+> cd ..                                         : Move back out of 'FOLDERNAME'
+> cd %USERPROFILE%                              : Navigate to your home directory
+> dir                                           
+
+================================================
+|                System controls               |
+================================================
+A couple of useful system commands.
+
+Commands                                        Description
+------------------------------------------------|---------------
+tasklist                                        :
+shutdown                                        : Command related to shutting down, logout,
+                                                  restarting the computer.
+sfc                                             : System File Checker
+chkdsk                                          : 
+
+[Example]
+> shutdown /r now                               : Restart the computer 
+> tasklist | more                               : Display the tasklist using 'more' format.
+
+================================================
+|                  Networking                  |
+================================================
+
+ipconfig                                        : Windows IP configuration
+ping
+tracert
+netstat                                         : Displays protocol statistics and current
+                                                  TCP/IP network connections.
+    -a                                          -  Displays all connections and listening ports.
+    -b                                          - Include the executable name and more
+                                                  Requires additional priveledges to run
+    -n                                          - Display addresses and port numbers in numerical form
+    -o                                          - Include the PID of the associated process
+
+[Example]
+> ping -n 100 google.com                        : Sends 100 packets to google, and include statistics afterwards
+> netstat -ano                                  : Display active connections in an ordered format with PID included
+                                                : 
+> ipconfig /flushdns                            : 
+> ipconfig /registerdns                         : 
+
+================================================
+|                     Help                     |
+================================================
+After any command, you can type /? to recieve 
+information about the use of that command, and 
+its options available.
+
+[Example]
+> tracert /?
+> 
+
+| more                                          : More format
+
+================================================
+|           Functions (not commands)           |
+================================================
+After a command has been written, you can 
+enter a character to decide what will happen.
+
+>                                               : Paste content into a file
+|                                               : Pipeline character
+
+You can display output a bit differently with
+the 'more' format, which is included
+after a pipeline character.
+
+more                                            : 'More' format
+
+[Example]
+> tasklist | more
+> (tracert 192.64.170.1) > "%USERPROFILE%\desktop\Tracert.txt"
+                                                : Paste result of the tracert command, into a file
+                                                  located on the desktop.
