@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.11.3
+ Version     : 2.11.4
  Date        : 29/09-20
- Last Updated: 03/09-21
+ Last Updated: 04/09-21
  Copyright   : Do not alter, copy or share this file without permission
  Description : A rough guide for new users to understand bash console commmands
                Made for course 62588 Operating systems at DTU Denmark Fall 2020.
@@ -1516,6 +1516,17 @@ until [condition]
 do
    ...
 done
+
+It is possible to disable shell functions,
+variables and references with 'unset'.
+
+Command-mode                                     Description
+------------------------------------------------|---------------
+unset [-f] [-v] [-n] [name ...]                 : Unset a function
+        -f                                      - Treat each NAME as a shell function
+        -v                                      - Treat each NAME as a shell variable
+        -n                                      - Treat each NAME as a name reference and unset the variable itself
+                                                  rather than the variable it references
 
 ================================================
 |                 System calls                 |

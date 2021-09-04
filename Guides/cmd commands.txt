@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : cmd commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.9
- Date        : 15/02-21
- Last Updated: 20/08-21
+ Version     : 1.0
+ Date        : 03/09-21
+ Last Updated: 03/09-21
  Copyright   : Do not alter, copy or share this file without permission
  Description : Created to provide a rough overview of some usefull
              : cmd commands
