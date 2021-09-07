@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.11.4
+ Version     : 2.11.5
  Date        : 29/09-20
- Last Updated: 04/09-21
+ Last Updated: 07/09-21
  Copyright   : Do not alter, copy or share this file without permission
  Description : A rough guide for new users to understand bash console commmands
                Made for course 62588 Operating systems at DTU Denmark Fall 2020.
@@ -68,7 +68,8 @@ One very strong advantage for choosing Linux
 is the powerful setup for creating and managing
 servers.
 
-Examples of server types and tools
+Examples of server types and tools               Description
+------------------------------------------------|---------------
 Apache                                          : Web server
 SAMBA                                           : A tool with multiple server and management option for Linux and Unix
                                                   It allows windows to share files and printers on the Unix host
@@ -77,6 +78,9 @@ Oracle, MySQL (MariaDB), Mongodb, etc.          : Database
 
 Additional server types.
 Mail/FTP/DNS/router/firewall and more           
+
+There is a list of useful abbreviations found in
+table 1.0 near the end of the document.
 
 ================================================
 |                 General info                 |
@@ -102,10 +106,18 @@ and a description of said command to the right.
 
 Commands                                         Description
 ------------------------------------------------|---------------
+[Command]                                       : Command description
+                                                  Related info
+        -K                                      - info about operator
 
 ================================================
 |                 General tips                 |
 ================================================
+Some of the most useful tips for navigating and
+using the command console, efficiently.
+
+Commands                                         Description
+------------------------------------------------|---------------
 Navigate to folder, then type 'bash'            : Open a terminal, which has already navigated to folder
 in the address field.                             Requires that Linux subsystem for Windows is activated
                                                   and that a Linux distribution is virtually installed
@@ -116,9 +128,9 @@ cd                                              : Change Directory, '..' to move
                                                   When inside a directory and you've typed part of the name
                                                   of a file. hit 'tab' to auto fill out the content.
                                                   Double hit 'tab' to see a list of directories.
-                                                  Use '$ cd -' to go back to the directory you were just in
-                                                  Use '$ cd /' to go to root directory
-                                                  Use '$ cd ~' to go to HOME directory
+                                                - Use '$ cd -' to go back to the directory you were just in
+                                                - Use '$ cd /' to go to root directory
+                                                - Use '$ cd ~' to go to HOME directory
 pwd                                             : Print Working directory
 
 something '>>' filename                         : Append content to file named filename
@@ -161,6 +173,9 @@ If you screw up somehow, terminate an active
 process with [CTRL + C], i.e. 'htop' or an
 infinitely running program.
 
+[CTRL + L]                                      : Clears the bash terminal of text.
+[CTRL + U]                                      : Cut beginning of line, cut text to the beginning of the line.
+
 ================================================
 |              Elevated privilege              |
 ================================================
@@ -174,6 +189,8 @@ to see if you've got direct root access.
 Or if you need to request it, in order to run
 a command.
 
+Commands                                         Description
+------------------------------------------------|---------------
 sudo                                            : Execute a command as another user, 'Super user' to be exact.
                                                   Super user access (creates a timer in the background,
                                                   before requiring a password again)
@@ -198,27 +215,17 @@ $ sudo apt-get update                           : Update packages, a command tha
 ================================================
 |                System Commands               |
 ================================================
+Primarily related to altering data within the
+OS, such as file permissions, altering processes
+and more.
+
+Commands                                         Description
+------------------------------------------------|---------------
 chmod                                           : Change file mode bits. Permission for files and directories,
                                                   look at the next section for details regarding bit setup.
         +r [Filename]                           - Makes the file readable
         +w [Filename]                           - Makes the file writeable
         +x [Filename]                           - Makes the file executable
-
-[EXAMPLE section]
-$ chmod 600 [filename]                          : Where 6 is the user, 0 is group, 0 is everyone
-$ chmod 755 [directory]                         : 755 is recommended for directories
-$ chmod 744 [filename]                          : 644 is recommended for files. 
-
-echo <text>                                     : Prints echoes the <print> in the console
-                                                  Has lots of uses, example printing the content of
-                                                  a system variable, inserting content into a file, and more.
-[Examples]
-$ echo $PATH                                    : Prints the entire path variable
-$ echo $PS1                                     : Prints the entire PS1 settings variable, for
-                                                  how to display your prompt
-$ echo "herp derp" >> filename1.txt             : Insert "herp derp" into a file named, filename1.txt
-                                                - This command either appends, or creates the file if it does not exist
-
 killall                                         : Kill all processes that you have access to, use with care, as you may
                                                   terminate more processes than you intended.
         [a-zA_Z]                                - Terminates any process related to that name
@@ -233,23 +240,11 @@ nice                                            : Run a program with modified sc
 renice                                          : Alter the 'niceness' priority of a running processes.
 gcc                                             : Compile program from c language.
         -o                                      - Output, next argument will be the created filename
-[Examples]
-$ gcc -o [newname] [c-file] 
-$ gcc -o derp /test_folder/test.c               : Here we navigate into a folder to find the test.c file,
-                                                  the 'derp' file, is placed in the current folder
-
 ps                                              : Processor Status, it is a highly integrated part of Linux.
                                                   There are more than 80 options, most commonly used is 'aux'
         aux                                     : Display processes of all users.
         -o                                      : User defined format       
         -e                                      : Select all processes, identical to -A
-        
-[Example]
-$ ps aux                                        : See all running processes
-$ ps -eo pid,user,uid,gid,vsz,rss,comm --sort=-vsz
-                                                : Showing the selected categories, sorted descending by vsz
-$ ps -eo pid,user,vsz,rss,comm --sort=rss       : Showing the selected categories, sorted ascending by rss
-
 whois                                           : shows some whois data about a website or ip
         [ip or website]
         | more/less                             - Displayed using the more or less format
@@ -259,7 +254,19 @@ fsck                                            : Check and repair a Linux files
 parted                                          : A partition manipulation program
 
 alias                                           : Access to aliases
-[Example]
+
+[EXAMPLES]
+$ chmod 600 [filename]                          : Where 6 is the user, 0 is group, 0 is everyone
+$ chmod 755 [directory]                         : 755 is recommended for directories
+$ chmod 744 [filename]                          : 644 is recommended for files. 
+$ gcc -o [newname] [c-file]                     : General format for compiling C-files
+$ gcc -o derp /test_folder/test.c               : Here we navigate into a folder to find the test.c file,
+                                                  the 'derp' file, is placed in the current folder
+$ ps aux                                        : See all running processes
+$ ps -eo pid,user,uid,gid,vsz,rss,comm --sort=-vsz
+                                                : Showing the selected categories, sorted descending by vsz
+$ ps -eo pid,user,vsz,rss,comm --sort=rss       : Showing the selected categories, sorted ascending by rss
+
 $ alias                                         : Display a list of aliases
 $ alias p='pwd ; ls -CF'                        : Create a new alias 'p', which is 2 commands, followed by one another
                                                   For the alias to be saved between shells and sessions, they need to
@@ -286,6 +293,12 @@ r = read                                        : [4] Decimal value #4, == 0x4, 
 w = write                                       : [2] Decimal value #2, == 0x2, == 0b010
 x = execute                                     : [1] Decimal value #1, == 0x1, == 0b001
 
+Meaning that:
+7 = read, write, execute privilege [111]
+6 = read and write privilege       [110]
+5 = read and execute privilege     [101]
+and so on
+
 -rwxrwxrwx
 |||||||||!------------------------------------> : Execute bit, for 'everyone'
 ||||||||! ------------------------------------> : Write bit, for 'everyone'
@@ -298,11 +311,6 @@ x = execute                                     : [1] Decimal value #1, == 0x1, 
 |! -------------------------------------------> : Read bit, for 'Owner'
 ! --------------------------------------------> : {d, 1, b, c, s, p}
 
-Meaning that:
-7 = read, write, execute privilege [111]
-6 = read and write privilege       [110]
-5 = read and execute privilege     [101]
-and so on
 
 When using the 'chmod' command, you  enter 3 numbers
 The first number represents the owner
@@ -406,6 +414,14 @@ k                                               : Killing a process. Use the pro
 ================================================
 |               System/User Info               |
 ================================================
+Information related to the OS, and user.
+Such as processes, users, calender and more.
+Unlike Windows, Linux does not have a Task
+Manager, so you need to be comfortable with
+commands such as 'top' and 'htop'. 
+
+Commands                                         Description
+------------------------------------------------|---------------
 uname                                           : Print system information
 who                                             : Show who is logged on
 whoami                                          : Print effective userid
@@ -432,6 +448,17 @@ watch                                           : Reruns a command every 2 secon
         free -h                                 - Shows how much memory is in the system
 jobs                                            : Display a list of jobs running in the background.
                                                   There is an entire paragraph dedicated to this concept, called 'Job control'.
+echo <text>                                     : Prints echoes the <print> in the console
+                                                  Has lots of uses, example printing the content of
+                                                  a system variable, inserting content into a file, and more.
+
+[Examples]
+$ echo $PATH                                    : Prints the entire path variable
+$ echo $PS1                                     : Prints the entire PS1 settings variable, for
+                                                  how to display your prompt
+$ echo "herp derp" >> filename1.txt             : Insert "herp derp" into a file named, filename1.txt
+                                                - This command either appends, or creates the file if it does not exist
+
 
 ================================================
 |              User administration             |
@@ -440,6 +467,8 @@ In general, unless you know exactly what you're
 doing, I HIGHLY recommend not touching anything
 because of how easily something can go wrong.
 
+Commands                                         Description
+------------------------------------------------|---------------
 passwd                                          : Used to change the password of users
 useradd                                         : Add a new user
 usermod                                         : Modify a user account
@@ -476,6 +505,11 @@ $ mount -t ext3 -o acl /dev/folderA/folderAA /work
 ================================================
 |              Directory commands              |
 ================================================
+Commands related to navigating and altering
+directory information.
+
+Commands                                         Description
+------------------------------------------------|---------------
 pwd                                             : Print working directory
 ls                                              : List content of current directory
         -a                                      - Display hidden files
@@ -490,18 +524,12 @@ cd                                              : Change directory
         ..                                      - Move up a directory
         [Directory Name]/                       - Move to specific directory
         <tab><tab>                              - Auto complete
-pushd                                           : Save directory into a LIFO stack
+pushd                                           : Save directory into a LIFO stack (directory stack)
                                                   Works much like 'cd' except that the directory you move from
                                                   is stored in the directory stack
 popd                                            : Pop the directory from the LIFO stack
 dirs                                            : Display directory stack
         -v                                      : Show the list with a bit of formatting
-[Example]
-$ cd ../../testfolder/                          - Move up two directories, and then down into the testfolder.
-$ cd test<tab><tab>                             - Will auto complete the name of a folder starting with 'test' (if it exist)
-$ ls -d */                                      - Shows directory names from within that folder.
-$ ls */                                         - Show the name and content of the directories, located within the folder.
-
 locate                                          : Able to locate specific command locations, and references
                                                   Requires a database to work. (updatedb*)
 history                                         : Shows a list of commands used so far.
@@ -513,7 +541,7 @@ touch                                           : Update the date of a file, wit
 cp                                              : Copy from specific directory into current directory
         [folder/folder/file] [New name]
         -i                                      - Add a prompt before overwriting files.
-mv                                              : Move a command/file, to some other location, but we can also rename
+mv                                              : Move a command/file, to some other location, but it can also rename at the same time
         [Filename] [Filename]                   - rename, can also overwrite other files
 rm                                              : Remove (PERMANENTLY)
         ?                                       - Wildcard, for a single character
@@ -521,16 +549,28 @@ rm                                              : Remove (PERMANENTLY)
         [a_zA_Z]*                               - Will remove everything, starting with the specified name, from current
                                                   directory.
         -r [directory]                          - will remove way too much, DO NOT USE
-
 rmdir                                           : Remove directory
         *                                       : wildcard
         [a_zA_Z]*                               - Remove directories starting with specified [a-zA_Z]
         [directory name]                        - Remove specific directory
 mkdir [options] directories                     : Creates 1 or more directories
 
+[Example]
+$ cd ../../testfolder/                          - Move up two directories, and then down into the testfolder.
+$ cd test<tab><tab>                             - Will auto complete the name of a folder starting with 'test' (if it exist)
+$ ls -d */                                      - Shows directory names from within that folder.
+$ ls */                                         - Show the name and content of the directories, located within the folder.
+$ mkdir ab{cd,ef}                               - Creates 2 directories, named 'abcd' and 'abef'
+
 ================================================
 |                 Help section                 |
 ================================================
+If you've got no idea what you're looking at,
+it's always nice to know how you can acquire
+acquire information about the subject.
+
+Commands                                         Description
+------------------------------------------------|---------------
 which                                           : Will show where a command is, or whether it is installed                
         [command name]                          - Shows location of that command
 whatis                                          : Brief description of a command
@@ -569,7 +609,11 @@ $ compgen -c | sort                             : List all commands sorted alpha
 ================================================
 |           File access, edit, format          |
 ================================================
+Commands related to files, such as viewing,
+altering, acquiring information
 
+Commands                                         Description
+------------------------------------------------|---------------
 VIM                                             : VIM text editor suite
                                                   There is an a paragraph with a tutorial for VIM.
         [filename]                              - Access a specific file via the VIM suite
@@ -584,10 +628,6 @@ file [option] [file]                            : Determine file type
 stat                                            : Display file or file system status
      [option] [FILE]
      -f [FILE]                                  : File system status
-
-[Example]
-$ stat --printf='%n\n%a\n%b\n' [FILE]           : Prints 3 options, %n, %a, %b, with line breaks.
-
 cat [option] [filename]                         : 'Concatenate' Show content of file via the terminal
         [Filename]                              - Display content of [Filename]
         >> [Filename]                           - Write something into the file (append), use 'Ctrl + D' to complete.
@@ -602,18 +642,7 @@ less                                            : Same as 'more' just goes one l
         q                                       - quits, and goes back to the prompt
 head                                            : View the first lines of a text file
 tail                                            : View the last lines of a text file
-
-[Examples]
-$ cat file1.txt | more                          : Display file1.txt in the console, using 'more' format
-$ cat file1.txt | less                          : Display file1.txt in the console, using 'less' format
-$ cat file1.txt | head                          : Display the first 10 lines of file1.txt in the console
-$ cat file1.txt | tail                          : Display the last 10 lines of file1.txt in the console
-
 sort                                            : Sort via parameters, alphabetically as standard -r for reversed
-[Example]
-$ ls -a | sort -r | less                        : List content of directory, in reversed alphabetical
-                                                  order, using 'less' format.
-
 strings                                         : Display text that's embedded in a binary file
 od [option] [filename]                          : Display a file in Octal or other formats (use option '-x' for Hex)
 wc [behavior] [filename]                        : Word count - count the number of words in a file
@@ -622,9 +651,6 @@ wget [website link]                             : Download a file from the inter
 diff                                            : Compare files line by line
 rev [filename]                                  : Reverse lines characterwise
 
-[Example]
-$ diff <(wc file1) <(wc file2)                  : Compares the wordcount of 2 different files
-$ cp a.txt b.txt ; rev b.txt > a.txt ; rm b.txt : Reversing the content of a file, line by line.
 
 Depending on your desktop environment, specific
 commands may vary, for how to open folders
@@ -632,6 +658,17 @@ Types: Gnome, KDE, Xfce, LXDE.
 
 xdg-open [foldername]                           : Opens a folder, should work on a full Linux distribution
 $ man -k xdg                                    - Use this command to check status of xdg commands in general
+
+[Examples]
+$ stat --printf='%n\n%a\n%b\n' [FILE]           : Prints 3 options, %n, %a, %b, with line breaks.
+$ cat file1.txt | more                          : Display file1.txt in the console, using 'more' format
+$ cat file1.txt | less                          : Display file1.txt in the console, using 'less' format
+$ cat file1.txt | head                          : Display the first 10 lines of file1.txt in the console
+$ cat file1.txt | tail                          : Display the last 10 lines of file1.txt in the console
+$ ls -a | sort -r | less                        : List content of directory, in reversed alphabetical
+                                                  order, using 'less' format.
+$ diff <(wc file1) <(wc file2)                  : Compares the wordcount of 2 different files
+$ cp a.txt b.txt ; rev b.txt > a.txt ; rm b.txt : Reversing the content of a file, line by line.
 
 ================================================
 |          Packages and installations          |
@@ -679,6 +716,10 @@ $ sudo apt install nmap                         : install nmap
 ================================================
 |                  NETWORKING                  |
 ================================================
+Commands related to networks.
+
+Commands                                         Description
+------------------------------------------------|---------------
 ssh                                             : OpenSSH remote login client
 netstat                                         : Printing network connections, routing tables, interface statistics,
                                                   masquerade connections, and multicast memberships
@@ -706,7 +747,8 @@ $ ping -c 100 google.com                        : Pings google.com with 100 pack
 For a complete list of variables, use command
 $ echo $<tab><tab>                              : Two tabs, for an auto complete
 
-:These are some general useful variables.
+Some usefull variable names                      Description
+------------------------------------------------|---------------
 $HOME                                           : Home directory
                                                   It is your current working directory each time you log in
                                                   or type the cd command with any option.
@@ -720,7 +762,8 @@ $USER                                           : Abbreviation of the username, 
 $PS1                                            : Where the bash shell formatting is stored, i.e. format and colors.
                                                   There is a paragraph dedidacted to this called "Setting your prompt".
 
-These are used in programming
+These are used in programming (and herefore
+NOT the commmand line)
 stdin                                           : Standard input (console), where the program reads from.
 stdout                                          : Standard output (console/screen) where the info will be displayed.
 stderr                                          : Standard error, using file descriptor #2, usually writes to console.
@@ -728,12 +771,15 @@ stderr                                          : Standard error, using file des
 ================================================
 |           FUNCTIONS-(NOT COMMANDS)           |
 ================================================
-Navigate command history
+
+Navigate command history                         Description
+------------------------------------------------|---------------
 [arrow up]                                      : Display previous command.
 [arrow down]                                    : Display next command.
 
-./[filename]                                    : Running an executable file (compiled file, or shell file).
 
+Expressions                                      Description
+------------------------------------------------|---------------
 $[expression]                                   : Arithmetic expression, direct.
 $((expression))                                 : Arithmetic expression, direct.
 $(expression)                                   : Arithmetic expression, via function.
@@ -748,12 +794,14 @@ $ echo "Derp $(ls | wc -w)"                     : The content of ls is piped to 
 
 |                                               : Pipeline character, Special circumstance(!!!).
 <('content')                                    : A method to condense the input, and use it as an argument.
+./[filename]                                    : Running an executable file (compiled file, or shell file).
 
 [Example]
 $ history | less                                : Will show the history using the 'less' format
 $ diff <(wc file1) <(wc file2)                  : Compare at the difference between the word count of 2 files
 
-[Wildcard types:]
+Wildcard types:                                  Description
+------------------------------------------------|---------------
 *                                               : Used as a wildcard for an string of undetermined length
 ?                                               : Used a wildcard for a single character in strings.
 [...]                                           : Matches any one of the characters between the brackets, which can
@@ -776,7 +824,8 @@ $ ls ?[2A]*                                     : List all files where the 2nd c
 $ sudo dmidecode | grep -A20 '^System Information'
 						: Display 20 lines, starting from the line 'System Information'
 
-[Boolean operators]
+Boolean operators                                Description
+------------------------------------------------|---------------
 ;                                               : Combining commands to be run in a sequence
 &&                                              : Run a sequence of commands, but stop execution if any of them fails,
 ||                                              : Run a sequence of commands, but stop when the first command is true
@@ -822,6 +871,8 @@ How to navigate the command console
 Mostly useful commands pasted first
 Rest unsorted.
 
+Shortcut                                         Description
+------------------------------------------------|---------------
 [ctrl + C]                                      : Kills a command, if a command is continuously running (example: htop).
 [ctrl + D]                                      : Terminate command window. (same as exit)
 [ctrl + A]                                      : Beginning of line, go to the beginning of the current line.
@@ -855,6 +906,9 @@ Rest unsorted.
 Managing the hardware details, such as removable
 USB drives, hardware plugged in during boot, 
 and more.
+
+Command                                          Description
+------------------------------------------------|---------------
 lshw                                            : List hardware (warning, should be run as a super user)
 dmesg                                           : Print or control the kernel ring buffers
                                                   Used to view or alter which hardware was detected and which
@@ -899,12 +953,16 @@ DVD or CD.
 
 Som basic info about common file systems, and
 denominators between Windows OS, and Linux OS.
+
+File System                                      Description
+------------------------------------------------|---------------
 VFAT                                            : Lowest common denominator between Linux and Windows.
                                                   Often used by USB-drives
 exFAT                                           : Often used by USB-drives
                                                   Linux may support it, if not requires additional kernel drivers.
 NTFS                                            : Standard file system for Windows
                                                   Linux may support it, if not requires additional kernel drivers.
+
 Ext4 is the standard file system for Linux.
 
 To add a new physical storage medium (usb, hdd,
@@ -923,7 +981,7 @@ $ parted -l
 
 This is the syntax for the 'mount' command.
 mount [options] <-t type> [-o mount options] <device> <mounting point>
-                                                :
+                                                : Syntax for the mount command
 
 ================================================
 |                 VIM tutorial                 |
@@ -1005,7 +1063,7 @@ pipe                                            : Pipe functionality, used withi
 grep [search pattern]                           : Print lines that match patterns
 chage                                           : Change user password expiry information
 
-[Example]
+
 Details for accessing the LSF 10 cluster on DTU
 via a linux terminal
 http://www.cc.dtu.dk/?page_id=2501
@@ -1044,13 +1102,14 @@ Sources:
 - https://www.geeksforgeeks.org/awk-command-unixlinux-examples/
                                                 : AWK 
 - https://man7.org/linux/man-pages/man1/ps.1.html
-                               : Man page for ps
-- https://www.computerhope.com/unix/visudo.htm                                  : Editing using the visudo command
-- https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/                 : Makefile explanation, by extension, the next
-                                                                                 link as well.
+                                                : Man page for ps
+- https://www.computerhope.com/unix/visudo.html : Editing using the visudo command
+- https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
+                                                : Makefile explanation, by extension, the next link as well.
 - http://www.gnu.org/software/make/manual/make.html
-- https://www.linux.com/training-tutorials/vim-101-beginners-guide-vim/         : VIM tutorial
-- https://vim.rtorr.com/                                                        : VIM shortcuts
+- https://www.linux.com/training-tutorials/vim-101-beginners-guide-vim/
+                                                : VIM tutorial
+- https://vim.rtorr.com/                        : VIM shortcuts
 
 /*============================================================================
         Advanced topics
@@ -1238,8 +1297,8 @@ You could make that your current directory with
 the command:
 $ cd $DERP
 You could run a program from that directory
-called derpina with the comand:
-$ $DERP/derpina
+called derpina with the command:
+$ .$DERP/derpina
 You could edit a file from there called troll
 with the command:
 $ vi $DERP/troll
@@ -1288,7 +1347,8 @@ background use the command 'jobs'.
 To access specific jobs, use the '%'
 percentage sign, followed by the number.
 
-Accessing background jobs:
+Accessing background jobs:                       Description
+------------------------------------------------|---------------
 %JOB_SPEC                                       : Refers to a specific job.
 %                                               : Refers to the most recent command put into the background
                                                   (indicated by the plus sign when you type the jobs command).
@@ -1419,6 +1479,9 @@ VAR2="derp"
 VAR3=$(date)
 
 Some characters have special meaning in the shell
+
+Special meaning                                  Description
+------------------------------------------------|---------------
 'enclosedwithin'                                : ' ', literal translation of content within brackets
 \followingcharacter                             : Backslash, literal translation of the following character
 "STRING"                                        : Content within "" is parsed as a string, variables are
