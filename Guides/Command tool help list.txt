@@ -14,6 +14,7 @@ Sections: (so far)
         - nslookup
         - openssl * not finished
         - MPI (Bash)
+        - openmp (Bash)
         - GIT (Bash)
 ================================================
 |                Introduction                  |
@@ -276,5 +277,73 @@ mpicc -o [compiledname] [filename.c]            : to compile a file using MPI
 mpiexec -n [number of processes] ./hello_world  : To run a compiled program with a
                                                 : specified number of processes
 
+================================================
+|                    OpenMP                    |
+================================================
+To compile an omp program, use this command:
+$ gcc -g -Wall -fopenmp -o omp hello_omp hello.c
+
+There are 2 methods to decide how many threads
+to create.
+
+                Method 1:
+Within the parallel sections and pragma, you can
+define it directly.
+
+#pragma omp parallel num_threads(int derp)
+{
+ /** Parallel code */
+}
+This requires that you supply the value either
+within the program, or as an argument when you
+execute the program, like this:
+$ ./omp_hello 4
+This function is used when converting argc/argv to a long int
+
+Example: int thread_count = strtol(argv[1], NULL, 10);
+
+                Method 2:
+You can define a system variable beforehand,
+to determine the thread count like this:
+$ export OMP_NUM_THREADS #
+Simply exchange the hashtag (Pound symbol),
+with the desired number.
+Then you can run the compiled code, without
+having to supply the value as an argument.
+$ ./derp
 
 
+================================================
+|                      Git                     |
+================================================
+Github is a repository of sorts, you create an
+account on their website, and then you'll be 
+able to use it to connect with a directory on
+your computer, to use it as a cloud service
+platform.
+
+Git commands work by typing 'git' first, and
+then the specific command.
+
+The general concept is that you have an index
+uploaded or altered within the online
+repository.
+In order to upload the files to Git, you need
+to ensure there's a commit message included.
+
+git commands                                     Description
+------------------------------------------------|---------------
+--help                                          : Provide a list of common Git commands.
+init                                            : Create an empty Git repository or reinitialize an existing one
+status                                          : Review the status of the directory, with new and unmodified files.
+add *                                           : Add all new/modified files to the index.
+git -m "Message"                                : Create a message for files within the index before uploading
+git push                                        : Push the files within the index to the online repository
+git pull                                        : Fetch from and integrate with another repository or a local branch.
+
+
+[Example]
+------------------------------------------------|---------------
+$ git add *                                     : Add all files to the index
+$ git commit -m "derp"                          : Create a message to go along with the files within the index
+$ git push                                      : Upload the index.
