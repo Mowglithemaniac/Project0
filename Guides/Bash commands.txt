@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.11.6
+ Version     : 2.11.7
  Date        : 29/09-20
- Last Updated: 11/09-21
+ Last Updated: 14/09-21
  Copyright   : Do not alter, copy or share this file without permission
  Description : A rough guide for new users to understand bash console commmands
                Made for course 62588 Operating systems at DTU Denmark Fall 2020.
@@ -680,18 +680,37 @@ Debian based distributions handle dependencies
 directly when you acquire and install packages.
 Wish I could say the same for .rpm distros.
 
+Debian based distros use "apt" or "apt-get"
+For a detailed list, use these two commands.
+
+$ sudo apt-get --help
+$ sudo apt --help
+
+These are the most commonly used debian based
+commands:
+------------------------------------------------|---------------
 $ sudo apt-get update                           : debian based distros
-$ sudo apt-get upgrade                          : debian based distros
-$ sudo apt-get build-essential                  : debian based distros
+                                                  Retrieve new lists of packages
+$ sudo apt-get upgrade                          : Perform an upgrade
+$ sudo apt-get build-essential                  : A
+$ sudo apt search [NAME]                        : Display a list of available packages related to the search parameter                        
+$ sudo apt-get install [PACKAGE]                : Install package
+$ sudo apt install [PACKAGE]                    : Instsall package
 
-And for .rpm distros.
+[Example DEB based]
+$ sudo apt search music                         : Find packages related to music
+$ sudo apt-get install [PACKAGENAME]            : Install a specific package, i.e. nmap
+$ sudo apt install nmap                         : install nmap
 
+And similar for .rpm distros, these two are the
+primary method for managing and installation.
 yum [option] [command]                          : (For RPM distros) Install, Uninstall, Update Packages
                                                   Now outdated 
 dnf [option] [command]                          : (For RPM distros) 'Dandified YUM', it is an upgraded version of YUM,
                                                   available since version 18 of Fedora. Syntax somewhat identical to YUM
 
-[Example .rpm]
+.rmp usecases
+------------------------------------------------|---------------
 $ yum provides dvdrecord                        : A method to search for packages, if you know either the 'configuration file',
                                                   'library name' or 'command', but don't known which package it is located in.
 $ yum search [partial name]                     : Looks for the partial name in the description of packages.
@@ -706,12 +725,6 @@ $ yum update                                    : Update a single package or to 
                                                   and have an update available.
 $ yum grouplist                                 : Show a list of package groups
 $ yum groupinstall [name]                       : Installing a package group
-
-
-[Example DEB based]
-$ sudo apt search music                         : Find packages related to music
-$ sudo apt-get install [PACKAGENAME]            : Install a specific package, i.e. nmap
-$ sudo apt install nmap                         : install nmap
 
 ================================================
 |                  NETWORKING                  |
