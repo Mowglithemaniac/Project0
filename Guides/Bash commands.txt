@@ -4,7 +4,10 @@
  Version     : 2.11.7
  Date        : 29/09-20
  Last Updated: 14/09-21
- Copyright   : Do not alter, copy or share this file without permission
+ Copyright   : Do not alter, this file without permission
+               For non commercial use only.
+ Licence     : CC BY-NC-ND
+               https://creativecommons.org/about/cclicenses/
  Description : A rough guide for new users to understand bash console commmands
                Made for course 62588 Operating systems at DTU Denmark Fall 2020.
                To be used by the teacher at his discretion.
