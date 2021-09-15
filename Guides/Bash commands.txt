@@ -1,7 +1,7 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.11.7
+ Version     : 2.12.0
  Date        : 29/09-20
  Last Updated: 14/09-21
  Copyright   : Do not alter, this file without permission
