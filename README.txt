@@ -11,7 +11,7 @@
                the content, and pretend it's your own.
                In case I'm not the author it should be clearly defined within
                the files.
- Copyright   : Do not alter, this file without permission
+ Copyright   : Do not alter, the files without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
                https://creativecommons.org/about/cclicenses/               
