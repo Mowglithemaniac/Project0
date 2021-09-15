@@ -2,7 +2,7 @@
  Name        : README.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
  Date        : 29/09-20
- Last Updated: 11/09-21
+ Last Updated: 15/09-21
  Description : This repository is created to include an introduction
                and overview into a number of subjects.
                If I'm the author (most files only include the ID, not the name)
