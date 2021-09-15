@@ -6,25 +6,26 @@
  Description : This repository is created to include an introduction
                and overview into a number of subjects.
                If I'm the author (most files only include the ID, not the name)
-               assume that the files are on copyright, with a licene regarding
+               assume that the files are on copyright, with a license regarding
                noncommercial and non derivative, meaning that you can't alter 
                the content, and pretend it's your own.
                In case I'm not the author it should be clearly defined within
                the files.
- Copyright   : Do not alter, the files without permission
+ Copyright   : Do not alter, the files without permission, can be shared,
+               always credit author.
                For non commercial use only.
  Licence     : CC BY-NC-ND
                https://creativecommons.org/about/cclicenses/               
  ============================================================================*/
 
 Directory   | C-code examples
-            : I wrote them, so they're on copyright (except for the argc/argv file)
+            : If I'm the author they're on copyright
             : Is set up to contain a number of C-code files, with a focus on syntax within
               the different areas.
               Files starting with the letter 'A' are meant to be useful in their own right
               rather than merely showing syntax.
 
-            : Files are compiled with gcc, there's an extensive description of how to compile
+            - Files are compiled with gcc, there's an extensive description of how to compile
               in the Guides folder "Command tool help.txt"
 
 
@@ -35,10 +36,12 @@ Exercise 1. : Figuring out why and how C codes can result in infinite
               loops if you enter something other than a value.
 Exercise 2. : Intentionally creates a number of zombies, so that you can
               experiment with the 'top' command, to see how the 'zombie'
-              paragraph can change, with the program is actively running.
+              paragraph can change, with the program actively running.
 
 Directory   | Guides
+            - Condensed information about topics, absolutely on copyright.
 1 pdf       : Configuring WSL and get it running with VSC.
+              I didn't write this
 Bash commands.txt
             : An extensive guide regarding Bash, the command
               console for Linux.
@@ -51,8 +54,8 @@ Command tool help list.txt
               nslookup, gcc, MPI, OpenMP, git
 
 Directory   | Shell Examples
-            : Copy pasted of the net and from places.
-            : A lot of shell files to highlight syntax.
+            - Copy pasted of the net and from places.
+            - A lot of shell files to highlight syntax.
               Note that file "B003 bsub.h" is to be used specifically on the LSF 10 cluster.
               This is done by submitting it to the job queue, and let the server handle it.
 Command:
