@@ -5,40 +5,56 @@
  Last Updated: 11/09-21
  Description : This repository is created to include an introduction
                and overview into a number of subjects.
+               If I'm the author (most files only include the ID, not the name)
+               assume that the files are on copyright, with a licene regarding
+               noncommercial and non derivative, meaning that you can't alter 
+               the content, and pretend it's your own.
+               In case I'm not the author it should be clearly defined within
+               the files.
+ Copyright   : Do not alter, this file without permission
+               For non commercial use only.
+ Licence     : CC BY-NC-ND
+               https://creativecommons.org/about/cclicenses/               
  ============================================================================*/
 
-
 Directory   | C-code examples
-Is set up to contain a number of C-code files, with a focus on syntax within
-the different areas.
-Files starting with the letter 'A' are meant to be useful in their own right
-rather than merely showing syntax.
+            : I wrote them, so they're on copyright (except for the argc/argv file)
+            : Is set up to contain a number of C-code files, with a focus on syntax within
+              the different areas.
+              Files starting with the letter 'A' are meant to be useful in their own right
+              rather than merely showing syntax.
 
-Files are compiled 
+            : Files are compiled with gcc, there's an extensive description of how to compile
+              in the Guides folder "Command tool help.txt"
 
 
 Directory   | Exercises
-Setup to help the user gain some practical experience in some specific way.
-Exercise 1.     : Figuring out why and how C codes can result in infinite
-                  loops if you enter something other than a value.
-Exercise 2.     : Intentionally creates a number of zombies, so that you can
-                  experiment with the 'top' command, to see how the 'zombie'
-                  paragraph can change, with the program is actively running.
+            : I wrote them, so they're on copyright
+              Setup to help the user gain some practical experience in some specific way.
+Exercise 1. : Figuring out why and how C codes can result in infinite
+              loops if you enter something other than a value.
+Exercise 2. : Intentionally creates a number of zombies, so that you can
+              experiment with the 'top' command, to see how the 'zombie'
+              paragraph can change, with the program is actively running.
 
 Directory   | Guides
-1 pdf                       : Configuring WSL and get it running with VSC.
-Bash commands.txt           : An extensive guide regarding Bash, the command
-                              console for Linux.
-cmd commands.txt            : A brief list regarding some of the most commonly
-                              used cmd command options.
-Command tool help list.txt  : A file explaining detailed use about a few useful
-                              and very specific commands, such as
-                              nslookup, gcc, MPI, OpenMP, git
+1 pdf       : Configuring WSL and get it running with VSC.
+Bash commands.txt
+            : An extensive guide regarding Bash, the command
+              console for Linux.
+cmd commands.txt
+            : A brief list regarding some of the most commonly
+              used cmd command options.
+Command tool help list.txt
+            : A file explaining detailed use about a few useful
+              and very specific commands, such as
+              nslookup, gcc, MPI, OpenMP, git
 
 Directory   | Shell Examples
-A lot of shell files to highlight syntax.
-Note that file "B003 bsub.h" is to be used specifically on the LSF 10 cluster.
-This is done by submitting it to the job queue, and let the server handle it.
+            : Copy pasted of the net and from places.
+            : A lot of shell files to highlight syntax.
+              Note that file "B003 bsub.h" is to be used specifically on the LSF 10 cluster.
+              This is done by submitting it to the job queue, and let the server handle it.
 Command:
 $ bsub < B003\ bsub.sh
 To view the job queue, use the command 'bjobs'
