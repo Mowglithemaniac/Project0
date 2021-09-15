@@ -20,5 +20,7 @@ All I have to do to commit and push are follow these commands.
 > git commit -m "message thingy"
 > git push
 
+Use the pull command, to update the directory on your computer to synchronize
+with the online repository.
 
 
