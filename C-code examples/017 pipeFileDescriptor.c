@@ -5,7 +5,7 @@
  Copyright   : source: https://www.youtube.com/watch?v=Mqb2dVRe0uo
  Date        : 05/07-2021
  Description : Communication via Pipe with file descriptors
-			 : This function use 'read' and 'write' function calls.
+             : This function use 'read' and 'write' function calls.
  ============================================================================*/
 
 #include <stdio.h>
