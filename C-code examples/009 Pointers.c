@@ -17,15 +17,16 @@ void basicFunction();
 void basicArray();
 void badExampleFunction(int derp);
 void godExampleFunction(int *derp); 
-void exampleArray(int *array[], int length);
+void exampleArray(int array[], int length);
 
 
-void 
+void main(void){
 
-int main (){
-    printf("This program illustrates the use of pointers.\n"
-           "A pointer is an object that looks at the address of another object.\n");
-    basic();
+       printf("This program illustrates the use of pointers.\n"
+              "A pointer is an object that looks at the address of another object.\n");
+       basic();
+       basicFunction();
+       basicArray();
  
 }
 
@@ -85,44 +86,45 @@ void basic(){
 
 //Pointers or values through functions
 void basicFunction(){
-    printf("============================================\n\n"
-           "What happens when sending values or pointers through functions\n"
-           "Using 2 simple examples, submitting as direct, and indirect(pointer) .\n\n");
-    int derp = 10;
-    printf("Original value of 'derp': %d\n\n", derp);
-    printf("Each of these functions will multiply the value with two, ")
-    badExampleFunction(derp);
-    printf("Result direct  \t %d\n", derp);
-    
-    godExampleFunction(&derp);
-    printf("Result indirect\t %d\n\n", derp);
-    /**When you pass a variable to a function,
-    * you're creating a copy of that variable,
-    * so in order to alter it within the original function,
-    * you need to pass the pointer to that variable,
-    * so you'll have access to the original and not just the copy.
-    */
-    
+       printf("============================================\n\n"
+              "What happens when sending values or pointers through functions\n"
+              "Using 2 simple examples, submitting as direct, and indirect (pointer) .\n\n");
+       int derp = 10;
+       printf("Each of these functions will double the value\n");
 
+       printf("Original value of 'derp': %d\n\n", derp);
+       badExampleFunction(derp);
+       printf("Result after direct  \t  %d\n", derp);
+       
+       godExampleFunction(&derp);
+       printf("Result after indirect\t  %d\n\n", derp);
+       /**When you pass a variable to a function,
+        * you're creating a copy of that variable,
+        * so in order to alter it within the original function,
+        * you need to pass the pointer to that variable,
+        * so you'll have access to the original and not just the copy.
+        */
+    
 }
 
 void basicArray(){
     printf("============================================\n\n"
            "When dealing with arrays, the name itself is treated as a pointer\n"
            "A single simple example\n\n");
-    int derp[] = {2, 3, 5, 7, 11}
+    int derp[] = {2, 3, 5, 7, 11};
     printf("Content of original array\n");
     for(int i = 0; i < 5; i++){
-       printf("%d")
-       if(i != 4){ printf(" ,")}
+       printf("%d", derp[i]);
+       if(i != 4){ printf(", ");}
     }
-    printf("\nIncrementing the value within, by 1");
-    exampleArray(derp, sizeof(derp)/sizeof(derp[0])){
-    printf("Content after functions\n");
+    printf("\nIncrementing the value within, by 1, by passing the name of the array\n");
+    exampleArray(derp, sizeof(derp)/sizeof(derp[0]));
+    printf("Content after passing through a function\n");
     for(int i = 0; i < 5; i++){
-       printf("%d")
-       if(i != 4){ printf(" ,")}
+       printf("%d", derp[i]);
+       if(i != 4){ printf(", ");}
     }
+    printf("\n\n");
 }
 
 
@@ -134,7 +136,7 @@ void godExampleFunction(int *derp){
     *derp *= 2;
 }
 
-void exampleArray(int *array[], int length){
+void exampleArray(int array[], int length){
    for(int i = 0; i < length; i++){
       array[i]++;
    }
