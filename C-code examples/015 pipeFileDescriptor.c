@@ -1,5 +1,5 @@
 /*============================================================================
- Name        : Test22.c
+ Name        : pipeFileDescriptor
  Author      : Declined#8151 (Discord ID), s090116
  Version     : v1.01
  Copyright   : source: https://www.youtube.com/watch?v=Mqb2dVRe0uo
