@@ -1,5 +1,5 @@
 /*============================================================================
- Name        : Test12.c
+ Name        : Advanced Pointers.c
  Author      : DTU - 2020 exam, course 02321
  Edited by   : s090116
  Version     : v1.00
