@@ -13,6 +13,7 @@
 void main(){
     char temp[20] = "Hello";
     printf("Length of 'Hello' is : %ld\n", strlen(temp));
-
+    //Hint it's 5
 }
+
 
