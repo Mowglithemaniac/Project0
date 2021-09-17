@@ -1,5 +1,5 @@
 /*============================================================================
- Name        : Test21.c
+ Name        : ArgcArgv
  Author      : Dunno, but it's concisely set up.
  Edited by   : Declined#8151 (Discord ID), s090116
  Version     : 1.00
