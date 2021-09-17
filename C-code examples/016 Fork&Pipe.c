@@ -1,11 +1,12 @@
 /*============================================================================
- Name        : Test23.c
+ Name        : Fork&Pipe.c
  Author      : Declined#8151 (Discord ID), s090116
  Version     : 1.01
  Copyright   : Your copyright notice
  Date        : 01/07-2021
+ Last updated: 17&09/2021
  Description : Sending a message to a child through a pipe, using FILE
-			 : Ergo, 'fprintf' and 'fscanf'
+	     : Ergo, 'fprintf' and 'fscanf'
  ============================================================================*/
 
 #include <stdio.h>
