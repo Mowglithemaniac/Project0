@@ -33,7 +33,7 @@ void main(){
 
     printf("\nThis is displayed using unsigned int:\n");
     for(int i=0;i<32;i++){
-        printf("%.2d : %4u\t", i+1, tempArray[i]); //Notie %u for unsigned
+        printf("%.2d : %4u\t", i+1, tempArray[i]); //Notice %u for unsigned
         if((i+1)%5==0){printf("\n");}
     }
 
