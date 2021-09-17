@@ -4,6 +4,7 @@
  Author      : Declined#8151 (Discord ID), s090116
  Version     : v1.02
  Date        : 27/12-2020
+ Last updated: 17/09-2021
  Copyright   : source: https://www.programiz.com/c-programming/c-pointer-functions
  Description : Passing an array through a function
  ============================================================================*/
@@ -19,24 +20,26 @@ int main(){
      * Example:
      * int  = 32 bits of data.
      * char = 8 bits of data.
+     * This is a fancy method to figure out the exact bit length
+     * and then divide it by the datatype, to find the relative length
      */
-    printf("Size of array:\t%ld\n", (sizeof(exampleArray)/sizeof(exampleArray[0])));    
-    printf("Initial:\t");
+    printf("The name of an array, is treated as a pointer, which is what this program is about\n"
+           "Size of array:\t%ld\n", (sizeof(exampleArray)/sizeof(exampleArray[0])));    
+    printf("Original content:\t");
     for(int i = 0; i < 5; i++){
         printf("%d ", exampleArray[i]);
-        exampleArray[i];
+//        exampleArray[i];
     }
     printf("\n");
 
 
-    /**Sending the array through a function
-     *  
+    /**
+     * Sending the array through a function 
      */
     T011(exampleArray, 5);
 
-    printf("\n\nWhat happens if I do the same in main.\nAfter :\t\t");
+    printf("\n\nWhat is the result after returning to main.\nAfter :\t\t");
     for(int i = 0; i < 5; i++){
-        exampleArray[i]++;
         printf("%d ", exampleArray[i]);
     }
 
@@ -53,12 +56,11 @@ int main(){
     return 0;
 }
 
-
 void T011(int arr[], int size){
-    printf("\nSending the content to a function, to be incremented.\n");
+    printf("\nSending the content to a function, to be multiplied by itself.\n");
     printf("Function :\t");
     for(int i = 0; i < size; i++){
-        arr[i]++;
+        arr[i]*=arr[i];
         printf("%d ", arr[i]);
     }
 }
