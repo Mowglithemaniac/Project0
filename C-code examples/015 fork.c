@@ -1,9 +1,10 @@
 /*============================================================================
- Name        : Test18.c
+ Name        : Fork
  Author      : Declined#8151 (Discord ID), s090116
  Version     : 1.01
  Copyright   : Your copyright notice
  Date        : 01/07-2021
+ Last updated: 17/09-2021
  Description : Basic example of implementation of fork
  ============================================================================*/
  
