@@ -1,5 +1,5 @@
 /*============================================================================
- Name        : Test20.c
+ Name        : simple_execvp.c
  Author      : Declined#8151 (Discord ID), s090116
  Version     : 1.01
  Copyright   : Your copyright notice
