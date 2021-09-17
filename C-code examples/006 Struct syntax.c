@@ -1,9 +1,10 @@
 /*============================================================================
- Name        : Test16.c
+ Name        : Struct syntax.c
  Author      : Declined#8151 (Discord ID), s090116
- Version     : 1.03
+ Version     : 1.04
  Copyright   : Your copyright notice
  Date        : 29/07-2021
+ Last updated: 17/07-2021
  Description : Struct syntax, different examples
  ============================================================================*/
 
