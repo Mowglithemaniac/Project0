@@ -347,3 +347,4 @@ git pull                                        : Fetch from and integrate with 
 $ git add *                                     : Add all files to the index
 $ git commit -m "derp"                          : Create a message to go along with the files within the index
 $ git push                                      : Upload the index.
+$ git reset --hard                              : Undo all local changes (make sure they're unstaged, aka not added first)
