@@ -2,7 +2,7 @@
  Name        : README.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
  Date        : 29/09-20
- Last Updated: 15/09-21
+ Last Updated: 18/09-21
  Description : This repository is created to include an introduction
                and overview into a number of subjects.
                If I'm the author (most files only include the ID, not the name)
@@ -19,24 +19,27 @@
  ============================================================================*/
 
 Directory   | C-code examples
-            : If I'm the author they're on copyright
-            : Is set up to contain a number of C-code files, with a focus on syntax within
-              the different areas.
-              Files starting with the letter 'A' are meant to be useful in their own right
-              rather than merely showing syntax.
-
-            - Files are compiled with gcc, there's an extensive description of how to compile
+            : If I'm the author the file is on copyright, else the source should be
+              clearly defined within the 
+            : The goal is to have a number of C-code examples regarding different topics,
+              which can be used to understand the basics of a topic relatively quickly.
+            : Files are compiled with gcc, there's an extensive description of how to compile
               in the Guides folder "Command tool help.txt"
-
+       Name - 000-020 A tl;dr introduction about different topics
+            - 021-[???] Could be better, a number of files I've crammed in there
+            - A[0??] Created to be useful in their own right
+            - C[0??] Basic topics regarding pointers
+            - D[0??] Files regarding Linked liists
 
 Directory   | Exercises
             : I wrote them, so they're on copyright
               Setup to help the user gain some practical experience in some specific way.
 Exercise 1. : Figuring out why and how C codes can result in infinite
               loops if you enter something other than a value.
+              Essentially letting users figure out the liitation of scanf.
 Exercise 2. : Intentionally creates a number of zombies, so that you can
               experiment with the 'top' command, to see how the 'zombie'
-              paragraph can change, with the program actively running.
+              paragraph can change, with the command actively running.
 
 Directory   | Guides
             - Condensed information about topics, absolutely on copyright.
@@ -58,9 +61,18 @@ Directory   | Shell Examples
             - A lot of shell files to highlight syntax.
               Note that file "B003 bsub.h" is to be used specifically on the LSF 10 cluster.
               This is done by submitting it to the job queue, and let the server handle it.
+
 Command:
 $ bsub < B003\ bsub.sh
 To view the job queue, use the command 'bjobs'
 After a minute or two expect that the job will disappear, so you have a limited
 amount of time to test it.
+
+
+Directory   | Tools
+            : Setup to contain useful programs
+            - LC3-Decoder jar file, graphical interface
+              looks like crap, but it works.
+              Converts machine language to Assembly.
+
 
