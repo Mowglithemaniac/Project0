@@ -1,44 +1,54 @@
-/*
- ============================================================================
- Name        : Exercise3
- Author      : 
- Version     : 1.0
- Copyright   : 
- Description : Afleverings Opgave 1. Programering C
- ============================================================================
- */
+ /*============================================================================
+ Name        : Solution3
+ Author      : Declined#8151 (Discord ID), s090116
+ Version     : 1.01
+ Copyright   : Your copyright notice
+ Date        : 17/09-2021
+ Last updated: 19/09-2021
+ Description : Exercise3 solution
+ ============================================================================*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+void filconverter1(char infil[], char outfil[]);
+void filconverter2(char infil[], char outfil[]);
+void filconverter3(char infil[], char outfil[]);
+void filconverter4(char infil[], char outfil[]);
 
+int main(void) { 
 
-// precon:  modtaget fil skal være en normal .txt fil og slutte på \n.
-// postcon: denne funktion laver "," om til "." 
-void filkonverter1(char infil[], char outfil[]){
-	FILE *fpt1,*fpt2; //angiver navne til filerne.
-	fpt1=fopen(infil,"r");// læser fra fpt1 (Inputfil1).
-	fpt2=fopen(outfil,"w");// skriver til fpt2 (Outputfil1).
+	filconverter1("Inputfil1.txt","Outputfil1.txt");
+	filconverter2("Inputfil2.txt","Outputfil2.txt");
+	filconverter3("Inputfil3.txt","Outputfil3.txt");
+	filconverter4("Inputfil4.txt","Outputfil4.txt");
+}
+
+// precon:  Input file must be a regular .txt fil and end with \n
+// postcon: This function converts ',' to '.' 
+void filconverter1(char infil[], char outfil[]){
+	FILE *fpt1,*fpt2; 								    // Creating file pointers to be used for accessing the files.
+	fpt1=fopen(infil,"r");								// Open file with read option
+	fpt2=fopen(outfil,"w");								// Open file with write option
 	if(fpt1 == NULL || fpt2 == NULL){
       perror("Error in opening file");
       exit(1);
 	}
 
 	char c;
-	while(fscanf(fpt1,"%c",&c)==1)//scanner filen 1 karakter afgangen.
-	{
+	while(fscanf(fpt1,"%c",&c)==1){                    // Scanning 1 character at a time
 		if(c==',')
-			fprintf(fpt2,"%c",'.'); //hvis "," lav om til ".".
+			fprintf(fpt2,"%c",'.');
 		else
-			fprintf(fpt2,"%c",c); // ellers forts�t at skrive direkte fra fpt1 til fpt2.
+			fprintf(fpt2,"%c",c);
 	}
 	
 }
 
-// precon:  modtaget fil skal være en normal .txt fil og slutte på \n.
-// postcon: mellemrum er blevet lavet om til linjeskift og "," er lavet om til mellemrum.
-void filkonverter2(char infil[], char outfil[]){
+// precon:  Input file must be a regular .txt fil and end with \n
+// postcon: Spaces must be turned into linebreaks, and commas to spaces
+void filconverter2(char infil[], char outfil[]){
 	FILE *fpt3,*fpt4; // angiver filerne .
 	fpt3=fopen(infil,"r"); // l�ser fra input.
 	fpt4=fopen(outfil,"w");// skriver til output.
@@ -50,10 +60,10 @@ void filkonverter2(char infil[], char outfil[]){
 	while(fscanf(fpt3,"%c",&c)==1){
 		switch(c){
 			case ' ':
-			 	fprintf(fpt4,"%c",'\n'); // hvis mellemrum lav om til linjeskift.
+			 	fprintf(fpt4,"%c",'\n');
 				break;
 			case ',':
-			 	fprintf(fpt4,"%c",' '); // hvis mellemrum lav om til linjeskift.
+			 	fprintf(fpt4,"%c",' ');
 				break;
 			default:
 			fprintf(fpt4,"%c",c); 
@@ -62,15 +72,14 @@ void filkonverter2(char infil[], char outfil[]){
 	}
 }
 
-// precon:  filen skal være af .txt format og slutte på \n.
-// postcon: filen skal have indsat punktum så der er 2 tal på hver linje som består af tal 1 og 2 samt
-// af tal 3 og 4.
-// programmet skal også kunne se om der er for mange tal i en linje eller ikke tal i (bogstaver og tegn)
+// precon:  Input file must be a regular .txt fil and end with \n
+// postcon: Each line in the file should contain 4 numbers, and be able to tell if there isn't
+//          When there is 4 numbers, insert a dot between the 2nd and 3rd number.
 
-void filkonverter3(char infil[], char outfil[]){
+void filconverter3(char infil[], char outfil[]){
 	FILE *fpt5,*fpt6;
-	fpt5=fopen(infil,"r"); // angiver fil der skal l�ses fra.
-	fpt6=fopen(outfil,"w"); // angiver fil der skal skrives til.
+	fpt5=fopen(infil,"r"); 
+	fpt6=fopen(outfil,"w");
 	if(fpt5 == NULL || fpt6 == NULL){
       perror("Error in opening file");
       exit(-1);
@@ -113,38 +122,32 @@ void filkonverter3(char infil[], char outfil[]){
 	}
 }
 
-//precon:  infilen skal være af .txt format og slutte på \n
-//postcon: outfilen skal have følgende krav.
-// 		   1. Der er et mellemrum efter punktum.
-//		   2. Der er et mellemrum mellem ordene, alts� overfl�dige mellemrum skal v�k.
-//		   3. Der er et mellemrum efter komma.
-//		   4. Der er ikke mellemrum f�r punktum.
-//		   5. Der er ikke mellemrum f�r komma.
-
-
-// følgende opgave virker ikke af ukendte årsager laves der "." i næstent hvert mellemrum. 
-// jeg har prøvet at finde frem til fejlen uden held (ikke engang at lave et nyt program har virket)
-// vil dog vove at p�st� at de funktioner jeg har skrevet burde virke som beskrevet.
-void filkonverter4(char infil[], char outfil[]){
+//precon  Input file must be a regular .txt fil and end with \n
+//postcon: Outputfile has the following requirements
+// 		   1. There must be a space after a dot (.) character.
+//		   2. There must only ever be 1 space between words, not multiple.
+//		   3. There must be a space after a comma (,) character.
+//		   4. There must not be a space prior to a dot character.
+//		   5. There must not be a space prior to a comma character.
+void filconverter4(char infil[], char outfil[]){
 	FILE *fpt7,*fpt8;
-	fpt7=fopen(infil,"r");//  angiver fil der skal l�ses fra.
-	fpt8=fopen(outfil,"w");// angiver fil der skal skrives til.
-	char c, nextc; // angiver en char c som er min "l�se" char og en char nextc  (next char)
+	fpt7=fopen(infil,"r");
+	fpt8=fopen(outfil,"w");
+	char c, nextc; 								//Only need to have acceess to 2 characters at a time, 0
 
 	while(!feof(fpt7)){
-		//Check first character(s) of a sentence
-		c=getc(fpt7);
-		if(c == ' ' || c == '.' || c == ','){
+		c=getc(fpt7);							// Read the first character(s) of a sentence
+		if(c == ' ' || c == '.' || c == ','){	// In case a sentence start with something weird, ignore it.
 			continue;
 		}
-		if(c == '\n'){
+		if(c == '\n'){							// Newline.
 			fprintf(fpt8,"\n");
 			continue;
 		}
 
 		while(1){ //check 1 sentence at a time.
 			nextc=getc(fpt7);
-			if(feof(fpt7)){ return;			}
+			if(feof(fpt7)){ return;}
 			if(nextc == '\n'){
 				fprintf(fpt8,"%c%c", c, nextc);
 				break;
@@ -173,13 +176,7 @@ void filkonverter4(char infil[], char outfil[]){
 }
 
 
-int main(void) { // her k�res filerne fra
 
-	filkonverter1("Inputfil1.txt","Outputfil1.txt");
-	filkonverter2("Inputfil2.txt","Outputfil2.txt");
-	filkonverter3("Inputfil3.txt","Outputfil3.txt");
-	filkonverter4("Inputfil4.txt","Outputfil4.txt");
-}
 
 
 
