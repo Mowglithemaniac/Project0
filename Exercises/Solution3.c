@@ -12,10 +12,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-void filconverter1(char infil[], char outfil[]);
-void filconverter2(char infil[], char outfil[]);
-void filconverter3(char infil[], char outfil[]);
-void filconverter4(char infil[], char outfil[]);
+void fileconverter1(char infil[], char outfil[]);
+void fileconverter2(char infil[], char outfil[]);
+void fileconverter3(char infil[], char outfil[]);
+void fileconverter4(char infil[], char outfil[]);
 
 int main(void) { 
 
@@ -48,10 +48,10 @@ void filconverter1(char infil[], char outfil[]){
 
 // precon:  Input file must be a regular .txt fil and end with \n
 // postcon: Spaces must be turned into linebreaks, and commas to spaces
-void filconverter2(char infil[], char outfil[]){
-	FILE *fpt3,*fpt4; // angiver filerne .
-	fpt3=fopen(infil,"r"); // l�ser fra input.
-	fpt4=fopen(outfil,"w");// skriver til output.
+void fileconverter2(char infil[], char outfil[]){
+	FILE *fpt3,*fpt4; 
+	fpt3=fopen(infil,"r");
+	fpt4=fopen(outfil,"w");
 	if(fpt3 == NULL || fpt4 == NULL){
       perror("Error in opening file");
       exit(-1);
@@ -76,7 +76,7 @@ void filconverter2(char infil[], char outfil[]){
 // postcon: Each line in the file should contain 4 numbers, and be able to tell if there isn't
 //          When there is 4 numbers, insert a dot between the 2nd and 3rd number.
 
-void filconverter3(char infil[], char outfil[]){
+void fileconverter3(char infil[], char outfil[]){
 	FILE *fpt5,*fpt6;
 	fpt5=fopen(infil,"r"); 
 	fpt6=fopen(outfil,"w");
@@ -129,7 +129,7 @@ void filconverter3(char infil[], char outfil[]){
 //		   3. There must be a space after a comma (,) character.
 //		   4. There must not be a space prior to a dot character.
 //		   5. There must not be a space prior to a comma character.
-void filconverter4(char infil[], char outfil[]){
+void fileconverter4(char infil[], char outfil[]){
 	FILE *fpt7,*fpt8;
 	fpt7=fopen(infil,"r");
 	fpt8=fopen(outfil,"w");
