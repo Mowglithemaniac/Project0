@@ -7,7 +7,6 @@
  Last updated: 17/09-2021
  Copyright   :
  Description : A tl;dr file about how pointers work
-             : 
  ============================================================================*/
 
 #include <stdio.h>
