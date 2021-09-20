@@ -55,6 +55,10 @@ int main(){
     for (int i=0;i<3;i++){
         printf(" String[i] = %s\n",doubleP[i]);
     }
+    free(doubleP[0]);
+    free(doubleP[1]);
+    free(doubleP[2]);
+    free(doubleP);
 
     printf("=================================================\n\n");
     return 0;
