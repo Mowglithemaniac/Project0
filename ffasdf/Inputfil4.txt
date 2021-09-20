@@ -1,4 +1,0 @@
-Vi  arbejder     med     afleveringsopgave A,som tæller 30%.I    indledende
-programmering     arbejder   vi med programmeringssproget C.Næste semester
-skal vi    arbejde   med programmeringssproget C++  , som er    et
-   objektorienteret  sprog .
