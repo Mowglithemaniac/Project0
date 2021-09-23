@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.12.0
+ Version     : 2.12.1
  Date        : 29/09-20
- Last Updated: 14/09-21
+ Last Updated: 23/09-21
  Copyright   : Do not alter, this file without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
@@ -15,13 +15,13 @@ Teacher      : Bhupjit Singh - bhsi@dtu.dk
  ============================================================================*/
 Sections:
     - Introduction
+    - Guide info
     - General tips
-    - General info
     - Elevated priveledge
     - System Commands
-      - Permission explanation
-      - Process details
+      * Permission explanation
     - System/User Info
+      * Process details
     - Directory commands
     - Help section
     - File access, edit, format
@@ -86,7 +86,7 @@ There is a list of useful abbreviations found in
 table 1.0 near the end of the document.
 
 ================================================
-|                 General info                 |
+|                  Guide info                  |
 ================================================
 Information about the format of this document
 
@@ -134,12 +134,12 @@ cd                                              : Change Directory, '..' to move
                                                 - Use '$ cd -' to go back to the directory you were just in
                                                 - Use '$ cd /' to go to root directory
                                                 - Use '$ cd ~' to go to HOME directory
-pwd                                             : Print Working directory
+pwd                                             : Print Working directory.
 
 something '>>' filename                         : Append content to file named filename
 something '>' filename                          : Overwrite content of file named filename
-                                                  This is a great option for pasting output into log files,
-                                                  when writing and testing C-programs
+                                                  These are great options for pasting output into log files,
+                                                  when writing and testing C-programs.
 
 (if intalled)Type 'code .' to open Visual Studio
 Code with that folder already being navigated to.
@@ -179,6 +179,9 @@ infinitely running program.
 [CTRL + L]                                      : Clears the bash terminal of text.
 [CTRL + U]                                      : Cut beginning of line, cut text to the beginning of the line.
 
+A similar tool in Linux, to 'Task Manager' 
+from Windows, are the commands 'top', 'htop', 
+and 'ps'.
 ================================================
 |              Elevated privilege              |
 ================================================
@@ -225,7 +228,7 @@ and more.
 Commands                                         Description
 ------------------------------------------------|---------------
 chmod                                           : Change file mode bits. Permission for files and directories,
-                                                  look at the next section for details regarding bit setup.
+                                                  look at the next paragraph for details regarding bit setup.
         +r [Filename]                           - Makes the file readable
         +w [Filename]                           - Makes the file writeable
         +x [Filename]                           - Makes the file executable
@@ -237,56 +240,43 @@ kill                                            : Sends a signal to a process.
        -[SIGNAL]                                - Optional, specify which signal number or signal name, to
                                                   send a specific signal
         [PID/%JOB_SPEC]                         - Which process to kill, JOB_SPEC is for background
-                                                  processes, so you need to look up the PID.
+                                                  processes, so you may need to look up the PID.
 nice                                            : Run a program with modified scheduling priority
                                                   Used for determining the 'nice' value upon process creation.
 renice                                          : Alter the 'niceness' priority of a running processes.
 gcc                                             : Compile program from c language.
         -o                                      - Output, next argument will be the created filename
-ps                                              : Processor Status, it is a highly integrated part of Linux.
-                                                  There are more than 80 options, most commonly used is 'aux'
-        aux                                     : Display processes of all users.
-        -o                                      : User defined format       
-        -e                                      : Select all processes, identical to -A
 whois                                           : shows some whois data about a website or ip
         [ip or website]
         | more/less                             - Displayed using the more or less format
-
 pstree                                          : Display a tree of process
 fsck                                            : Check and repair a Linux filesystem
 parted                                          : A partition manipulation program
-
 alias                                           : Access to aliases
-
-[EXAMPLES]
-$ chmod 600 [filename]                          : Where 6 is the user, 0 is group, 0 is everyone
-$ chmod 755 [directory]                         : 755 is recommended for directories
-$ chmod 744 [filename]                          : 644 is recommended for files. 
-$ gcc -o [newname] [c-file]                     : General format for compiling C-files
-$ gcc -o derp /test_folder/test.c               : Here we navigate into a folder to find the test.c file,
-                                                  the 'derp' file, is placed in the current folder
-$ ps aux                                        : See all running processes
-$ ps -eo pid,user,uid,gid,vsz,rss,comm --sort=-vsz
-                                                : Showing the selected categories, sorted descending by vsz
-$ ps -eo pid,user,vsz,rss,comm --sort=rss       : Showing the selected categories, sorted ascending by rss
-
-$ alias                                         : Display a list of aliases
-$ alias p='pwd ; ls -CF'                        : Create a new alias 'p', which is 2 commands, followed by one another
-                                                  For the alias to be saved between shells and sessions, they need to
-                                                  stored in the configuration files
-
-Use 'unalias' to remove an alias
-Remember, that if an alias is set in a 
-configuration file, it will be set again when
-you open another shell.
-
+unalias                                         : Remove an alias
+                                                  Remember that if an alias is set in a  configuration file, it will be
+                                                  set again when you open another shell.
 export                                          : Set the export attribute for variables
                                                   Used for passing variables to child shells.
                                                 - If no name is supplied, updates all.
         -p                                      - Display a list of all exported variables
 
+[EXAMPLES]
+$ chmod 650 [filename]                          : Where 6 is the user, 5 is group, 0 is everyone
+$ chmod 755 [directory]                         : 755 is recommended for directories
+$ chmod 744 [filename]                          : 644 is recommended for files. 
+$ gcc -o [newname] [c-file]                     : General format for compiling C-files
+$ gcc -o derp /test_folder/test.c               : Here we navigate into a folder to find the test.c file,
+                                                  the 'derp' file, is placed in the current directory
+$ alias                                         : Display a list of aliases
+$ alias p='pwd ; ls -CF'                        : Create a new alias 'p', which is 2 commands, followed by one another
+                                                  For the alias to be saved between shells and sessions, they need to
+                                                  stored in the configuration files
+$ alias derpyPing='ping -c 100 google.com'      : A relatively simple command to send 100 packages to google, and Then
+                                                  generate som statistics to check the connection
+
 ================================================
-|            Permission explanation            |
+|           * Permission Explanation           |
 ================================================
 Permission explanation:
 https://youtu.be/oxuRxtrO2Ag?t=3490
@@ -314,7 +304,6 @@ and so on
 |! -------------------------------------------> : Read bit, for 'Owner'
 ! --------------------------------------------> : {d, 1, b, c, s, p}
 
-
 When using the 'chmod' command, you  enter 3 numbers
 The first number represents the owner
 The second number represents the group
@@ -336,7 +325,68 @@ p                                               : Named pipe
 drwxrwxrwx 1 declined  4096 Jul 17 14:02  Guides
 
 ================================================
-|                Process details               |
+|               System/User Info               |
+================================================
+Information related to the OS, and user.
+Such as processes, users, calender and more.
+Unlike Windows, Linux does not have a Task
+Manager, so you need to be comfortable with
+commands such as 'top' and 'htop'. 
+
+Commands                                         Description
+------------------------------------------------|---------------
+uname                                           : Print system information
+who                                             : Show who is logged on
+whoami                                          : Print effective userid
+users                                           : Print the user names of users currently logged in to the current host
+id                                              : ID number, and associated details with the user
+hostname                                        : Show or set the system's host name (usually shown in your prompt)
+                                                  WARNING This is a complicated topic, DO NOT alter your hostname!!!
+date                                            : Display the date
+cal                                             : Calender
+        [month optional] [year]                 - month, and/or year. 
+[Example]
+$ cal 2021                                      : Will display the calender for the year 2021
+
+free                                            : Display amount of free and used memory in the system
+df [option] [file]                              : Report file system disk space usage'
+        -h                                      - Human readable
+        -H                                      - Print sizes in powers of 1000 (e.g., 1.1G)
+top                                             : Provides a dynamic overview of the running processes
+htop                                            : Interactive process viewer
+ps                                              : Processor Status, it is a highly integrated part of Linux.
+                                                  There are more than 80 options, most commonly used is 'aux'
+        aux                                     : Display processes of all users.
+        -o                                      : User defined format       
+        -e                                      : Select all processes, identical to -A
+tar                                             : An archiving utility
+free                                            : Displays the total amount of free space available along with the
+                                                  amount of memory used and swap memory in the system, and also the
+                                                  buffers used by the kernel
+watch                                           : Reruns a command every 2 seconds.
+        free -h                                 - Shows how much memory is in the system
+jobs                                            : Display a list of jobs running in the background.
+                                                  There is an entire paragraph dedicated to this concept, called 'Job control'.
+echo <text>                                     : Prints echoes the <print> in the console
+                                                  Has lots of uses, example printing the content of
+                                                  a system variable, inserting content into a file, and more.
+        -e                                      : Interprets escape characters
+printf                                          : An advanced version of echo
+
+[Examples]
+$ echo $PATH                                    : Prints the entire path variable
+$ echo $PS1                                     : Prints the entire PS1 settings variable, for
+                                                  how to display your prompt
+$ echo "herp derp" >> filename1.txt             : Insert "herp derp" into a file named 'filename1.txt'
+                                                - This command either appends, or creates the file if it does not exist
+$ echo -e "derp\a"                              : Prints 'derp' and should also beep
+$ ps aux                                        : See all running processes
+$ ps -eo pid,user,uid,gid,vsz,rss,comm --sort=-vsz
+                                                : Showing the selected categories, sorted descending by vsz
+$ ps -eo pid,user,vsz,rss,comm --sort=rss       : Showing the selected categories, sorted ascending by rss
+
+================================================
+|               * Process details              |
 ================================================
 Each process have some information related to it.
 This paragraph refers to specific usage of the
@@ -356,7 +406,7 @@ USER or UID                                     : The user who the process is ti
 %MEM                                            : How much memory the process is using 
 PID                                             : Processor ID, each process has a unique ID
 PPID                                            : ID number of the process's parent process
-PRI                                             : Priority of the process            
+PRI                                             : Priority of the process
 VSZ or SZ                                       : 'Virtual Memory Size'
 RSS                                             : Resident Set Size, it stands for the size of the
                                                   physical memory that the process is using
@@ -413,55 +463,6 @@ k                                               : Killing a process. Use the pro
                                                   to terminate the process cleanly, or just 9 to kill the
                                                   process outright.
                                                   Note comparison, command 'kill' vs 'killall'
-
-================================================
-|               System/User Info               |
-================================================
-Information related to the OS, and user.
-Such as processes, users, calender and more.
-Unlike Windows, Linux does not have a Task
-Manager, so you need to be comfortable with
-commands such as 'top' and 'htop'. 
-
-Commands                                         Description
-------------------------------------------------|---------------
-uname                                           : Print system information
-who                                             : Show who is logged on
-whoami                                          : Print effective userid
-users                                           : Print the user names of users currently logged in to the current host
-id                                              : ID number, and associated details with the user
-
-date                                            : Display the date
-cal                                             : Calender
-        [month optional] [year]                 - month, and/or year. 
-[Example]
-$ cal 2021                                      : Will display the calender for the year 2021
-
-free                                            : Display amount of free and used memory in the system
-df [option] [file]                              : Report file system disk space usage'
-        -h                                      - Human readable
-        -H                                      - Print sizes in powers of 1000 (e.g., 1.1G)
-top                                             : Provides a dynamic overview of the running processes
-htop                                            : Interactive process viewer
-tar                                             : An archiving utility
-free                                            : Displays the total amount of free space available along with the
-                                                  amount of memory used and swap memory in the system, and also the
-                                                  buffers used by the kernel
-watch                                           : Reruns a command every 2 seconds.
-        free -h                                 - Shows how much memory is in the system
-jobs                                            : Display a list of jobs running in the background.
-                                                  There is an entire paragraph dedicated to this concept, called 'Job control'.
-echo <text>                                     : Prints echoes the <print> in the console
-                                                  Has lots of uses, example printing the content of
-                                                  a system variable, inserting content into a file, and more.
-
-[Examples]
-$ echo $PATH                                    : Prints the entire path variable
-$ echo $PS1                                     : Prints the entire PS1 settings variable, for
-                                                  how to display your prompt
-$ echo "herp derp" >> filename1.txt             : Insert "herp derp" into a file named, filename1.txt
-                                                - This command either appends, or creates the file if it does not exist
-
 
 ================================================
 |              User administration             |
@@ -723,7 +724,7 @@ $ yum list emacs                                : List package names in differen
                                                   a package.
 $ yum install emacs                             : Install the emacs package (May require additional dependency installations)
 $ yum reinstall emacs                           : Reinstalling a package if you messed something up
-$ yum check-update
+$ yum check-update                              : Check for updates for all packages on the system
 $ yum update                                    : Update a single package or to get updates to all packages that are installed
                                                   and have an update available.
 $ yum grouplist                                 : Show a list of package groups
@@ -748,14 +749,21 @@ wget                                            : Retrieve web pages/files to di
         -b                                      - Run in background, to see the status use the command "tail -f wget-log"
         -C                                      - Resume download, in case networking dropped, rather than starting from scratch.
 ftp                                             : Copy files to/from a remote host
+sftp                                            : Same as 'ftp' only this is a secure version
 whois                                           : Client for the whois directory service
 ssh                                             : OpenSSH remote login client, remote access to a host
 iptables                                        : administration tool for IPv4/IPv6 packet filtering and NAT
 ping -[operator] [website]                      : Pings a website with packages
+traceroute                                      : Print the route packets trace to network host
 nslookup                                        : Query Internet name servers interactively.
                                                   There is a paragraph dedicated to the usage of this command.
+tcpdump                                         :Dump traffic on a network
+
 [Example]
 $ ping -c 100 google.com                        : Pings google.com with 100 packets, and provide you with statistics afterwards.
+$ ip addr show                                  : View all loaded network interfaces
+$ ip monitor
+$ traceroute yahoo.com                     : Display a traceroute to yahoo.com with 2 sec 
 
 ================================================
 |                   VARIABLES                  |
@@ -880,6 +888,13 @@ $ ./derp >> derpy.txt                           - Will send the content from the
 $ ./derp > derpy.txt                            - Will send the content from the compiled program (derp) to 
                                                   overwrite content of file 'derpy.txt' rather than shown on the console.
 
+There is also a command called 'expr' which can
+do basic math calculations, and regex.
+
+[Examples]
+$ expr 324 - 5123                               : Output -4799
+$ expr length 32094ij+NJIfe3#¤                  : Output 16
+
 ================================================
 |            Command line shortcuts            |
 ================================================
@@ -925,7 +940,6 @@ and more.
 
 Command                                          Description
 ------------------------------------------------|---------------
-lshw                                            : List hardware (warning, should be run as a super user)
 dmesg                                           : Print or control the kernel ring buffers
                                                   Used to view or alter which hardware was detected and which
                                                   drivers were loaded by the kernel at boot time.
@@ -936,6 +950,7 @@ lspci                                           : List all PCI devices
 lsusb                                           : List all USB devices
 lscpu                                           : List all PCU devices
 lsmod                                           : Show the status of modules in the Linux kernel
+lshw                                            : List hardware (warning, should be run as a super user)
 modinfo                                         : Show information about a Linux Kernel module
 rmmod                                           : Simple program to remove a module from the linux Kernel
 modprobe                                        : Add and remove modules from the Linux Kernel
@@ -1080,6 +1095,7 @@ grep [search pattern]                           : Print lines that match pattern
 chage                                           : Change user password expiry information
 
 
+[DTU specific]
 Details for accessing the LSF 10 cluster on DTU
 via a linux terminal
 http://www.cc.dtu.dk/?page_id=2501
@@ -1100,7 +1116,7 @@ $ bsub < example.sh
 
 To look at the job queue, use the command
 'bjobs'
-
+[DTU end]
 ================================================
 |                    Sources                   |
 ================================================
@@ -1213,7 +1229,7 @@ When installed, the prompt is usually set up
 to contain {Your username, your hostname, 
 the base name of your current working directory}
 For regular users, they're followed by a dollar
-sign, and pound sign (#) for the root user.
+sign ($), and pound sign (#) for the root user.
 
 Here is an example of that prompt:
 [declined@LAPTOP-E9IBLV7O: folderA] $
@@ -1398,6 +1414,8 @@ continue to run, even if you close the console.
 Remember to use %JOB_SPEC to access  the specific
 process directly.
 
+Command                                          Description
+------------------------------------------------|---------------
 jobs                                            : Display background jobs (hint use -l operator to view PID as well as status)
 bg                                              : Move jobs to the background.
                                                   Simulates running in the foreground, same as if it had been started with ' &' 
@@ -1795,6 +1813,7 @@ Command line                                    : A text interpreter with direct
 Desktop environment                             : Graphical user interface on top of the operating system
                                                 - Only available for fully fledged installations of Linux OS.
                                                 - Example: GNOME, DKE, Xfce and Fluxbox
+Directory                                       : Folder structure
 Distro/distribution                             : Collection of software making up a Linux-based OS.
                                                   There is a detailed explanation within the introduction section.
 Filesystem                                      : Method for storing and organizing files.
@@ -1951,7 +1970,7 @@ Directory                                        Description
                                                   standard /media directory. Some bootable Linux systems still use this
                                                   directory to mount hard disk partitions and remote filesystems.
                                                   Many people still use this directory to temporarily mount local or remote
-                                                  filesystems, which are not mountned permanently.
+                                                  filesystems, which are not mounted permanently.
 /misc                                           : A directory sometimes used to automount filesystem upon request
 /opt                                            : Directory structure available to store add-on application software.
 /proc                                           : Contains information about system resources
