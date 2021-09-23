@@ -1,13 +1,13 @@
  /*============================================================================
  Name        : Exercise3
  Author      : Declined#8151 (Discord ID), s090116
- Version     : 1.01
+ Version     : 1.02
  Copyright   : Your copyright notice
  Date        : 17/09-2021
- Last updated: 20/09-2021
+ Last updated: 23/09-2021
  Description : 4 small tasks of increasing difficulty, about evaluating
                input from .txt files
-               Desctiption at the bottom.
+               Description at the bottom.
  ============================================================================*/
 
 #include <stdio.h>
@@ -26,16 +26,16 @@ int main(void) {
 	fileconverter4("Inputfile4.txt","Outputfile4.txt");
 }
 
-void fileconverter2(char infil[], char outfil[]){
+void fileconverter1(char infil[], char outfil[]){
     //FILL ME IN
 }
 void fileconverter2(char infil[], char outfil[]){
     //FILL ME IN
 }
-void fileconverter2(char infil[], char outfil[]){
+void fileconverter3(char infil[], char outfil[]){
     //FILL ME IN
 }
-void fileconverter2(char infil[], char outfil[]){
+void fileconverter4(char infil[], char outfil[]){
     //FILL ME IN
 }
 

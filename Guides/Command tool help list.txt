@@ -101,6 +101,16 @@ print *argv@2                                   : Prints the entire set of argum
 print argv[1]                                   : Prints the second argument
 print derp=10                                   : Set variable derp to 10.
 
+When a program terminates, it provides a return
+value. By default, this value is 0 upon success
+and 1 (or other nonzero value) upon failure.
+
+To view the return value of a program, use the
+command '$?' within a terminal.
+[Example]
+$ ./program
+$ $?
+
 ================================================
 |                  nslookup                    |
 ================================================
