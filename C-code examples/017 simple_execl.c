@@ -23,7 +23,7 @@
         derp_pid = fork();
         if(derp_pid==0){
             char command[20] = {"man creat | less"};
-		    execl("/bin/sh", "sh", "-c", command, (char *) 0);
+            execl("/bin/sh", "sh", "-c", command, (char *) 0);
         }   
         if(derp_pid == -1){
             printf("Error with exec.\n");
