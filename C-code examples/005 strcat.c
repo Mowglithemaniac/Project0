@@ -33,6 +33,9 @@ void main(){
     printf("String b: %s\n", b);
     printf("String c: %s\n", c);
 
+    derpA = strlen(a);
+    derpB = strlen(b);
+    derpC = strlen(c);
     printf("------------------------\n\n"
            "So, what happened to b?\n"
            "...\n\nDisplaying the entire content of the 3 arrays\n");
