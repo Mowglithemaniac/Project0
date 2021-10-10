@@ -29,20 +29,27 @@ void pop();
 void printList();
 
 void main(){
-    char tempArray[20];
+    int maxSize = 512;
+    char tempArray[maxSize];
 
     FILE *fp;
     fp = fopen ("derpy.txt", "r");		// Open the file with 'read' option.	''
     if(fp==NULL){ exit(-1);}
     while(!feof(fp)){
-
-       fgets(tempArray, 20, fp);
-       if(tempArray[strlen(tempArray)-1]== '\n'){
-            tempArray[strlen(tempArray)-1] = 0;
-        }
+       fgets(tempArray, maxSize, fp);
+       // Uncomment this, and change the printf within printList to include a '\n' when printing each node
+//       if(tempArray[strlen(tempArray)-1]== '\n'){
+//            tempArray[strlen(tempArray)-1] = 0;
+//        }
         push();
-        tail->data = strdup(tempArray);
+        if(strlen(tempArray) > 0){
+            printf("String length\t: %d\n", (int)strlen(tempArray));
+            tail->data = strdup(tempArray);
+        } else{
+            pop();
 //        printf("%s", tempArray);
+        }
+        memset(tempArray, 0, sizeof(char) * maxSize);
     }
     fclose(fp);
     printList();
@@ -52,13 +59,14 @@ void main(){
 void push(){
     if(head != NULL){
         struct Node* temp1 = malloc(sizeof(struct Node));
+        temp1->data = NULL;
         temp1->next = NULL; 
         temp1->prev = tail; 
-        temp1->data = NULL;
         tail->next = temp1;
         tail = temp1;
     } else { //list is empty
         head = malloc(sizeof(struct Node));	// setting up space in the memory for the 1st node.
+        head->data = NULL;        // This causes an error
         head->prev = NULL;
         head->next = NULL;
 
@@ -73,8 +81,8 @@ void pop(){
         if(tail->prev != NULL){
             temp1 = tail;
             tail = tail->prev;
-            if(tail->data != NULL){
-                            free(tail->data);
+            if(temp1->data != NULL){
+                free(temp1->data);
             }
             free(temp1);
             tail->next = NULL;
@@ -94,6 +102,7 @@ void printList(){
 	printf("------------------------------------"	
 		   "\n------------------------------------"
 		   "\nThis function will print info from all the nodes.\n");
+    printf("Note that newline characters are NOT excluded from within nodes\n");
 	struct Node* Derpina = head;
 	int derp = 1;
 	while (1==1){
