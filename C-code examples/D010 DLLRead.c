@@ -38,9 +38,9 @@ void main(){
     while(!feof(fp)){
        fgets(tempArray, maxSize, fp);
        // Uncomment this, and change the printf within printList to include a '\n' when printing each node
-//       if(tempArray[strlen(tempArray)-1]== '\n'){
-//            tempArray[strlen(tempArray)-1] = 0;
-//        }
+       if(tempArray[strlen(tempArray)-1]== '\n'){
+            tempArray[strlen(tempArray)-1] = 0;
+        }
         push();
         if(strlen(tempArray) > 0){
             printf("String length\t: %d\n", (int)strlen(tempArray));

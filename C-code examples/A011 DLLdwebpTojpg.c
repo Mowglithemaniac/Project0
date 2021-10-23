@@ -6,7 +6,7 @@
  Dato        : 01/06-21
  Description : This program will convert all webp files in a folder to jpg
              : as well as removing the old webp file.
-             : Requires a UNIX system to run (Linux)
+             : Requires a UNIX system to run (Linux), as well as the dwebp package
              : Since the only method I know of to convert a file from webp to 
              : jpg, is via a Linux command 'dwebp' I am going to cheat a lot.
  ============================================================================*/
