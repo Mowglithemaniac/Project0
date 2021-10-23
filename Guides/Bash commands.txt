@@ -11,7 +11,7 @@
  Description : A rough guide for new users to understand bash console commmands
                Made for course 62588 Operating systems at DTU Denmark Fall 2020.
                To be used by the teacher at his discretion.
-Teacher      : Bhupjit Singh - bhsi@dtu.dk
+ Teacher     : Bhupjit Singh - bhsi@dtu.dk
  ============================================================================*/
 Sections:
     - Introduction
@@ -922,6 +922,7 @@ Shortcut                                         Description
 [ctrl + A]                                      : Beginning of line, go to the beginning of the current line.
 [ctrl + E]                                      : End of line, go to the end of the line.
 [ctrl + L]                                      : Clears the bash terminal of text.
+[alt + .]                                       : Paste the argument from the previous command
 
 [ctrl + K]                                      : Cut end of line, cut text to the end of the line.
 [ctrl + U]                                      : Cut beginning of line, cut text to the beginning of the line.
@@ -945,6 +946,9 @@ Shortcut                                         Description
 [alt + L]                                       : Lowercase word, change the current word to lower case        
 [alt + C]                                       : Change the current word to an initial capital
 [alt + D]                                       : Cut the word following the cursor
+[alt + 1]                                       : Access the 1st argument from the previous command
+[alt + 2]                                       : Access the 2nd argument from the previous command
+...                                             : And so on
 
 ================================================
 |                   HARDWARE                   |
@@ -1092,6 +1096,12 @@ forward 11 words.
 ================================================
 |                 Uncategorized                |
 ================================================
+:p                                              : prints a command rather than executing it
+:s                                              : Substitute argument with something else
+:t                                              : Strip path from an argument
+:r                                              : Strip file extension from an argument
+:g                                              : Affect all occurences of a word
+
 sudo apt install <deb name>                     : Install additional packages, such as 'nmap'
 
 mkfifo pipeline                                 : Make fifo pipeline        
@@ -1157,6 +1167,8 @@ Sources:
 - https://www.linux.com/training-tutorials/vim-101-beginners-guide-vim/
                                                 : VIM tutorial
 - https://vim.rtorr.com/                        : VIM shortcuts
+- http://samrowe.com/wordpress/advancing-in-the-bash-shell/
+                                                : Details concerning the use of colon (:) operators for arguments
 
 ================================================================================
 ||      Advanced topics                                                       ||
