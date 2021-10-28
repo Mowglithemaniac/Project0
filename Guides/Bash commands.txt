@@ -637,7 +637,7 @@ nano                                            : text editor
         [empty]                                 - Open a new document in nano (unsaved version)
 
 Additional text exditors:
-gedit, jed, joe, kate, kedit, mcedit, nedit
+vi, gedit, jed, joe, kate, kedit, mcedit, nedit
 
 file [option] [file]                            : Determine file type
 stat                                            : Display file or file system status
@@ -830,11 +830,15 @@ $ echo "Derp $(ls | wc -w)"                     : The content of ls is piped to 
                                                   the number of words in the folder.
 
 |                                               : Pipeline character, Special circumstance(!!!).
+                                                  This character is used to send the output of one command, to another command
+                                                 
+                                                  
 <('content')                                    : A method to condense the input, and use it as an argument.
 ./[filename]                                    : Running an executable file (compiled file, or shell file).
 
 [Example]
 $ history | less                                : Will show the history using the 'less' format
+$ history | grep derp                           : Will search the history and 
 $ diff <(wc file1) <(wc file2)                  : Compare at the difference between the word count of 2 files
 
 Wildcard types:                                  Description
@@ -1102,10 +1106,7 @@ forward 11 words.
 :r                                              : Strip file extension from an argument
 :g                                              : Affect all occurences of a word
 
-sudo apt install <deb name>                     : Install additional packages, such as 'nmap'
-
 mkfifo pipeline                                 : Make fifo pipeline        
-
 awk                                             : Awk is a scripting language used for manipulating data and
                                                   generating reports. By itself it goes beyond the scope of
                                                   this file, and would thus require a guide by itself, even
@@ -1114,11 +1115,7 @@ make                                            : GNU make utility to maintain g
                                                   Requires additional knowledge to setup for projects via makefile
 rm .test.c.sw*                                  : Deletes both .sw files for 'test.c' (In case of errors)
                                                   //compiler course
-pipe                                            : Pipe functionality, used within  C programs
-./[filename]                                    : running an executable file (compiled file)
-grep [search pattern]                           : Print lines that match patterns
 chage                                           : Change user password expiry information
-
 
 [DTU specific]
 Details for accessing the LSF 10 cluster on DTU
