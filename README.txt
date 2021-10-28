@@ -20,7 +20,7 @@
 
 Directory   | C-code examples
             : If I'm the author the file is on copyright, else the source should be
-              clearly defined within the 
+              clearly defined within the folder
             : The goal is to have a number of C-code examples regarding different topics,
               which can be used to understand the basics of a topic relatively quickly.
             : Files are compiled with gcc, there's an extensive description of how to compile
