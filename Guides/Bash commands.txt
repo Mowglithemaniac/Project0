@@ -1117,6 +1117,13 @@ rm .test.c.sw*                                  : Deletes both .sw files for 'te
                                                   //compiler course
 chage                                           : Change user password expiry information
 
+Python trick for C programming.
+If you've compiled a C program that requires a
+single input, you can use python to simulate it.
+[Example]
+./program < <(python -c "print('someinput')")   : The output of the python is treated as an input to the program.
+                                                  The -c option, mean that the (python)program, is passed in as a string
+
 [DTU specific]
 Details for accessing the LSF 10 cluster on DTU
 via a linux terminal
