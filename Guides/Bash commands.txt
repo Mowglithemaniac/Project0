@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.12.1
+ Version     : 2.12.3
  Date        : 29/09-20
- Last Updated: 23/09-21
+ Last Updated: 01/11-21
  Copyright   : Do not alter, this file without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
@@ -2051,7 +2051,7 @@ SIGUSR1         10                              :
 SIGSEGV         11                              : 
 SIGUSR2         12                              :
 SIGPIPE         13                              : 
-SIGALRM         14                              : 
+SIGALRM            14                              : 
 SIGTERM         15                              : Termination signal
 SIGSTKFLT       16                              : 
 SIGSTOP         17,(19,23)                      : The SIGSTOP signal stops the process. It cannot be handled,
