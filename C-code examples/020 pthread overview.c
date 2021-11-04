@@ -161,19 +161,22 @@ void *function3(struct threadInfo *details){
         avg = MAXSIZE/details->threadMax;
         start = details->threadCount * avg;
         end = (details->threadCount + 1) * avg;
-    } else  // No it isn't 
-    if ((float)MAXSIZE / details->threadMax < 2 && (float)MAXSIZE / details->threadMax > 1){ //threads numbering start to half MAXSIZE, get to do stuff
-        if(details->threadCount != 0 && MAXSIZE/details->threadCount <= 2){ //technically 2, but integers are rounded down.
-            details->output = 0;
-            return details;
+    } else  // No it isn't
+    //In case, there are an excessive amount of threads (compared to array locations)
+    if(MAXSIZE/ details->threadMax < 2) {
+    // Any threads with an ID in the range [MAXSIZE/2 ; ...] will be set to do nothing. 
+    // Range [0,1[ aka (threadID > MAXSIZE) means there are more threads than work
+    // Range ]1,2[ aka (threadID < MAXSIZE && threadID > MAXSIZE/2) means ID greater than MAXSIZE/2 but smaller than MAXSIZE
+        if((float)MAXSIZE/2 < details->threadCount+1){ //Using float to accompass both even and odd MAXSIZE.
+                details->output = 0;
+                return details;
         }
-
         start = details->threadCount * 2;
-        if(MAXSIZE/ (details->threadCount + 1) == 2 )
+        if( MAXSIZE/2 == (details->threadCount + 1)) //The very  last thread allowed to do stuff, notice how I'm rounding down the MAXSIZE, via integer.
             end = MAXSIZE;
         else
             end = (details->threadCount +1)* 2;
-    } else { // Equal to, or less than half the number of threads compared to values
+    } else { //Less than half the number of threads compared to values, not evenly distributed
         avg = (MAXSIZE/details->threadMax) +1;
         start = details->threadCount * avg;
         if(details->threadCount != details->threadMax -1){
@@ -186,6 +189,7 @@ void *function3(struct threadInfo *details){
     for(int i = start; i < end; i++){
         sum += binaryTable[i];
     }
+//    printf("Thread: %2d, Range: %d-%d\n", details->threadCount, start, end-1);
     details->output = sum;
 //    free(details);
     return details;
