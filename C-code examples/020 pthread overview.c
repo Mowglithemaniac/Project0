@@ -1,10 +1,10 @@
 /*============================================================================
  Name        : pthread overview
  Author      : Declined#8151 (Discord ID), s090116
- Version     : v1.00
+ Version     : v1.02
  Copyright   : Your copyright notice
- Date        : 29/07-2021
- Last updated: 31/09-2021
+ Date        : 29/10-2021
+ Last updated: 04/11-2021
  Description : Showcasing multiple aspects of pthreads
                Using a very common of distributing a shared memory between
                processes.
