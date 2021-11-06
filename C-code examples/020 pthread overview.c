@@ -4,7 +4,7 @@
  Version     : v1.02
  Copyright   : Your copyright notice
  Date        : 29/10-2021
- Last updated: 04/11-2021
+ Last updated: 06/11-2021
  Description : Showcasing multiple aspects of pthreads
                Using a very common of distributing a shared memory between
                processes.
@@ -189,7 +189,7 @@ void *function3(struct threadInfo *details){
     for(int i = start; i < end; i++){
         sum += binaryTable[i];
     }
-//    printf("Thread: %2d, Range: %d-%d\n", details->threadCount, start, end-1);
+    printf("Thread: %2d, Range: %d-%d\n", details->threadCount, start, end-1);
     details->output = sum;
 //    free(details);
     return details;
