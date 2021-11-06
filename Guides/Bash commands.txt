@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.12.3
+ Version     : 2.12.4
  Date        : 29/09-20
- Last Updated: 01/11-21
+ Last Updated: 06/11-21
  Copyright   : Do not alter, this file without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
@@ -658,6 +658,15 @@ less                                            : Same as 'more' just goes one l
 head                                            : View the first lines of a text file
 tail                                            : View the last lines of a text file
 sort                                            : Sort via parameters, alphabetically as standard -r for reversed
+        -r                                      - Sort in reversed order
+        -n                                      - Sort according to string numeral value
+        -u                                      - Only show unique occurences of a sentence
+uniq                                            : Displaying unique sentences, has additional options over 'sort -u'
+                                                  Unique refers to 2 adjacent sentences, therefore often used
+                                                  in conjunction with the 'sort' command.
+        -c                                      - Count occurences of a sentence
+        -d                                      - Only print duplicate lines, one for each group
+        -u                                      - only print unique lines without duplicates
 strings                                         : Display text that's embedded in a binary file
 od [option] [filename]                          : Display a file in Octal or other formats (use option '-x' for Hex)
 wc [behavior] [filename]                        : Word count - count the number of words in a file
@@ -684,6 +693,7 @@ $ ls -a | sort -r | less                        : List content of directory, in 
                                                   order, using 'less' format.
 $ diff <(wc file1) <(wc file2)                  : Compares the wordcount of 2 different files
 $ cp a.txt b.txt ; rev b.txt > a.txt ; rm b.txt : Reversing the content of a file, line by line.
+$ sort sometxt.txt | uniq -c | sort -nr         : Sort a file, and display in order how many times a sentence occured
 
 ================================================
 |          Packages and installations          |
