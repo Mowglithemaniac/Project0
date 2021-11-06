@@ -9,20 +9,38 @@
  ============================================================================*/
 
 #include <stdio.h>
+#define ARRAYSIZE 10
+
+int printArray(int array[], int size);
+void BubbleSort(int array[], int size);
 
 int main(void){
 
-    int temp = 0, array[] = {20, 22, 42, 3, 234, 75, 3, 2, 27, 72};
+    int array[] = {20, 22, 42, 3, 234, 75, 3, 2, 27, 72};
     printf("This is the content of the initial array:\n");
-    for(int i = 0; i < 10; i++){
-        printf("%d", array[i]);
+    printf("Total: %d\n", printArray(array, ARRAYSIZE));
+
+    BubbleSort(array, ARRAYSIZE);
+
+    printf("After sorting:\n");
+    printArray(array, ARRAYSIZE);
+
+}
+
+int printArray(int arrayThingy[], int size){
+    int temp = 0;
+    for(int i = 0; i < size; i++){
+        printf("%d", arrayThingy[i]);
         if(i != 9){ printf(", ");}
         else {printf("\n");}
-        temp += array[i];
+        temp += arrayThingy[i];
     }
-    printf("Total: %d\n", temp);
+    return temp;
+}
 
-    for(int i=0; i < 9; i++){ //go forward
+void BubbleSort(int array[], int size){
+    int temp;
+    for(int i=0; i < ARRAYSIZE-1; i++){ //go forward
         if(array[i] > array[i+1]){ //go backward
             for(int j = i+1;j != 0 && array[j] < array[j-1] ; j--){
                 temp = array[j];
@@ -31,25 +49,6 @@ int main(void){
             }
         }
     }
-    printf("After sorting:\n");
-    for(int i = 0; i < 10; i++){
-        printf("%d", array[i]);
-        if(i != 9){ printf(", ");}
-        else {printf("\n");}
-        temp += array[i];
-    }
+
 }
-
-int printArray(int *arrayThingy[], int size){
-    int temp = 0;
-    for(int i = 0; i < size; i++){
-        printf("%d", *arrayThingy[i]);
-        if(i != 9){ printf(", ");}
-        else {printf("\n");}
-        temp += *arrayThingy[i];
-    }
-    return temp;
-}
-
-
 
