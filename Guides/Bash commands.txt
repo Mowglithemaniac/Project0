@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.12.4
+ Version     : 2.12.5
  Date        : 29/09-20
- Last Updated: 06/11-21
+ Last Updated: 09/11-21
  Copyright   : Do not alter, this file without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
@@ -235,7 +235,7 @@ Commands                                         Description
 ------------------------------------------------|---------------
 chmod                                           : Change file mode bits. Permission for files and directories.
                                                   Look at the next paragraph for details regarding bit setup, and numbers
-       y+..                                     - 'User' option
+       u+..                                     - 'User' option
        g+..                                     - 'Group' option
        o+..                                     - 'Other' option
         +r [Filename]                           - Makes the file readable
@@ -303,15 +303,15 @@ Meaning that:
 and so on
 
 -rwxrwxrwx
-|||||||||!------------------------------------> : Execute bit, for 'other'
-||||||||! ------------------------------------> : Write bit, for 'other'
-|||||||! -------------------------------------> : Read bit, for 'other'
+|||||||||!------------------------------------> : Execute bit, for 'Other'
+||||||||! ------------------------------------> : Write bit, for 'Other'
+|||||||! -------------------------------------> : Read bit, for 'Other'
 ||||||! --------------------------------------> : Execute bit, for 'Group'
 |||||! ---------------------------------------> : Write bit, for 'Group'
 ||||! ----------------------------------------> : Read bit, for 'Group'
-|||! -----------------------------------------> : Execute bit, for 'Owner'
-||! ------------------------------------------> : Write bit, for 'Owner'
-|! -------------------------------------------> : Read bit, for 'Owner'
+|||! -----------------------------------------> : Execute bit, for 'User'
+||! ------------------------------------------> : Write bit, for 'User'
+|! -------------------------------------------> : Read bit, for 'User'
 ! --------------------------------------------> : {d, 1, b, c, s, p}
 
 When using the 'chmod' command, you  enter 3 numbers
@@ -320,7 +320,10 @@ The second number represents the group
 The 3rd number represents everybody else.
 
 [Example]
-$ chmod 744 filename
+$ chmod 744 filename.sh                         : Permission will look like this -rwxr--w--
+$ chmod u+x filename.c                          : Adding execute permission of the file to user
+$ chmod g+w filename.c                          : Adding write permission of the file to Group
+$ chmod o+r filename.c                          : Adding read permission of the file to 'Other users'
 
 With the 'ls -l' command, you can view permissions
 The first permission character have multiple meanings
@@ -355,13 +358,12 @@ hostname                                        : Show or set the system's host 
 date                                            : Display the date
 cal                                             : Calender
         [month optional] [year]                 - month, and/or year. 
-[Example]
-$ cal 2021                                      : Will display the calender for the year 2021
-
 free                                            : Display amount of free and used memory in the system
 df [option] [file]                              : Report file system disk space usage'
         -h                                      - Human readable
         -H                                      - Print sizes in powers of 1000 (e.g., 1.1G)
+du                                              : Estimate file space,
+                                                  Summarizedisk usage of the set of FILEs, recursively for directories.
 top                                             : Provides a dynamic overview of the running processes
 htop                                            : Interactive process viewer
 ps                                              : Processor Status, it is a highly integrated part of Linux.
@@ -384,6 +386,7 @@ echo <text>                                     : Prints echoes the <print> in t
 printf                                          : An advanced version of echo
 
 [Examples]
+$ cal 2021                                      : Will display the calender for the year 2021
 $ echo $PATH                                    : Prints the entire path variable
 $ echo $PS1                                     : Prints the entire PS1 settings variable, for
                                                   how to display your prompt
