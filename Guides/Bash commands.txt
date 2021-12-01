@@ -922,6 +922,9 @@ $ ./derp >> derpy.txt                           - Will send the content from the
                                                   appended in the file 'derpy.txt' rather than shown on the console.
 $ ./derp > derpy.txt                            - Will send the content from the compiled program (derp) to 
                                                   overwrite content of file 'derpy.txt' rather than shown on the console.
+$ ./derp 2> /dev/null                           - Display normal messages (stdout) on the screen, but error messages (stderr) are discarded
+$ ./derp 1> /dev/null                           - Only display error messages, since normal messages (stdout) are discarded 
+$ ./derp 2>&1                                   - stderr messages are appended to the stdout messages
 
 There is also a command called 'expr' which can
 do basic math calculations, and regex.
