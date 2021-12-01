@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.12.5
+ Version     : 2.12.7
  Date        : 29/09-20
- Last Updated: 09/11-21
+ Last Updated: 01/12-21
  Copyright   : Do not alter, this file without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
@@ -140,6 +140,9 @@ something '>>' filename                         : Append content to file named f
 something '>' filename                          : Overwrite content of file named filename
                                                   These are great options for pasting output into log files,
                                                   when writing and testing C-programs.
+[Example]
+echo yolo > derpy.txt                           : Overwrites the content of file derpy.txt "yolo"
+echo yolo >> derpy.txt                          : Append "yolo" to the content of file derpy.txt
 
 (if intalled)Type 'code .' to open Visual Studio
 Code with that folder already being navigated to.
@@ -911,6 +914,8 @@ logout                                          : Logs out, but recommended to u
                                                   the content of that file is overwritten
 2>                                              : Directs standard error(error messages) to the file.
 &>                                              : Directs both standard output and standard error to the file
+2>&1                                            : Appends stderr to stdout
+$?                                              : Returns the error code from the previous command or executed program
 
 [Examples]
 $ ./derp >> derpy.txt                           - Will send the content from the compiled program (derp) to be
@@ -1136,6 +1141,12 @@ single input, you can use python to simulate it.
 [Example]
 ./program < <(python -c "print('someinput')")   : The output of the python is treated as an input to the program.
                                                   The -c option, mean that the (python)program, is passed in as a string
+
+objdump                                         :
+nm
+readelf
+$ objdump -d <binary_name>
+
 
 [DTU specific]
 Details for accessing the LSF 10 cluster on DTU
