@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.12.7
+ Version     : 2.12.8
  Date        : 29/09-20
- Last Updated: 01/12-21
+ Last Updated: 05/12-21
  Copyright   : Do not alter, this file without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
@@ -990,6 +990,8 @@ dmesg                                           : Print or control the kernel ri
 journalctl                                      : Query the systemd journal
                                                   Can be used to view boot messages, and show messages
                                                   messages associated with a particular boot instance.
+lsblk                                           : List block devices
+        -f                                      - Output  info  about  filesystems
 lspci                                           : List all PCI devices
 lsusb                                           : List all USB devices
 lscpu                                           : List all PCU devices
