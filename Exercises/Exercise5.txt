@@ -1,0 +1,32 @@
+
+ /*============================================================================
+ Name        : Exercise5
+ Author      : Declined#8151 (Discord ID), s090116
+ Version     : 1.02
+ Copyright   : Your copyright notice
+ Date        : 07/12-2021
+ Last updated: 07/12-2021
+ Description : A simple exercise to test your knowldge about C and the Linux
+               Command line.
+ ============================================================================*/
+
+Try to answer this question without compiling the program or running the commands.
+What is the output of these commands (followed by the progran in question)?
+
+```bash
+gcc -o a.out test.c  ; ./a.out derp 2> /dev/null 1> derpy.txt
+echo $?
+```
+
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main( int argc, char *argv[]){
+   if(argc-2){ perror("Incorrect usage\n"); exit(2);}
+   fprintf(stdout, "%s\n", argv[1]);
+   return 1;
+}
+```
+
