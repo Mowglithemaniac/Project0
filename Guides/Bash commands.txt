@@ -1140,12 +1140,18 @@ rm .test.c.sw*                                  : Deletes both .sw files for 'te
                                                   //compiler course
 chage                                           : Change user password expiry information
 
+
+size                                            : Display the size of a compiled C program, and how data is stored.
+time                                            : Display the time used to execute a command and print the time for
+                                                  {real-time, CPU-time and system CPU time}
+
 Python trick for C programming.
 If you've compiled a C program that requires a
 single input, you can use python to simulate it.
 [Example]
 ./program < <(python -c "print('someinput')")   : The output of the python is treated as an input to the program.
                                                   The -c option, mean that the (python)program, is passed in as a string
+
 
 objdump                                         :
 nm
