@@ -4,6 +4,7 @@
  Version     : v1.00
  Copyright   : 
  Dato        : 01/06-21
+ Last updated: 12/01-22
  Description : This program will convert all webp files in a folder to jpg
              : as well as removing the old webp file.
              : Requires a UNIX system to run (Linux), as well as the dwebp package
@@ -42,12 +43,14 @@ void skeleton();
 void readFromFile(char filename[]);
 int checkAnimation(char filename[]);
 void convertWebpToJPG(char filename[]);
+void forkoversystem(char filename[]);
 
 void main(){
     skeleton();
 }
 
-//Node operations
+/*********************************Node operations*********************************/
+//Insert node at tail
 void push(){
     if(head != NULL){
         struct Node* temp1 = malloc(sizeof(struct Node));
@@ -153,9 +156,11 @@ void printList(){
 	}	
 	return;
 }
+/*******************************NODE OPERATIONS END*******************************/
 
 void skeleton(){
-    system("ls *.webp > derpy.txt");
+//    system("ls *.webp > derpy.txt");
+    forkoversystem("ls *.webp > derpy.txt");
     readFromFile("derpy.txt");
     fileHead = head;
     fileTail = tail;
@@ -172,10 +177,14 @@ void skeleton(){
 
 }
 
+/**
+ * Create a linked list where each sentence represents 1 line from the file.
+ * Content stored in list connected to 'head' and 'tail'.
+ */
 void readFromFile(char filename[]){
     int maxSize = 512;
     char tempArray[maxSize];
-
+    memset(tempArray, 0, sizeof(char) * maxSize);
     FILE *fp;
     fp = fopen (filename, "r");		// Open the file with 'read' option.	''
     if(fp==NULL){ exit(-1);}
@@ -189,50 +198,61 @@ void readFromFile(char filename[]){
 //            print("String length\t: %d\n", strlen(tempArray));
             tail->data = strdup(tempArray);
         } else{
-//            printf("Empty line, deleted a node\n");
             pop();
-//        printf("%s", tempArray);
         }
         memset(tempArray, 0, sizeof(char) * maxSize);       // Resetting the string for next round
     }
     fclose(fp);
 //    printList();
-    printf("\n");
 }
 
+/**Check if the *.webp file contains animations or not
+ * 
+ */
 int checkAnimation(char filename[]){
-//    grep -c "ANMF" FILENAME.webp > derpy.txt
-    printf("Checking animation for file\t: %s\n", filename);
-    char command[100];
+   char command[100];
+   memset(command, 0, sizeof(char) * 100);
+   int length = 0, result = 0;
+    length = strlen(filename);
+    printf("\n----------------------------------------\n"
+        "Checking animation for file\t: %s\n", filename);
+    for(int i = 0; i < length; i++){
+        if(filename[i] == '\'' || filename[i] ==  ':' ||filename[i] ==  '\\' || filename[i] == ' '){
+            printf("Result\t\t\t\t: Unsupported characters in filename\n");
+            return 400;
+        }
+    }
+
+
+//    grep -c "ANMF" FILENAME.webp > derpy1.txt
+
     strcat(command, "grep -c \"ANMF\" ");
     strcat(command, filename);
-    strcat(command, " > derpy.txt\n");
+    strcat(command, " > derpy1.txt\n");
 //    printf("Executing command\t: %s\n", command);
-    system(command);
-    readFromFile("derpy.txt");
+//    system(command);
+    forkoversystem(command);
+    readFromFile("derpy1.txt");
     int value = atoi(head->data);
-    system("rm derpy.txt\n");
-    dequeue();
+//    system("rm derpy.txt\n");
+    forkoversystem("rm derpy1.txt\n");
     if(value){
-        printf("Result\t\t\t\t\t: Contains animations\n");
-    }
-    printf("Result \t: Will be converted\n");
+        printf("Result\t\t\t\t: Contains animations\n");
+        printf("Verifying result\t\t: %s\n", head->data);
+    } else 
+        printf("Result\t\t\t\t: Will be converted\n");
+    dequeue();
     return value;
 }
 
 void convertWebpToJPG(char filename[]){
     char command[100];
-    int length = 0, result = 0;
+    memset(command, 0, sizeof(char) * 100);
+    int length = 0;
     length = strlen(filename);
-    for(int i = 0; i < length; i++){
-        if(filename[i] == '\''){
-            result++;
-        }
-    }
-    if(result == 2){//assume no files found
-        return;
-    }
+
     strcat(command, "dwebp -o ");
+
     strcat(command, filename);
     length = strlen(command);
     command[length - 4] = 'j';
@@ -240,8 +260,9 @@ void convertWebpToJPG(char filename[]){
     command[length - 2] = 'g';
     command[length - 1] = ' ';
     strcat(command, filename);
-    printf("Executing command \t: %s\n", command);
-    system(command);                                //Execute command "dwebp -o FILENAME.jpg FILENAME.webp"
+    printf("Executing command\t\t: %s\n", command);
+//    system(command);                                //Execute command "dwebp -o FILENAME.jpg FILENAME.webp"
+    forkoversystem(command);
     memset(command, 0, sizeof(char) * 100);
 /*    strcat(command, "rm ");
     strcat(command, filename);
@@ -249,6 +270,23 @@ void convertWebpToJPG(char filename[]){
     system(command);                                //Execute command "rm FILENAME.webp"
 *///    memset(command, 0, sizeof(command));
 }   
+
+
+
+void forkoversystem(char command[]){
+    pid_t pid;
+    pid = fork();
+    if (pid < 0){
+        perror("Creation of child failed.\t");
+        fprintf(stderr, "%s\n", command);
+        exit(4);
+    }
+    if(pid == 0){
+         execl("/bin/sh", "sh", "-c", command, (char *) 0);
+    }
+    else
+        wait(NULL);
+}
 
 
 /*****************************************
