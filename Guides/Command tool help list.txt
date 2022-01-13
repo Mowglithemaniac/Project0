@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Command tool help List.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.1
+ Version     : 2.2
  Date        : 15/02-21
- Last Updated: 20/08-21
+ Last Updated: 13/01-22
  Copyright   : Do not alter, copy or share this file without permission
  Description : This document is created to function as a guide
              : for multiple specific command line functions.
@@ -16,6 +16,7 @@ Sections: (so far)
         - MPI (Bash)
         - openmp (Bash)
         - GIT (Bash)
+        - Source
 ================================================
 |                Introduction                  |
 ================================================
@@ -60,6 +61,39 @@ gcc -o outputfile infile.c                      : Standard usecase
         -w                                      - supress warnings
         -Wall                                   - enables all compiler's warning messages
         -g                                      - Generates debug information to be used by the GDB debugger
+./compiledprogram                               : Execute a compiled C-program.
+./compiledprogram [argument(s)]                 : Execute a compiled C-program with arguments in the command line
+
+[Example]                                        Description
+------------------------------------------------|---------------
+$ gcc -o derp main.c                            : 
+$ ./derp                                        : Run the program
+$ ./derp something                              : Run the program with an argument
+
+
+When a program terminates, it provides a return
+value. By default, this value is 0 upon success
+and 1 (or other nonzero value) upon failure.
+
+To view the return value of a program, use the
+command '$?' within a terminal.
+[Example]
+$ ./program
+$ $?
+
+There is something called 'stdout' and 'stderr'
+While both by standard write to the console, it
+is possible to redirect the data streams
+elsewhere.
+
+[Example]
+$ ./derp >> derpy.txt                           : Will send the content from the compiled program (derp) to be
+                                                  appended in the file 'derpy.txt' rather than shown on the console.
+$ ./derp > derpy.txt                            : Will send the content from the compiled program (derp) to 
+                                                  overwrite content of file 'derpy.txt' rather than shown on the console.
+$ ./derp 2> /dev/null                           : Display normal messages (stdout) on the screen, but error messages (stderr) are discarded
+$ ./derp 1> /dev/null                           : Only display error messages, since normal messages (stdout) are discarded 
+$ ./derp 2>&1                                   : stderr messages are appended to the stdout messages
 
 
 For debugging, there's a command called 'gdb'
@@ -78,38 +112,35 @@ gdb mode commands                                Description
 ------------------------------------------------|---------------
 layout next                                     : Opens the layout menu
 run                                             : start the program
-q                                               : Quit
+quit | q                                        : Ends the gdb session
 next | n                                        : Next line in the immediate scope
 step | s                                        : Step into
                                                   Will step will go into functions, to see what's going on inside of it.
-b                                               : Breakpoint
+break| b                                        : Breakpoint
                                                   Enter a line, or name of a function, to set a breakpoint there
+clear [b-name]                                  : Clears the specified breakpoint (line number, or function name)
 print [variable name]                           :
         @NUMBER                                 - Print array
 watch [variable name]                           : Keep watch on a variable
                                                   Every time it changes, we will be notified about it.
 refresh                                         : Refreshes the console text
-clear [b-name]                                  : Clears the specified breakpoint
 set args [input]                                : Define argc/argv
 backtrace                                       : 
 whatis [variable]                               : Display the variable type, i.e. char, int, ... and so on
+watch [variable]                                : Keep track of a variable, and display it every time it is altered 
+[enter]                                         : Repeats the last command
+continue                                        : Continues to run until t he next breakpoint or watch point 
+list                                            : Will display the code that you're debugging (in case of crashes)
 
-[Example]
+[Example]                                        Description
+------------------------------------------------|---------------
+$ gcc -g -Wall -o main main.C                   : Compile the file, and ensure it's ready for gdb with the -g flag.
+$ gdb main
 print array@10                                  : Pretends that 'array' is an array with 10 slots
 print *array@10                                 : Dereferences it first.
 print *argv@2                                   : Prints the entire set of arguments
 print argv[1]                                   : Prints the second argument
 print derp=10                                   : Set variable derp to 10.
-
-When a program terminates, it provides a return
-value. By default, this value is 0 upon success
-and 1 (or other nonzero value) upon failure.
-
-To view the return value of a program, use the
-command '$?' within a terminal.
-[Example]
-$ ./program
-$ $?
 
 ================================================
 |                  nslookup                    |
@@ -358,3 +389,14 @@ $ git add *                                     : Add all files to the index
 $ git commit -m "derp"                          : Create a message to go along with the files within the index
 $ git push                                      : Upload the index.
 $ git reset --hard                              : Undo all local changes (make sure they're unstaged, aka not added first)
+
+
+
+================================================
+|                     Source                     |
+================================================
+      - Manual pages
+      - Learn GDB in 60 seconds by Jacob Sorber
+        https://www.youtube.com/watch?v=mfmXcbiRs0E
+      -
+      -
