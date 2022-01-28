@@ -3,7 +3,7 @@
  Author      : Declined#8151 (Discord ID), s090116
  Version     : 1.00
  Copyright   : Your copyright notice
- Date        : 01/07-2021
+ Date        : 28/01-2021
  Description : Example of redirecting the output from one process to another
              : via a pipe, by duplicating the stdout data stream through the
              : pipe. Essentially simulating a pipeline character on the
