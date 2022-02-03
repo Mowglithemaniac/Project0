@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.12.8
+ Version     : 2.12.9
  Date        : 29/09-20
- Last Updated: 11/01-22
+ Last Updated: 03/02-22
  Copyright   : Do not alter, this file without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
@@ -261,6 +261,7 @@ gcc                                             : Compile program from c languag
 whois                                           : shows some whois data about a website or ip
         [ip or website]
         | more/less                             - Displayed using the more or less format
+
 pstree                                          : Display a tree of process
 fsck                                            : Check and repair a Linux filesystem
 parted                                          : A partition manipulation program
@@ -272,6 +273,7 @@ export                                          : Set the export attribute for v
                                                   Used for passing variables to child shells.
                                                 - If no name is supplied, updates all.
         -p                                      - Display a list of all exported variables
+shutdown                                        : Halt, power-off or reboot the machine
 
 [EXAMPLES]
 $ chmod 650 [filename]                          : Where 6 is the user, 5 is group, 0 is other
@@ -287,6 +289,10 @@ $ alias p='pwd ; ls -CF'                        : Create a new alias 'p', which 
                                                   stored in the configuration files
 $ alias derpyPing='ping -c 100 google.com'      : A relatively simple command to send 100 packages to google, and Then
                                                   generate som statistics to check the connection
+$ shutdown -r now                               : Reboot computer now
+$ shutdown -h now                               : Halt computer now
+$ shutdown -r +10 mins                          : Reboot computer in 10 minutes
+$ shutdown -c                                   : Cancel pending shutdown
 
 ================================================
 |           * Permission Explanation           |
@@ -347,12 +353,14 @@ Information related to the OS, and user.
 Such as processes, users, calender and more.
 Unlike Windows, Linux does not have a Task
 Manager, so you need to be comfortable with
-commands such as 'top' and 'htop'. 
+commands such as 'top' and 'htop'.
 
 Commands                                         Description
 ------------------------------------------------|---------------
 uname                                           : Print system information
 who                                             : Show who is logged on
+w                                               : Show who is logged on and what they are doing.
+                                                - Also include statistical data and lists what they're doing
 whoami                                          : Print effective userid
 users                                           : Print the user names of users currently logged in to the current host
 id                                              : ID number, and associated details with the user
@@ -360,20 +368,22 @@ hostname                                        : Show or set the system's host 
                                                   WARNING This is a complicated topic, DO NOT alter your hostname!!!
 date                                            : Display the date
 cal                                             : Calender
-        [month optional] [year]                 - month, and/or year. 
-free                                            : Display amount of free and used memory in the system
+        [month optional] [year]                 - month, and/or year.
+iostat                                          : Report Central Processing Unit (CPU) statistics and input/output statistics for
+                                                  devices and partitions.
 df [option] [file]                              : Report file system disk space usage'
         -h                                      - Human readable
         -H                                      - Print sizes in powers of 1000 (e.g., 1.1G)
 du                                              : Estimate file space,
-                                                  Summarizedisk usage of the set of FILEs, recursively for directories.
+                                                  Summarize disk usage of the set of FILEs, recursively for directories.
 top                                             : Provides a dynamic overview of the running processes
 htop                                            : Interactive process viewer
 ps                                              : Processor Status, it is a highly integrated part of Linux.
                                                   There are more than 80 options, most commonly used is 'aux'
         aux                                     : Display processes of all users.
-        -o                                      : User defined format       
+        -o                                      : User defined format
         -e                                      : Select all processes, identical to -A
+sar                                             : Collect, report, or save system activity information.
 tar                                             : An archiving utility
 free                                            : Displays the total amount of free space available along with the
                                                   amount of memory used and swap memory in the system, and also the
@@ -419,7 +429,7 @@ ADDR                                            : Memory address of the process
 C or CP                                         : CPU usage and scheduling information
 USER or UID                                     : The user who the process is tied to.
 %CPU                                            : How much of the CPU the process is using 
-%MEM                                            : How much memory the process is using 
+%MEM                                            : How much memory the process is using
 PID                                             : Processor ID, each process has a unique ID
 PPID                                            : ID number of the process's parent process
 PRI                                             : Priority of the process
@@ -508,19 +518,19 @@ commands, ACL must be enabled when the
 filesystem is mounted.
 
 setfacl                                         : Setting the ACL status of a file
-getfacl                                         : Getting the ACL status of a file 
+getfacl                                         : Getting the ACL status of a file
 
 [Example]
 $ setfacl -m u:username:rwx filename            : -m option, modify permission, for username, to rwx, on file filename
 $ getfacl temp.txt                              :
 
 To see whether the ACL status is available on an
-ext4 file system use the 'tune2fs -l' command, 
+ext4 file system use the 'tune2fs -l' command,
 to view the implemented mount options.
 
 [Example]
 mount -t ext3 -o acl [device-name] [partition]
-$ mount -t ext3 -o acl /dev/folderA/folderAA /work 
+$ mount -t ext3 -o acl /dev/folderA/folderAA /work
 
 ================================================
 |              Directory commands              |
@@ -556,11 +566,13 @@ history                                         : Shows a list of commands used 
         -c                                      - Reset the the history
 mkdir                                           : Make directory (folder)
         [Directory name]                        : new directory
+tree                                            : List contents of directories in a tree-like format.
 touch                                           : Update the date of a file, without making changes to the file
         [file name]                             : Can create a new file, if that file does not exist
 cp                                              : Copy from specific directory into current directory
         [folder/folder/file] [New name]
         -i                                      - Add a prompt before overwriting files.
+dd                                              : Copy a file, converting and formatting 
 mv                                              : Move a command/file, to some other location, but it can also rename at the same time
         [Filename] [Filename]                   - rename, can also overwrite other files
 rm                                              : Remove (PERMANENTLY)
@@ -591,7 +603,7 @@ acquire information about the subject.
 
 Commands                                         Description
 ------------------------------------------------|---------------
-which                                           : Will show where a command is, or whether it is installed                
+which                                           : Will show where a command is, or whether it is installed
         [command name]                          - Shows location of that command
 whatis                                          : Brief description of a command
         [command]                               - tl;dr of that command
@@ -677,7 +689,7 @@ strings                                         : Display text that's embedded i
 od [option] [filename]                          : Display a file in Octal or other formats (use option '-x' for Hex)
 wc [behavior] [filename]                        : Word count - count the number of words in a file
         -l                                      - Count lines, not words
-wget [website link]                             : Download a file from the internet (pdf, rar, and so on)                
+wget [website link]                             : Download a file from the internet (pdf, rar, and so on)
 diff                                            : Compare files line by line
 rev [filename]                                  : Reverse lines characterwise
 
@@ -724,7 +736,7 @@ $ sudo apt-get update                           : Retrieve new lists of packages
 $ sudo apt-get upgrade                          : Perform an upgrade of packages
 $ sudo apt-get build-essential                  : A collection of packages required to compile and run a number of different
                                                   programming languages, such as C, C++
-$ sudo apt search [NAME]                        : Display a list of available packages related to the search parameter                        
+$ sudo apt search [NAME]                        : Display a list of available packages related to the search parameter
 $ sudo apt-get install [PACKAGE]                : Install package
 $ sudo apt install [PACKAGE]                    : Install package
 $ sudo apt-get dist-upgrade                     : Update the kernel packages
@@ -785,12 +797,24 @@ traceroute                                      : Print the route packets trace 
 nslookup                                        : Query Internet name servers interactively.
                                                   There is a paragraph dedicated to the usage of this command.
 tcpdump                                         :Dump traffic on a network
+socat                                           : Multipurpose relay (SOcat CAT)
+                                                - The socat utility is a relay for bidirectional data transfers between two
+                                                  independent data channels. 
 
 [Example]
 $ ping -c 100 google.com                        : Pings google.com with 100 packets, and provide you with statistics afterwards.
 $ ip addr show                                  : View all loaded network interfaces
 $ ip monitor
-$ traceroute yahoo.com                     : Display a traceroute to yahoo.com with 2 sec 
+$ traceroute yahoo.com                          : Display a traceroute to yahoo.com with 2 sec 
+
+[Example socat]
+$ socat TCP-LISTEN:400,reuseaddr,pf=ip4,fork -
+[new terminal]
+$ socat TCP:localhost:4000 - 
+herpti derpti derp
+[Previous terminal]
+: Here the "herpti derpti derp" should appear   :
+
 
 ================================================
 |                   VARIABLES                  |
@@ -968,7 +992,7 @@ Shortcut                                         Description
 [alt + B]                                       : Word backward, go backward one word
 [alt + T]                                       : Transpose words, switch positions of current and previous character
 [alt + U]                                       : Uppercase word, change the current word to upper case
-[alt + L]                                       : Lowercase word, change the current word to lower case        
+[alt + L]                                       : Lowercase word, change the current word to lower case
 [alt + C]                                       : Change the current word to an initial capital
 [alt + D]                                       : Cut the word following the cursor
 [alt + 1]                                       : Access the 1st argument from the previous command
@@ -1089,36 +1113,116 @@ Shortcuts:
 Command-mode                                     Description
 ------------------------------------------------|---------------
 i                                               : Switch to 'Insert' mode.
+I                                               : Switch to 'Insert' mode, but move the cursr to the beginning of the line
+a                                               : Append, same as 'i', except the cursor is moved to the end of the word
+A                                               : Append, same as 'i', except the cursor is moved to the end of the line
 [CTLR + V]                                      : Highlight 1 column at a time
 v                                               : Highlight one character at a time
+p                                               : paste text after the current line
+                                                : paste text on the current line
+x                                               : Delete character
+dw                                              : Delete from the cursor up to the next word
+d$                                              : Delete from the cursor to the end of a line
+dd                                              : Delete a line
+y                                               : Yank text into the copy buffer 
+u                                               : Undo
+U                                               : Undo a whole line
+[CTRL + R]                                      : Undo an undo (redoing your last undo)
+p                                               : Put previously deleted text after the cursor
+r[Character]                                    : Replace the character highlighted by the cursor with [Character]
+ce                                              : Change until the end of a world
+                                                - Notice that ce deletes the word and places you in the 'Insert' mode
+?text                                           : Search for 'text', then use '/' to move forward, and '?' to move backward.
+
+Commands(Command mode)                           Description
+------------------------------------------------|---------------
 :q                                              : Quit the file (adds a prompt if changes were made to the file)
 :q!                                             : Force quit the file
 :wq                                             : Save and quit
-p                                               : paste text after the current line
-                                                : paste text on the current line
-y                                               : Yank text into the copy buffer 
-u                                               : Undo
-[CTRL + R]                                      : Undo an undo (redoing your last undo)
-?text                                           : Search for 'text', then use '/' to move forward, and '?' to move backward.
+:ter                                            : Open a terminal window
+:h                                              : Help
+:ju                                             : List of jumps
 
-Character movement                               Description
+Cursor movement(Command mode)                    Description
 ------------------------------------------------|---------------
 h                                               : Moves the cursor one character to the left.
 j                                               : Moves the cursor down one line.
 k                                               : Moves the cursor up one line.
-l                                               : Moves the cursor one character to ther right.
-0                                               : Moves the cursor to the beginning of the line.
-$                                               : Moves the cursor to the end of the line.
-w                                               : Move forward one word.
-b                                               : Move backward one word.
+l                                               : Moves the cursor one character to the right.
+H                                               : Move the cursor to the top of the screen
+M                                               : Move to the middle of the screen
+L                                               : Move to the bottom of the screen
+w                                               : Jump forward to the beginning of the next word.
+W                                               : Jump forward to the beginning of the next word.
+                                                - Words can contain punctuation
+e                                               : Jump forward to the end of a word
+E                                               : Jump forward to the end of a word
+                                                - Words can contain punctuation
+b                                               : Move backward to the beginning of the previous word
+B                                               : Move backward to the beginning of the previous word
+                                                - Words can contain punctuation
+ge                                              : Jump backward to the end of the previous word
+gE                                              : Jump backward to the end of the previous word
+                                                - Words can contain punctuation
+^                                               : Jump to the first non-blank character of the line
+g_                                              : Jump to the last non-blank character of the line
+$                                               : Jump to the end of the line
+0                                               : Jump to the beginning of the line.
 G                                               : Move to the end of the file.
 gg                                              : Move to the beginning of the file
+f[character]                                    : Jump to the next occurance of [character]
+F[character]                                    : Jump to the previous occurance of [character]
+t[character]                                    : Jump to before next occurence of [character]
+T[character]                                    : Jump to the previous occurence of [character]
+;                                               : Repeat previous f, F, t or T movement
+,                                               : Repeat previous f, F, t or T movement backwards
+}                                               : Jump to the next paragraph
+                                                - Or function/block when editing code
+{                                               : Jump to the previous paragraph
+                                                - Or function/block when editing code
+zz                                              : Center cursor on screen
+%                                               : Move  to matching character 
+                                                - Default supported pairs: '()', '{}', '[]'
+                                                - use :h matchpairs in vim for more info
 `.                                              : Move to the last edit.
+[Ctrl + e]                                      : Move screen down one line without moving the cursor
+[Ctrl + y]                                      : Move screen up one line without moving the cursor
+[Ctrl + f]                                      : Move forward one full screen
+[Ctrl + d]                                      : Move forward ½ a screen
+[Ctrl + b]                                      : Move backward one full screen
+[Ctrl + u]                                      : Move backward ½ a screen
 
 Some of these commands can be 'prefaced',
 meaning that if you use the command 10b, you
 move back 10 words. Or if you use 11w, move
-forward 11 words.
+forward 11 words, and so on.
+
+Quick tips.
+------------------------------------------------|---------------
+1 character movement
+             ^                                  : The k key is up
+             k                                  : The h key is at the left and moves left.
+       < h       l >                            : The l key is at the right and moves right.
+             j                                  : The j key looks like a down arrow.
+             v
+
+Part of the screen
+             ^
+             H                                  : The H key moves the cursor to the top of the screen
+             M                                  : The M key moves the cursor to the middle of the screen
+             L                                  : The L key moves the cursor to the bottom of the screen
+             v
+
+Move a full screen
+             ^
+         [Ctrl + b]                             : Move backward one full screen
+         [Ctrl + f]                             : Move forward one full screen
+             v
+
+
+If you want an interactive tutorial use the
+command: "vimtutor"
+$vimtutor
 
 ================================================
 |                 Uncategorized                |
@@ -1337,7 +1441,7 @@ $ temp=$PS1
 [For debian]
 $ PS1='\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 [For RHEL]
-$ PS1='\e[33;1m\u@\h: \e[31m\w\e[0m\$ '
+$ PS1='\e[33;1m\u@\h: \e[31m\w\e[0m\$'
 
 You can restart the shell with the command:
 $ exec bash
@@ -2042,7 +2146,8 @@ Directory                                        Description
 /proc                                           : Contains information about system resources
 /root                                           : Represents the root user's home diretory. The home directory for root
                                                   does not reside beneath /home for seurity reasons.
-/sbin                                           : Contains administrative commands and daemon processes
+/sbin                                           : Contains administrative commands and daemon processes, can only be
+                                                  accessed by a Super user (such as Root).
 /sys                                            : Contains parameters for such things as tuning block storage and managing
                                                   cgroups.
 /tmp                                            : Contains temporary files used by applications.
