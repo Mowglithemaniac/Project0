@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Command tool help List.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.2
+ Version     : 2.3
  Date        : 15/02-21
- Last Updated: 13/01-22
+ Last Updated: 05/02-22
  Copyright   : Do not alter, copy or share this file without permission
  Description : This document is created to function as a guide
              : for multiple specific command line functions.
@@ -119,13 +119,14 @@ step | s                                        : Step into
 break| b                                        : Breakpoint
                                                   Enter a line, or name of a function, to set a breakpoint there
 clear [b-name]                                  : Clears the specified breakpoint (line number, or function name)
-print [variable name]                           :
+print [variable name]                           : 
         @NUMBER                                 - Print array
 watch [variable name]                           : Keep watch on a variable
                                                   Every time it changes, we will be notified about it.
 refresh                                         : Refreshes the console text
 set args [input]                                : Define argc/argv
-backtrace                                       : 
+backtrace                                       : In case of segmentation fault or similar, use this command to see
+                                                  where the program failed
 whatis [variable]                               : Display the variable type, i.e. char, int, ... and so on
 watch [variable]                                : Keep track of a variable, and display it every time it is altered 
 [enter]                                         : Repeats the last command
