@@ -22,6 +22,7 @@ Sections:
       * Permission explanation
     - System/User Info
       * Process details
+    - User administration
     - Directory commands
     - Help section
     - File access, edit, format
@@ -226,9 +227,14 @@ su                                              : Switch user
         - [empty]                               - Changing to root user, but remains in the current users home directory
         - [Username]                            - will change to other specified user on the username.
         [username]                              - Will switch to other user, but remain in your own home directory
+systemctl                                       : Control the systemd system and service Manager
+journalctl                                      : Query the systemd journal
 
 [Example]
 $ sudo apt-get update                           : Update packages, a command that require Root access.
+$ systemclt Status                              : Show system status
+$ systemclt status [subject]                    : Show detailed information about a currently active [subject]
+                                                  followed by most recent log data from the journal.
 
 ================================================
 |                System Commands               |
@@ -785,7 +791,7 @@ $ yum grouplist                                 : Show a list of package groups
 $ yum groupinstall [name]                       : Installing a package group
 
 ================================================
-|                  NETWORKING                  |
+|                  Networking                  |
 ================================================
 Commands related to networks.
 
@@ -814,12 +820,16 @@ tcpdump                                         :Dump traffic on a network
 socat                                           : Multipurpose relay (SOcat CAT)
                                                 - The socat utility is a relay for bidirectional data transfers between two
                                                   independent data channels. 
+ufw                                             : Program for managing a netfilter firewall
 
 [Example]
 $ ping -c 100 google.com                        : Pings google.com with 100 packets, and provide you with statistics afterwards.
 $ ip addr show                                  : View all loaded network interfaces
 $ ip monitor
 $ traceroute yahoo.com                          : Display a traceroute to yahoo.com with 2 sec 
+$ sudo ufw status                               : Show status of firewall and ufw managed rules
+$ sudo ufw allow http                           : added http access to the firewall
+$ sudo ufw delete allow http                    : Removed http access from the firewall
 
 [Example socat]
 $ socat TCP-LISTEN:400,reuseaddr,pf=ip4,fork -
@@ -828,7 +838,6 @@ $ socat TCP:localhost:4000 -
 herpti derpti derp
 [Previous terminal]
 : Here the "herpti derpti derp" should appear   :
-
 
 ================================================
 |                   VARIABLES                  |
@@ -853,9 +862,12 @@ $PS1                                            : Where the bash shell formattin
 
 These are used in programming (and herefore
 NOT the commmand line)
-stdin                                           : Standard input (console), where the program reads from.
+stdin                                           : Standard input (console), where the program reads from. (0)
+                                                - File descriptor 0
 stdout                                          : Standard output (console/screen) where the info will be displayed.
+                                                - File descriptor 1
 stderr                                          : Standard error, using file descriptor #2, usually writes to console.
+                                                - File descriptor 2
 
 ================================================
 |           FUNCTIONS-(NOT COMMANDS)           |
