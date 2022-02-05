@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.12.9
+ Version     : 2.12.10
  Date        : 29/09-20
- Last Updated: 03/02-22
+ Last Updated: 05/02-22
  Copyright   : Do not alter, this file without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
@@ -17,7 +17,7 @@ Sections:
     - Introduction
     - Guide info
     - General tips
-    - Elevated priveledge
+    - Elevated priviledge
     - System Commands
       * Permission explanation
     - System/User Info
@@ -192,10 +192,13 @@ A similar tool in Linux, to 'Task Manager'
 from Windows, are the commands 'top', 'htop', 
 and 'ps'.
 ================================================
-|              Elevated privilege              |
+|              Elevated privilegde             |
 ================================================
 For some commands, you require root access,
 this section explains how to acquire that.
+Most of these are centered around administrator
+tasks, such as managing users, packages, access,
+and more.
 
 The prompt symbol for regular users is a dollar
 sign ($), the prompt symbol for superuser
@@ -215,7 +218,7 @@ visudo                                          : visudo edits the sudoers file,
 updatedb                                        - Creates or updates a database used by 'locate(1)'
 sudos                                           : Super user access, for extended periods, (generally
                                                   not a good idea unless you know what you're doing)
-        -s                                     - Disable the timer, and continue on as the super user
+        -s                                      - Disable the timer, and continue on as the super user
                                                   (WARNING, DON'T FORGET to log out)
         exit                                    - Will terminate the super user access
 su                                              : Switch user
@@ -371,7 +374,8 @@ cal                                             : Calender
         [month optional] [year]                 - month, and/or year.
 iostat                                          : Report Central Processing Unit (CPU) statistics and input/output statistics for
                                                   devices and partitions.
-df [option] [file]                              : Report file system disk space usage'
+lsof                                            : List open files
+df [option] [file]                              : Report file system disk space usage
         -h                                      - Human readable
         -H                                      - Print sizes in powers of 1000 (e.g., 1.1G)
 du                                              : Estimate file space,
@@ -390,6 +394,7 @@ free                                            : Displays the total amount of f
                                                   buffers used by the kernel
 watch                                           : Reruns a command every 2 seconds.
         free -h                                 - Shows how much memory is in the system
+uptime                                          : Tell how long the system has been running
 jobs                                            : Display a list of jobs running in the background.
                                                   There is an entire paragraph dedicated to this concept, called 'Job control'.
 echo <text>                                     : Prints echoes the <print> in the console
@@ -500,16 +505,25 @@ because of how easily something can go wrong.
 Commands                                         Description
 ------------------------------------------------|---------------
 passwd                                          : Used to change the password of users
-useradd                                         : Add a new user
+useradd                                         : Create a new user or update default new user information
+adduser                                         : Add a user to the system
+addgroup                                        : Add a group to the system
 usermod                                         : Modify a user account
 groupadd                                        : Add a new group
 deluser                                         : Deletes user, Debian based distribution, for other types, use
                                                   "userdel" command instead.
         --remove-home [username]                - This syntax is for Debian Distributions
                                                   Will delete the user
+chgrp                                           : Change group ownership
+groups                                          : Print the groups a user is in
+
 
 [Example]
 $ sudo deluser --remove-home derp               : Removes user 'derp'
+$ sudo su - [username]                          : Use root pw to pretend being another user, using their environment variables 
+                                                  Remember to exit when done
+$ sudo usermod -a -G [groupname] [username]     : Add [username] to group [groupname]
+$ groups [username]                             : View the groups that [username] is part of
 
 There is a utility called 'Access Control List'
 which can be used to set permissions on files
@@ -1326,6 +1340,7 @@ Sources:
 ||              -  Shell scripting                                            ||
 ||              -  System calls                                               ||
 ||              -  [Command] nslookup                                         ||
+||              -  [Command] tmux                                             ||
 ||         : Table list                                                       ||
 ||              -  Table 1.0: Useful abbreviations                            ||
 ||              -  Table 1.1: Bash Configuration files                        ||
@@ -1971,6 +1986,66 @@ $ nslookup -type=mx dtu.dk                      : Info about the mail exchange s
 $ nslookup -query=hinfo  -timeout=10 [website]  : Generates a query, using the hinfo option, with timeout 10 to dtu.dk.
 $ nslookup dtu.dk google.com                    : Here we send our query to google.com which will query dtu.dk on our behalf
                                                   and then google will provide us with the result.
+================================================
+|                     tmux                     |
+================================================
+Terminal Multiplexer.
+It enables a number of terminals to be created,
+accessed, and controlled from a single screen.
+What makes it powerful is the ability to be
+detached from a screen and continue running in
+the background, then later reattached.
+
+In combination with it's ability to detach and
+reattach, it can allow multiple users on the
+same system to access the same shell
+concurrently.
+
+Tmux Navigation			                 Description
+------------------------------------------------|---------------
+[Ctrl + B + ,]                                  : Rename a window
+[Ctrl + B] + [%]                                : Split windows vertically
+[Ctrl + B + "]                                  : Split windows horizontally
+[Ctrl + B + LArrow]                             : Split window left
+[Ctrl + B + RArrow]                             : Split window right
+[Ctrl + B] + [Arrow keys]                       : Move between panes
+
+[Ctrl + B (window #)]                           : Switch between windows
+[Ctrl + B + UArrow]                             : Scroll up
+[Ctrl + B + DArrow]                             : Scroll down
+Esc                                             : Escape the scrolling mode
+exit            j                                : Close a pane/window
+logout                                          : Will terminate a session.
+
+[Ctrl + b] + [d]                                : Will disconnect from the session and keep it persistent
+
+In tmux, a session is displayed on screen by a
+client and all sessions are managed by a single
+server.
+The server and each client are separate
+processes which communicate through a socket in
+/tmp.
+
+Some relevant flags                             
+ [-S socket-path]
+ [-s target-session]
+ [-t target-client]
+
+[Example]
+Assume that a user group have already been set
+up to include the relevant users.
+$ tmux -S /tmp/shareds new -s [sessionname]     : Here '/tmp/shareds' is the path we choose
+                                                - [sessionname] can be some arbitrary name such as 'session1'
+$ chmod 777 /tmp/shareds                        : As root, fix permissions of folder /tmp/shareds
+$ chgrp [groupname] /tmp/shareds                : As root, change group settings for /tmp/shareds
+                                                - [groupname] should be the chosen name, such as dragonslayers
+Now every user can connect to the tmux session
+with the command
+$ tmux -S /tmp/shareds attach -t [sessionname]  : Simply replace [sessionname] with the chosen name, i.e. 'session1'
+Remember to log out with
+[Ctrl + b] + [d]
+
+
 ================================================
 |                  Table: 1.0                  |
 ================================================
