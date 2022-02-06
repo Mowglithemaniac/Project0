@@ -22,6 +22,8 @@ Sections:
 |                 Introduction                 |
 ================================================
 
+This will be the max width of this file---------------------------------------------------------------------------------------->|
+
 Kerckhoffs' principle
 - An algorithm's security should not rely on the
   secrecy of the algorithm.
@@ -77,10 +79,11 @@ Asymmetric cryptography                         : Requires a public and private 
                                                   and vice versa.
 Padding                                         : Padding means adding additional data/bits to a message for a specific purpose
                                                   such as obfuscating the content.
-                                                - It is also used in hashing, as hashes technically take in blocks of a fixed length
-                                                  and if the input does not match up, additional bits are padded to the end, in order
-                                                  to make it reach that size.
-                                                - Same concept with Block Cipher modes, in order for the input to be of a fixed length
+                                                - It is also used in hashing, as hashes technically take in blocks of a fixed
+                                                  length and if the input does not match up, additional bits are padded to the
+                                                  end, in order to make it reach that size.
+                                                - Same concept with Block Cipher modes, in order for the input to be of a fixed
+                                                  length
 
 Means of authenticating a users identity         Explanation and example
 ------------------------------------------------|----------
@@ -589,26 +592,29 @@ Hashing                                         : Takes a variable length input,
                                                 - The longer the output, the better collision resistance
 One-way algorithms                              : Hashing essentially
 Hash                                            : The output of a hash algorithm
-Collision resistance                            : In regards to hashing, the likelyhood of 2 different messages have an identical output
-                                                  using the same Hashing method. (i.e. MD5 vs SHA-256)
-Worm                                            : A type of malicious software (malware) that replicates while moving across computers,
-                                                  leaving copies of itself in the memory of each computer in its path.
+Collision resistance                            : In regards to hashing, the likelyhood of 2 different messages have an identical
+                                                  output using the same Hashing method. (i.e. MD5 vs SHA-256)
+Worm                                            : A type of malicious software (malware) that replicates while moving across
+                                                  computers, leaving copies of itself in the memory of each computer in its path.
 RAT (Malicious software)                        : Remote Access Trojan. Malware designed to allow an attacker to remotely
                                                   control an infected computer. Once the RAT is running on a compromised
-                                                  system, the attacker can send commands to it and receive data back in
-                                                  response.
-RAT (Security)                                  : Remote Administration Tool. Software that gives a person full access to the device remotely.
-                                                  These are considered legitimate until used for malicious purposes.
-Trojan                                          : Some malicious code or software, disguised as a, or within a legitimate program.
-                                                  Common trojan examples: {Backdoor ..., Downoader, Fake AV ..., RAT, Ransomware, Mailfinder ...,
-                                                  Rootkit ..., SMS ..., Banker ..., Cryptomining ...,  and so on}
-Malware                                         : Malicious Software
-Clipper                                         : Clipper chip, a chipset that was developed and promoted by NSA, with multiple security flaws
-                                                  which they wanted to use both on a domestic and global level. They neverhad much success with the chip
-Cracker                                         : A term for an individual, who performs cracking, the process of breaking into computers or passwords
-Hacker                                          : A term for an individual with the skillset to break into things, but generally try to make people
-                                                  aware of the vulnerabilities of a system.
-Rainbow table                                   : A precomputed table for caching the output of cryptographic hash functions usually for cracking password hashes
+                                                  system, the attacker can send commands to it and receive data back in response.
+RAT (Security)                                  : Remote Administration Tool. Software that gives a person full access to the
+                                                  device remotely. These are considered legitimate until used for malicious
+                                                  purposes.
+Malware                                         : Malicious Software, common term.
+Trojan                                          : Some malicious code or software, disguised as a, or within a legitimate file.
+                                                  Common trojan examples: {Backdoor ..., Downoader, Fake AV ..., RAT, Ransomware,
+                                                  Mailfinder ..., Rootkit ..., SMS ..., Banker ..., Cryptomining ...,  and so on}
+Clipper                                         : Clipper chip, a chipset that was developed and promoted by NSA, with multiple
+                                                  security flaws which they wanted to use both on a domestic and global level.
+                                                  They never had much success with the chip
+Cracker                                         : A term for an individual, who performs cracking, the process of breaking into
+                                                  computers or passwords
+Hacker                                          : A term for an individual with the skillset to break into things, but generally
+                                                  try to make people aware of the vulnerabilities of a system.
+Rainbow table                                   : A precomputed table for caching the output of cryptographic hash functions
+                                                  usually for cracking password hashes
 Brute force                                     :
 Key                                             :
 Keyring                                         :
@@ -621,34 +627,47 @@ Active Attack                                   :
 Authentification                                : To establish the authenticity of...
 Authenticity                                    : The quality of being authentic
 Availability                                    : The quality of being able to be used or obtained.
-Data Confidentiality                            : Protecting data against unintentional, unlawful, or unauthorized access, disclosure, or theft.
-Data Integrity                                  : It guarantees and secures the searchability and traceability of your data to its original source. 
+Data Confidentiality                            : Protecting data against unintentional, unlawful, or unauthorized access,
+disclosure, or theft.
+Data Integrity                                  : It guarantees and secures the searchability and traceability of your data to
+its original source. 
 CA                                              : Certificate Authority
 CSR                                             : Certificate Signing Request
-                                                - The message that's sent to the CA in order to get a digital certificate created. 
-Nonrepudiation                                  : Assurance that the sender of information is provided with proof of delivery, and the recipient is provided with proof of the sender's identity, so neither can later deny having process the information
+                                                - The message that's sent to the CA in order to get a digital certificate
+                                                  created. 
+Nonrepudiation                                  : Assurance that the sender of information is provided with proof of delivery,
+                                                  and the recipient is provided with proof of the sender's identity, so neither
+                                                  can later deny having process the information.
 OSI Security Architecture                       :
 Active Attack                                   :
 Passive Attack                                  :
-Security Attacks                                : Any action that compromises the security of information owned by an organization
-Security Mechanism                              : A process (or a device incorporating such a process) that is designed to detect, prevent, or recover from a security attack
-Security Services                               : • A processing or communication service that enhances the security of the data processing systems and the information transfers of an organization
-                                                - • Intended to counter security attacks, and they make use of one or more security mechanisms to provide the service
-                                                Key Exchange                                    : A method where 2 parties using a public key encryption scheme decide upon a symmetric key, in such a way, that any onlooker cannot figure out the resulting symmetric key.
-                                                ECC                                             : Elliptic Curve Cryptography
+Security Attacks                                : Any action that compromises the security of information owned by an
+                                                  organization
+Security Mechanism                              : A process (or a device incorporating such a process) that is designed to
+                                                  detect, prevent, or recover from a security attack
+Security Services                               : • A processing or communication service that enhances the security of the data
+                                                    processing systems and the information transfers of an organization
+                                                - • Intended to counter security attacks, and they make use of one or more 
+                                                    security mechanisms to provide the service
+Key Exchange                                    : A method where 2 parties using a public key encryption scheme decide upon a
+                                                  symmetric key, in such a way, that any onlooker cannot figure out the resulting
+                                                  symmetric key.
+ECC                                             : Elliptic Curve Cryptography
 Diffie-Hellman                                  : A key exchange method, devised by Whitfield Diffie and Martin Hellman
 El Gamal                                        : Based on Diffie-Hellman, it is a public key encryption method
 DSS                                             : Digital Signature Standard
 DSA                                             : Digital Signature Algorithm
 Plaintext                                       : Human readable text
 Ciphertext                                      : Gibberish essentially
-Stream Cipher                                   : A symmetric encryption method, where a plain/cipher-text is XOR with the resulting stream of bits generated by the stream cipher method.
+Stream Cipher                                   : A symmetric encryption method, where a plain/cipher-text is XOR with the
+                                                  resulting stream of bits generated by the stream cipher method.
 TRNG                                            : True Random Number Generator
 PRNG                                            : Pseudo Random Number Generator
 PRF                                             : Pseudorandom Function
 TLS                                             : Transport Layer Security, 
 MAC                                             : Message Authen Code
-MAC address                                     : Media Access Control address, hardware identification number that uniquely identifies each device on a network.
+MAC address                                     : Media Access Control address, hardware identification number that uniquely
+                                                  identifies each device on a network.
 
         ***
 Block cipher mode of encryption
@@ -742,6 +761,7 @@ Oauth
         ***
 Internet Mail Architecture
 ------------------------------------------------|----------
+
 MIME                                            : Multipurpose Internet Mail Extensions
 S/MIME                                          : Secure MIME. Protocol for sending digitally signed and encrypted messages
 PGP                                             : Pretty Good Privacy
@@ -757,11 +777,14 @@ SMTP                                            : Simple Mail Transfer Protocol
 ESMTP                                           : Extended SMTP
 STARTTLS                                        : SMTP Service Extension for Secure SMTP over Transport
 IMAP                                            : Internet Message Access Protocol
-                                                - Is an Internet standard protocol used by email clients to retrieve email messages)
+                                                - Is an Internet standard protocol used by email clients to retrieve email
+                                                  messages)
 POP                                             : Post Office Protocol
-                                                - Application-layer Internet standard protocol used by e-mail clients to retrieve e-mail from a mail server )
+                                                - Application-layer Internet standard protocol used by e-mail clients to retrieve
+                                                  e-mail from a mail server )
 Base64                                          : Text encoding format.
-                                                - Encodes the data by mapping 6-bit blocks of input to 8-bit blocks of output, all which are printable ASCII characters.
+                                                - Encodes the data by mapping 6-bit blocks of input to 8-bit blocks of output,
+                                                  all which are printable ASCII characters.
 DNSSEC                                          : DNS Security Extensions
 DANE                                            : DNS-based Authentification of Named Entities
 DKIM                                            : DomainKeys Identified Mail
