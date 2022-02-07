@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.12.10
+ Version     : 2.12.11
  Date        : 29/09-20
- Last Updated: 05/02-22
+ Last Updated: 07/02-22
  Copyright   : Do not alter, this file without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
@@ -354,6 +354,23 @@ p                                               : Named pipe
                                                 
 [Example output of "ls -lG"]
 drwxrwxrwx 1 declined  4096 Jul 17 14:02  Guides
+
+To expand upon this concept, is something called
+"sticky bit".
+Much like rwx, it can be viewed with 'ls' and
+altered with chmod.
+What is does, is specify that only the user and
+root are allowed to delete or rename the file
+or if the sticky bit is set on a directory, the
+files located within that directory.
+
+[Example]
+$ chmod +t [directory]                          : Add the sticky bit to [directory]
+$ chmod -t [directory]                          : Remove the sticky bit from {directory]
+It is also possible to add or remove the sticky
+bit, using octal characters.
+$ chmod 1777 [directory]                        : Add sticky bit to the directory
+$ chmod 777 [directory]                         : Remove sticky bit from the directory
 
 ================================================
 |               System/User Info               |
@@ -810,12 +827,17 @@ wget                                            : Retrieve web pages/files to di
         -C                                      - Resume download, in case networking dropped, rather than starting from scratch.
 ftp                                             : Copy files to/from a remote host
 sftp                                            : Same as 'ftp' only this is a secure version
+scp [from] [to]                                 : Secure copy (remote file copy program)
+                                                - Use ssh in the background
+        -P
+        -v
 whois                                           : Client for the whois directory service
 iptables                                        : administration tool for IPv4/IPv6 packet filtering and NAT
 ping -[operator] [website]                      : Pings a website with packages
 traceroute                                      : Print the route packets trace to network host
-nslookup                                        : Query Internet name servers interactively.
-                                                  There is a paragraph dedicated to the usage of this command.
+dig                                             : DNS lookup utility
+nslookup                                        : Query Internet name servers interactively
+                                                  There is a paragraph dedicated to the usage of this command
 tcpdump                                         :Dump traffic on a network
 socat                                           : Multipurpose relay (SOcat CAT)
                                                 - The socat utility is a relay for bidirectional data transfers between two
@@ -838,6 +860,18 @@ $ socat TCP:localhost:4000 -
 herpti derpti derp
 [Previous terminal]
 : Here the "herpti derpti derp" should appear   :
+
+[Example scp]
+This example assumes you have a server already
+setup to connect via ssh.
+$ scp -P [port number] user@yourserverip:derp.txt /some/local/directory
+                                                : Move a file called 'derp' located at
+                                                  the home directory of your account on the server, to 
+                                                  your own computer on some local directory specified by the absolute path.
+$ scp -P [port number] derp.txt user@yourserverip:/some/remote/directory
+                                                : Move a file called 'derp.txt' located at
+                                                  the current directory on your local machine to
+                                                  to the server at '/some/remote/directory' specified by the absolute path.
 
 ================================================
 |                   VARIABLES                  |
@@ -2073,6 +2107,7 @@ Desktop environment                             : Graphical user interface on to
 Directory                                       : Folder structure
 Distro/distribution                             : Collection of software making up a Linux-based OS.
                                                   There is a detailed explanation within the introduction section.
+flash                                           - File Hierarchy Standard, the layout of the file system on Linux.
 Filesystem                                      : Method for storing and organizing files.
                                                 - Example: ext3, ext4, FAT, XFS, NTFS and Btrfs
 Kernel                                          : Controls hardware, and makes the hardware interact with applications
