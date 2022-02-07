@@ -306,6 +306,19 @@ $ shutdown -c                                   : Cancel pending shutdown
 ================================================
 |           * Permission Explanation           |
 ================================================
+Each file and directory has some metadata, such
+as: Group, owner, read, write, executable, 
+sticky bit and more.
+
+When you call the 'ls' command with '-l' option
+you can see the permissions of the files and
+folders located within that directory using a
+specific format.
+
+If you use the '-a' option, you also display
+hidden files and folders. They're displayed
+with a dot (.) in front.
+
 Permission explanation:
 https://youtu.be/oxuRxtrO2Ag?t=3490
 Set up in relation to separate bits, from left
@@ -336,6 +349,13 @@ When using the 'chmod' command, you  enter 3 numbers
 The first number represents the owner
 The second number represents the group
 The 3rd number represents everybody else.
+
+[Example output of 'ls -la']
+drwxrwxrwx 1 declined declined  4096 Jan 28 22:29  Guides
+                                                : Only included a single sentence
+                                                - User, Group and Other all have 'Read', 'Write' and 'Execute'
+                                                  permission as specified via -rwxrwxrwx, it is owned by user 'declined'
+                                                  owned by group 'declined', it is a directory and the rest is irrelevant for now
 
 [Example]
 $ chmod 744 filename.sh                         : Permission will look like this -rwxr--w--
@@ -538,6 +558,9 @@ deluser                                         : Deletes user, Debian based dis
         --remove-home [username]                - This syntax is for Debian Distributions
                                                   Will delete the user
 chgrp                                           : Change group ownership
+        -R                                      - Recursively, to include all files and sub folders located with
+                                                  the directory.
+chown                                           : Change file owner and group
 groups                                          : Print the groups a user is in
 
 
@@ -547,6 +570,10 @@ $ sudo su - [username]                          : Use root pw to pretend being a
                                                   Remember to exit when done
 $ sudo usermod -a -G [groupname] [username]     : Add [username] to group [groupname]
 $ groups [username]                             : View the groups that [username] is part of
+$ chgrp [group] [file]                          : Alter the group ownership of that directory/file
+$ chown [user] [file]                           : Change ownership of file to specified user
+$ chown :[group] [file]                         : Change ownership of file to specified group
+$ chown [user]:[gropu] [file]                   : Change ownership of file for both user and group
 
 There is a utility called 'Access Control List'
 which can be used to set permissions on files
@@ -582,6 +609,8 @@ ls                                              : List content of current direct
         -a                                      - Display hidden files
         -l                                      - Provides extra information about each file, the left mode column regarding rwx,
                                                   concerns users priveledge.
+                                                - Column format: {permissions, number of links to the file, file owner,
+                                                                  group owner, size, date}
         -la                                     - Extra details and hidden files
         /[foldername]                           - List content of specified directory
 
@@ -1303,7 +1332,7 @@ make                                            : GNU make utility to maintain g
 rm .test.c.sw*                                  : Deletes both .sw files for 'test.c' (In case of errors)
                                                   //compiler course
 chage                                           : Change user password expiry information
-
+ls- l | awk '{ print $2 }'                      : Print only the 2nd column
 
 size                                            : Display the size of a compiled C program, and how data is stored.
 time                                            : Display the time used to execute a command and print the time for
