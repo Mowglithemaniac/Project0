@@ -308,7 +308,7 @@ $ shutdown -c                                   : Cancel pending shutdown
 ================================================
 Each file and directory has some metadata, such
 as: Group, owner, read, write, executable, 
-sticky bit and more.
+sticky bit, setuid bit, setgid bit and more.
 
 When you call the 'ls' command with '-l' option
 you can see the permissions of the files and
@@ -343,7 +343,16 @@ and so on
 |||! -----------------------------------------> : Execute bit, for 'User'
 ||! ------------------------------------------> : Write bit, for 'User'
 |! -------------------------------------------> : Read bit, for 'User'
-! --------------------------------------------> : {d, 1, b, c, s, p}
+! --------------------------------------------> : {-, d, 1, b, c, s, p}
+
+- File
+d Directory,
+b Block file
+c Character file ()
+s 
+p Named pipe
+Link file, (soft link or hard link)
+
 
 When using the 'chmod' command, you  enter 3 numbers
 The first number represents the owner
@@ -375,22 +384,72 @@ p                                               : Named pipe
 [Example output of "ls -lG"]
 drwxrwxrwx 1 declined  4096 Jul 17 14:02  Guides
 
-To expand upon this concept, is something called
-"sticky bit".
-Much like rwx, it can be viewed with 'ls' and
-altered with chmod.
-What is does, is specify that only the user and
+There are actually 3 additional bits: {setuid,
+setgid, sticky}
+
+Much like rwx, they can be viewed with 'ls -l'
+command and altered with chmod.
+Starting with the sticky bit.
+What it does, is specify that only the user and
 root are allowed to delete or rename the file
 or if the sticky bit is set on a directory, the
 files located within that directory.
 
+setuid and setgid are very similar, but with a
+slight difference. setuid, refers to users.
+setgid refers to group.
+
+When setgid is set on a directory, it cause     : Great for sharing a directory of files among several users, as long as they
+newly created files within the directory to take  belong to a common group
+on the group ownership of the directory rather  - Behave differently when setgid bit is set on an executable file
+than the default group of the user that created
+the file.
+
+
 [Example]
 $ chmod +t [directory]                          : Add the sticky bit to [directory]
 $ chmod -t [directory]                          : Remove the sticky bit from {directory]
-It is also possible to add or remove the sticky
-bit, using octal characters.
-$ chmod 1777 [directory]                        : Add sticky bit to the directory
-$ chmod 777 [directory]                         : Remove sticky bit from the directory
+        It is also possible to add or remove the sticky
+        bit, using octal characters.
+        $ chmod 1777 [directory]                        : Add sticky bit to the directory
+        $ chmod 777 [directory]                         : Remove sticky bit from the directory
+        
+
+---------?
+|||||||||!------------------------------------> : 'x' executable for Everyone
+                                                  't' for sticky bit and executable,
+                                                  'T' for sticky bit                                                 
+                                                  's for setgid/setuid and an executable
+                                                  'S for setgid/setuid
+
+There is a bonus concept called file attributes.
+It is a list of supplemental flag, that can be
+set on files to request special handling.
+
+
+Flag            : File System                    Description
+----------------|-------------------------------|---------------
+A               : XBE                           : Never update access time (st_atime; for performance)
+a               : XBE                           : Allow writing only in append mode
+C               :  B                            : Disable copy-on-write updates
+c               :  B                            : Compress contents
+D               :  BE                           : Force directory updates to be written synchronously
+d               : XBE                           : Do not back up; backup utilities should ignore this file
+i               : XBE                           : Make file immutable and undeletable
+j               :   E                           : Keep a journal for data changes as well as metadata
+s               : XBE                           : Force changes to be written synchronously (no buffering)
+X               :  B                            : Avoid data compression if it is the default
+
+Where in the file system column:
+                  X = XFS
+                  B = Btrfs
+                  E = ext3 and ext4
+
+These additional flags can be viewed and altered
+with the commands 'lsattr' and 'chattr'.
+
+This is important in case a file contains the
+'i' flag.
 
 ================================================
 |               System/User Info               |
@@ -409,6 +468,8 @@ w                                               : Show who is logged on and what
                                                 - Also include statistical data and lists what they're doing
 whoami                                          : Print effective userid
 users                                           : Print the user names of users currently logged in to the current host
+fuser                                           : Identify processes using files or sockets
+        -c
 id                                              : ID number, and associated details with the user
 hostname                                        : Show or set the system's host name (usually shown in your prompt)
                                                   WARNING This is a complicated topic, DO NOT alter your hostname!!!
@@ -418,6 +479,7 @@ cal                                             : Calender
 iostat                                          : Report Central Processing Unit (CPU) statistics and input/output statistics for
                                                   devices and partitions.
 lsof                                            : List open files
+file                                            : Determine file type
 df [option] [file]                              : Report file system disk space usage
         -h                                      - Human readable
         -H                                      - Print sizes in powers of 1000 (e.g., 1.1G)
@@ -430,6 +492,7 @@ ps                                              : Processor Status, it is a high
         aux                                     : Display processes of all users.
         -o                                      : User defined format
         -e                                      : Select all processes, identical to -A
+        up "[process id(s)]"
 sar                                             : Collect, report, or save system activity information.
 tar                                             : An archiving utility
 free                                            : Displays the total amount of free space available along with the
@@ -458,6 +521,8 @@ $ ps aux                                        : See all running processes
 $ ps -eo pid,user,uid,gid,vsz,rss,comm --sort=-vsz
                                                 : Showing the selected categories, sorted descending by vsz
 $ ps -eo pid,user,vsz,rss,comm --sort=rss       : Showing the selected categories, sorted ascending by rss
+$ ps up "342 8525"                              : Show specific details regarding the two processes with the ID342 and 8525
+
 
 ================================================
 |               * Process details              |
@@ -846,6 +911,7 @@ Commands                                         Description
 ssh                                             : OpenSSH remote login client, remote access to a host
 netstat                                         : Printing network connections, routing tables, interface statistics,
                                                   masquerade connections, and multicast memberships
+ss                                              : Another utility to investigate sockets
 ip                                              : ip - show/manipulate routing, network devices, interfaces and tunnels
 ifconfig                                        : Configure a network interface
 nmap                                            : Network exploration tool and security/port scanner
@@ -1322,7 +1388,11 @@ $vimtutor
 :r                                              : Strip file extension from an argument
 :g                                              : Affect all occurences of a word
 
-mkfifo pipeline                                 : Make fifo pipeline        
+[Example]
+$ mkfifo [pipeline]                             : Create a  (aka a Named pipe) called [pipeline], some arbitrary name
+$ ls -la > [pipeline]                           - Send something through the pipeline
+$ cat < [pipeline]                              - Display the content of the pipeline
+
 awk                                             : Awk is a scripting language used for manipulating data and
                                                   generating reports. By itself it goes beyond the scope of
                                                   this file, and would thus require a guide by itself, even
@@ -1425,6 +1495,8 @@ Sources:
 ||              -  Table 1.5: Signals available in Linux                      ||
 ||              -  Table 1.6: Control group limiting options                  ||
 ||              -  Table 1.7: Operators for test expressions(Shell scripting) ||
+||              -  Table 1.8: Important files on the Linux OS                 ||
+||         : References                                                       ||
 ================================================================================
 
 ================================================
@@ -2287,6 +2359,7 @@ Directory                                        Description
                                                   would be mounted on /media/myusb
 /lib                                            : Contains shred libraries needed by applicatiosn in /bin and /sbin to
                                                   boot systems.
+/media                                          : Mount points for filesystems on removable media
 /mnt                                            : A common mount point for many devices before it was supplanted by the 
                                                   standard /media directory. Some bootable Linux systems still use this
                                                   directory to mount hard disk partitions and remote filesystems.
@@ -2297,6 +2370,7 @@ Directory                                        Description
 /proc                                           : Contains information about system resources
 /root                                           : Represents the root user's home diretory. The home directory for root
                                                   does not reside beneath /home for seurity reasons.
+/run                                            : Rendezvous points for running programs (PIDs, sockets, etc)
 /sbin                                           : Contains administrative commands and daemon processes, can only be
                                                   accessed by a Super user (such as Root).
 /sys                                            : Contains parameters for such things as tuning block storage and managing
@@ -2306,6 +2380,15 @@ Directory                                        Description
                                                   and a variety of other commands and files that are not needed during the
                                                   boot process. The /usr directory is meant for files that don't change
                                                   after installation (in theory, /usr could be mounted read-only).
+/usr/bin                                        : Most commands and executable files
+/usr/include                                    : Header files for compiling C programs
+/usr/lib                                        : Libraries; also, support files for standard programs
+/usr/local                                      : Local software or configuration data; mirrors /usr
+/usr/sbin                                       : Less essential commands for administration and repair
+/usr/share                                      : Items that might be common to multiple systems
+/usr/share/man                                  : On-line manual pages
+/usr/src                                        : Source code for nonlocal software (not widely used)
+/usr/tmp                                        : More temporary space (preserved between reboots)
 /var                                            : Contains directories of data used by various applications. In particular,
                                                   this is where you would place files that you share as an FTP server
                                                   (/var/ftp) or a web server (/var/www). It also contains all system log
@@ -2314,6 +2397,11 @@ Directory                                        Description
                                                   to change often. On server computers, it is common to create the /var
                                                   directory as a separate filesystem, using a filesystem that that can be
                                                   easily expanded.
+/var/adm                                        : Varies: logs, setup records, strange administrative bits
+/var/log                                        : System log files
+/var/run                                        : Same function as /run; now often a symlink
+/var/spool                                      : Spooling (that is, storage) directories for printers, mail, etc.
+/var/tmp                                        : More temporary space (preserved between reboots)
 
 ================================================
 |                  Table: 1.5                  |
@@ -2475,6 +2563,72 @@ var1 != var2                                    : Is the first variable not equa
 var1 -ne var2                                   : Is the firat variable not equal to the second variable?
 
 ================================================
+|                  Table: 1.8                  |
+================================================
+Everything in Linux is a file, from logging in 
+to the commands you use.
+
+Here is an overview for some of the files that
+are of interest for some reason or another.
+As well as their location
+
+File and location                                Description
+------------------------------------------------|---------------
+$HOME/.bashrc
+$HOME/.bash_profile
+$HOME/.bash_history
+$HOME/.viminfo
+
+
+.login ... ?
+.logout ... ?
+.profile ... /etc/profile
+.wm_style ... ?
+
+/boot/vmlinuz                                   : The Linux kernel file.  File naming conventions may include release information
+/dev/fd0                                        : Device file for the first floppy disk drive on the system
+/dev/fd0H1440                                   : Device driver for the first floppy drive in high density mode, commonly invoked when formatting a floppy diskette for that density
+/dev/hda                                        : Device file for the first IDE hard drive on the system
+/dev/hdc                                        : Commonly, the IDE CDROM drive device file which often is a symbolic link called to /dev/cdrom, the real CDROM driver file.
+/dev/null                                       : A dummy device which contains nothing.  It is sometimes useful to send output to this device to make it go away forever.
+/etc/aliases                                    : Contains aliases used by sendmail and other mail transport agents. Whenever this file is changed, the newaliases utility must be run to notify sendmail of the changes
+/etc/bashrc                                     : Contains global defaults and aliases used by the bash shell
+/etc/crontab                                    : A parent shell script to run commands periodically.  It invokes hourly, daily, weekly, and monthly scripts.
+/etc/exports                                    : Contains a list of filesystems which may be made available to other systems on the network via NFS.
+/etc/fstab                                      : The file system table contains the description of what disk devices are available at what mount points.
+/etc/group                                      : Holds information regarding security group definitions.
+/etc/grub.conf                                  : The grub boot loader configuration file
+/etc/hosts                                      : Contains host names and their corresponding IP addresses used for name resolution whenever a DNS server is unavailable
+/etc/hosts.allow                                : Contains a list of hosts allowed to access services on this computer.
+/etc/hosts.deny                                 : Contains a list of hosts forbidden to access services on this computer.
+/etc/inittab                                    : Describes how the INIT process should set up the system in various runlevels
+/etc/issue                                      : Contains the pre-login message, often overwritten by the /etc/rc.d/rc.local script in Red Hat and some other rpm-based Linux distributions
+/etc/lilo.conf                                  : The lilo boot loader configuration file
+/etc/modules.conf                               : Holds options for configurable system modules
+/etc/motd                                       : This is the ?message of the day? file which is printed upon login. It can be overwritten by /etc/rc.d/rc.local Red Hat on startup.
+/etc/mtab                                       : Status information for currently mounted devices and partitions
+/etc/passwd                                     : Contains information regarding registered system users. Passwords are typically kept in a shadow file for better security.
+/etc/printcap                                   : Holds printer setup information
+/etc/profile                                    : Contains global defaults for the bash shell
+/etc/resolv.conf                                : A list of domain name servers (DNS) used by the local machine
+/etc/securetty                                  : This file contains a list of terminals where root can login
+/etc/shadow                                     : Here the hashed passwords are stored
+/etc/termcap                                    : An extensive ASCII text file defining the properties of consoles, terminals, and printers
+/proc/cpuinfo                                   : Contains CPU related information
+/proc/filesystems                               : Holds information regarding filesystems that are currently in use
+/proc/interrupts                                : Stores the interrupts that are currently being used
+/proc/ioports                                   : A list of the I/O addresses used by devices connected to the server
+/proc/meminfo                                   : Contains memory usage information for both physical memory and swap
+/proc/modules                                   : Lists currently loaded kernel modules
+/proc/mounts                                    : Displays currently mounted file systems
+/proc/stat                                      : Contains various statistics about the system, such as the number of page faults since the system was last booted
+/proc/swaps                                     : Holds swap file utilization information
+/proc/version                                   : Contains Linux version information
+/var/log/lastlog                                : Stores information about the last boot process
+/var/log/messages                               : Contains messages produced by the syslog daemon during the boot process
+/var/log/wtmp                                   : A binary data file holding login time and duration for each user currently on the system
+
+================================================
 |                  References                  |
 ================================================
 http://www.tlpd.org/HOWTO/Bash-Prompt-HOWTO     : Refer to this link for information on changing colors, commands and other
@@ -2489,4 +2643,5 @@ https://opensource.com/article/19/10/strace     : Understanding System calls
 https://en.wikipedia.org/wiki/System_call       : System calls
 https://www.geeksforgeeks.org/introduction-of-system-call/
                                                 : System calls
-                                                
+- http://www.dba-oracle.com/linux/important_files_directories.htm
+                                                : Important files
