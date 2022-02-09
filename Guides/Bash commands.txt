@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.12.11
+ Version     : 2.13.00
  Date        : 29/09-20
- Last Updated: 07/02-22
+ Last Updated: 10/02-22
  Copyright   : Do not alter, this file without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
@@ -253,6 +253,8 @@ chmod                                           : Change file mode bits. Permiss
         +r [Filename]                           - Makes the file readable
         +w [Filename]                           - Makes the file writeable
         +x [Filename]                           - Makes the file executable
+       u+s [Filename]                           - Add setuid bit 
+       g+s [Filename]                           - Add setgid bit 
 killall                                         : Kill all processes that you have access to, use with care, as you may
                                                   terminate more processes than you intended.
         [a-zA_Z]                                - Terminates any process related to that name
@@ -343,7 +345,7 @@ and so on
 |||! -----------------------------------------> : Execute bit, for 'User'
 ||! ------------------------------------------> : Write bit, for 'User'
 |! -------------------------------------------> : Read bit, for 'User'
-! --------------------------------------------> : {-, d, 1, b, c, s, p}
+! --------------------------------------------> : {-, d, l, b, c, s, p}
 
 - File
 d Directory,
@@ -352,7 +354,6 @@ c Character file ()
 s 
 p Named pipe
 Link file, (soft link or hard link)
-
 
 When using the 'chmod' command, you  enter 3 numbers
 The first number represents the owner
@@ -411,8 +412,8 @@ $ chmod +t [directory]                          : Add the sticky bit to [directo
 $ chmod -t [directory]                          : Remove the sticky bit from {directory]
         It is also possible to add or remove the sticky
         bit, using octal characters.
-        $ chmod 1777 [directory]                        : Add sticky bit to the directory
-        $ chmod 777 [directory]                         : Remove sticky bit from the directory
+        $ chmod 1777 [directory]                : Add sticky bit to the directory
+        $ chmod 777 [directory]                 : Remove sticky bit from the directory
         
 
 ---------?
@@ -467,10 +468,10 @@ who                                             : Show who is logged on
 w                                               : Show who is logged on and what they are doing.
                                                 - Also include statistical data and lists what they're doing
 whoami                                          : Print effective userid
+id                                              : ID number, and associated details with the user such as group
 users                                           : Print the user names of users currently logged in to the current host
 fuser                                           : Identify processes using files or sockets
-        -c
-id                                              : ID number, and associated details with the user
+        -c                                      - Check for current directory
 hostname                                        : Show or set the system's host name (usually shown in your prompt)
                                                   WARNING This is a complicated topic, DO NOT alter your hostname!!!
 date                                            : Display the date
@@ -614,6 +615,7 @@ Commands                                         Description
 ------------------------------------------------|---------------
 passwd                                          : Used to change the password of users
 useradd                                         : Create a new user or update default new user information
+        -m                                      - Remembering to also create their home ID
 adduser                                         : Add a user to the system
 addgroup                                        : Add a group to the system
 usermod                                         : Modify a user account
@@ -630,6 +632,8 @@ groups                                          : Print the groups a user is in
 
 
 [Example]
+$ useradd -m derp -G sudo -s /bin/sh            : Create user 'derp' part og group sudo, using the /bin/sh shell
+$ passwd derp                                   : Change password of 'derp'
 $ sudo deluser --remove-home derp               : Removes user 'derp'
 $ sudo su - [username]                          : Use root pw to pretend being another user, using their environment variables 
                                                   Remember to exit when done
@@ -678,12 +682,12 @@ ls                                              : List content of current direct
                                                                   group owner, size, date}
         -la                                     - Extra details and hidden files
         /[foldername]                           - List content of specified directory
-
 cd                                              : Change directory
        [empty]                                  - Move to home directory
         ~                                       - Move to home directory
         ..                                      - Move up a directory
         [Directory Name]/                       - Move to specific directory
+
         <tab><tab>                              - Auto complete
 pushd                                           : Save directory into a LIFO stack (directory stack)
                                                   Works much like 'cd' except that the directory you move from
@@ -691,8 +695,6 @@ pushd                                           : Save directory into a LIFO sta
 popd                                            : Pop the directory from the LIFO stack
 dirs                                            : Display directory stack
         -v                                      : Show the list with a bit of formatting
-locate                                          : Able to locate specific command locations, and references
-                                                  Requires a database to work. (updatedb*)
 history                                         : Shows a list of commands used so far.
         -c                                      - Reset the the history
 mkdir                                           : Make directory (folder)
@@ -700,18 +702,7 @@ mkdir                                           : Make directory (folder)
 tree                                            : List contents of directories in a tree-like format.
 touch                                           : Update the date of a file, without making changes to the file
         [file name]                             : Can create a new file, if that file does not exist
-cp                                              : Copy from specific directory into current directory
-        [folder/folder/file] [New name]
-        -i                                      - Add a prompt before overwriting files.
 dd                                              : Copy a file, converting and formatting 
-mv                                              : Move a command/file, to some other location, but it can also rename at the same time
-        [Filename] [Filename]                   - rename, can also overwrite other files
-rm                                              : Remove (PERMANENTLY)
-        ?                                       - Wildcard, for a single character
-        *                                       - Wildcard, will remove everything from current directory
-        [a_zA_Z]*                               - Will remove everything, starting with the specified name, from current
-                                                  directory.
-        -r [directory]                          - will remove way too much, DO NOT USE
 rmdir                                           : Remove directory
         *                                       : wildcard
         [a_zA_Z]*                               - Remove directories starting with specified [a-zA_Z]
@@ -731,6 +722,7 @@ $ mkdir ab{cd,ef}                               - Creates 2 directories, named '
 If you've got no idea what you're looking at,
 it's always nice to know how you can acquire
 acquire information about the subject.
+Or how to search for something
 
 Commands                                         Description
 ------------------------------------------------|---------------
@@ -747,6 +739,17 @@ man [operator] [command]                        : Manual page for Bash commands
                                                   linked to the search word.
                                                   Each manual page, has a number, that refers to a category
                                                   To find out what the category means, look at the manual page for man
+locate                                          : Able to locate specific command locations, and references
+                                                  Requires a database to work. (updatedb*)
+which                                           : Locate a command
+find                                            : Search for files in a directory hierarchy
+type [command]                                  : Display where a command is located.
+        -a                                      - Display all instances of where the command is located
+locate [detail]                                 : Locates a detail on the computer
+compgen [Operator] [word]                       : Display possible completions depending on the operator
+        -c                                      - List commands, if 'word' is supplied, list those starting with 'word'
+
+
 [Example]
 $ man man                                       - Manual page for the manual command
 $ man pipe                                      - Manual page for the pipe command
@@ -761,11 +764,6 @@ Commands include a help method, referenced
 $ ls --help                                     : List a help category for 'ls' command.
 $ chmod --help                                  : List a help category for 'chmod' command
 
-type [command]                                  : Display where a command is located.
-        -a                                      - Display all instances of where the command is located
-locate [detail]                                 : Locates a detail on the computer
-compgen [Operator] [word]                       : Display possible completions depending on the operator
-        -c                                      - List commands, if 'word' is supplied, list those starting with 'word'
 [Example]
 $ compgen -c gr                                 : List commands starting with 'gr'
 $ compgen -c | sort                             : List all commands sorted alphabetically
@@ -774,9 +772,10 @@ $ compgen -c | sort                             : List all commands sorted alpha
 |           File access, edit, format          |
 ================================================
 Commands related to files, such as viewing,
-altering, acquiring information
+altering, acquiring information, sorting,
+compressing, and so on.
 
-Commands                                         Description
+Text editors                                     Description
 ------------------------------------------------|---------------
 VIM                                             : VIM text editor suite
                                                   There is a paragraph with a tutorial for VIM.
@@ -788,10 +787,33 @@ nano                                            : text editor
 Additional text exditors:
 vi, gedit, jed, joe, kate, kedit, mcedit, nedit
 
+
+File alteration                                  Description
+------------------------------------------------|---------------
+cp      [source] [destination]                  : copy files and directories
+        -i                                      - Add a prompt before overwriting files.
+mv      [Source] [Destination]                  : Move (rename) files
+        -i                                      - Add a prompt before overwriting files.
+rm                                              : Remove (PERMANENTLY)
+        ?                                       - Wildcard, for a single character
+        *                                       - Wildcard, will remove everything from current directory
+        [a_zA_Z]*                               - Will remove everything, starting with the specified name, from current
+                directory.
+        -r [directory]                          - will remove way too much, DO NOT USE
+
+
+File information                                 Description
+------------------------------------------------|---------------
 file [option] [file]                            : Determine file type
-stat                                            : Display file or file system status
-     [option] [FILE]
+stat [option] [file]                            : Display file or file system status
      -f [FILE]                                  : File system status
+wc [behavior] [filename]                        : Word count - count the number of words in a file
+        -l                                      - Count lines, not words
+wget [website link]                             : Download a file from the internet (pdf, rar, and so on)
+
+
+Displaying content                               Description
+------------------------------------------------|---------------
 cat [option] [filename]                         : 'Concatenate' Show content of file via the terminal
         [Filename]                              - Display content of [Filename]
         >> [Filename]                           - Write something into the file (append), use 'Ctrl + D' to complete.
@@ -806,24 +828,43 @@ less                                            : Same as 'more' just goes one l
         q                                       - quits, and goes back to the prompt
 head                                            : View the first lines of a text file
 tail                                            : View the last lines of a text file
-sort                                            : Sort via parameters, alphabetically as standard -r for reversed
-        -r                                      - Sort in reversed order
-        -n                                      - Sort according to string numeral value
-        -u                                      - Only show unique occurences of a sentence
+        -f                                      - Follow, output appended data as the file grows;
+strings                                         : Display text that's embedded in a binary file
+od [option] [filename]                          : Display a file in Octal or other formats (use option '-x' for Hex)
+
+
+Sorting, Comparing and Searching                 Description
+------------------------------------------------|---------------
+diff                                            : Compare files line by line
+rev [filename]                                  : Reverse lines characterwise
+grep                                            : Print lines that match patterns
+cut                                             : Remove sections from each line of lines
+        -d[character]                           : Use [character] as a delimiter
+awk                                             : Pattern scannoing and processing language
 uniq                                            : Displaying unique sentences, has additional options over 'sort -u'
                                                   Unique refers to 2 adjacent sentences, therefore often used
                                                   in conjunction with the 'sort' command.
         -c                                      - Count occurences of a sentence
         -d                                      - Only print duplicate lines, one for each group
         -u                                      - only print unique lines without duplicates
-strings                                         : Display text that's embedded in a binary file
-od [option] [filename]                          : Display a file in Octal or other formats (use option '-x' for Hex)
-wc [behavior] [filename]                        : Word count - count the number of words in a file
-        -l                                      - Count lines, not words
-wget [website link]                             : Download a file from the internet (pdf, rar, and so on)
-diff                                            : Compare files line by line
-rev [filename]                                  : Reverse lines characterwise
+sort                                            : Sort via parameters, alphabetically as standard -r for reversed
+        -r                                      - Sort in reversed order
+        -n                                      - Sort according to string numeral value
+        -u                                      - Only show unique occurences of a sentence
 
+
+Compression and Decompression                    Description
+------------------------------------------------|---------------
+$ tar cf compressed.tar [files]                 : Compress using .tar extension
+$ tar xf compressed.tar                         : Extract using .tar extension
+$ tar cfz compressed.tar.gz files               : Compress into compressed.tar.gz format
+$ tar xfz compressed.tar.gz                     : Extract from compressed.tar.gz format
+$ gzip file.txt > compressed.txt.gz             : Compress into compressed.txt.gz format
+$ gzip -d compressed.txt.gz                     : Extract from compressed.txt.gz format
+$ tar cfj compressed.tar.bz2 files              : Compress into compressed.tar.bz2 format
+$ tar xfj compressed.tar.bz2                    : Extract from  format
+$ zip compressed.zip files                      : Compress into compressed.zip format
+$ unzip compressed.zip                          : Extract from compressed.zip format
 
 Depending on your desktop environment, specific
 commands may vary, for how to open folders
@@ -843,6 +884,10 @@ $ ls -a | sort -r | less                        : List content of directory, in 
 $ diff <(wc file1) <(wc file2)                  : Compares the wordcount of 2 different files
 $ cp a.txt b.txt ; rev b.txt > a.txt ; rm b.txt : Reversing the content of a file, line by line.
 $ sort sometxt.txt | uniq -c | sort -nr         : Sort a file, and display in order how many times a sentence occured
+$ cat /etc/passwd |cut -d: -f1 | wc -l          : Count the number of users on a system
+						- cat ... show the content in the terminal
+						- cut use a delimiter ':', and focus on the first column
+$ ls -l | awk '{ print $2 }'                    : Print only the 2nd column
 
 ================================================
 |          Packages and installations          |
@@ -1101,7 +1146,8 @@ $ ./derp >> derpy.txt                           - Will send the content from the
                                                   appended in the file 'derpy.txt' rather than shown on the console.
 $ ./derp > derpy.txt                            - Will send the content from the compiled program (derp) to 
                                                   overwrite content of file 'derpy.txt' rather than shown on the console.
-$ ./derp 2> /dev/null                           - Display normal messages (stdout) on the screen, but error messages (stderr) are discarded
+$ ./derp 2> /dev/null                           - Display normal messages (stdout) on the screen, but error messages (stderr) are
+                                                  discarded
 $ ./derp 1> /dev/null                           - Only display error messages, since normal messages (stdout) are discarded 
 $ ./derp 2>&1                                   - stderr messages are appended to the stdout messages
 
@@ -1402,7 +1448,6 @@ make                                            : GNU make utility to maintain g
 rm .test.c.sw*                                  : Deletes both .sw files for 'test.c' (In case of errors)
                                                   //compiler course
 chage                                           : Change user password expiry information
-ls- l | awk '{ print $2 }'                      : Print only the 2nd column
 
 size                                            : Display the size of a compiled C program, and how data is stored.
 time                                            : Display the time used to execute a command and print the time for
@@ -1758,8 +1803,8 @@ fg                                              : Brings a job from the backgrou
 kill                                            : Duplicate in document
 disown                                          : Disowns background processes in different ways.
                                                   If no JOB_SPEC is used, the command applies to all jobs in the background.
-        -h                                      - If background job status is 'Running', ensures that SIGHUP signal is not sent to
-                                                  process, when the shell terminates.
+        -h                                      - If background job status is 'Running', ensures that SIGHUP signal is not sent
+                                                  to process, when the shell terminates.
         -a                                      - Remove all jobs if JOB_SPEC is not supplied
         -r                                      - Remove only Running jobs
 
@@ -1895,7 +1940,6 @@ There is also a shorthand method for an
 if-statement with a single command.
 [statement] || [command]                        : If statement fails run [command]
 [statement] && [command]                        : If statement succeed run [command]
-
 
 The 'case' command, otherwise known as a switch,
 ')' is used for different cases, and '*)' is
@@ -2338,6 +2382,27 @@ Number  Type                                     Description
 |                  Table: 1.4                  |
 ================================================
 (Some of) Linux directory information
+
+tl;dr, this format for the file system on Linux
+             ╔═══╗
+             ║ / ║ <-- Root node
+             ╚═╦═╝
+    ╔═══════╦══╩════╦════════╦═══════╗
+ ╔══╩══╗ ╔══╩══╗ ╔══╩═══╗ ╔══╩══╗ ╔══╩══╗
+ ║ bin ║ ║ etc ║ ║ home ║ ║ tmp ║ ║ usr ║
+ ╚═════╝ ╚═════╝ ╚═══╦══╝ ╚═════╝ ╚═════╝
+              ╔══════╩═════════╗
+          ╔═══╩════╗       ╔═══╩══╗
+          ║ Tarzan ║       ║ jane ║
+          ╚═══╦════╝       ╚═══╦══╝
+              ║          ╔═════╩════╗ 
+           ╔══╩═══╗   ╔══╩═══╗   ╔══╩═══╗ 
+           ║ food ║   ║ work ║   ║ derp ║
+           ╚══════╝   ╚══════╝   ╚══════╝
+Please note that different distributions include
+additional directories, and this is a rough
+sketch to illustrate the format.
+
 Directory                                        Description
 ------------------------------------------------|---------------
 /bin                                            : Contains common Linux user commands, such as ls, sort, date and chmod
@@ -2579,41 +2644,54 @@ $HOME/.bash_profile
 $HOME/.bash_history
 $HOME/.viminfo
 
-
 .login ... ?
 .logout ... ?
 .profile ... /etc/profile
 .wm_style ... ?
 
-/boot/vmlinuz                                   : The Linux kernel file.  File naming conventions may include release information
+/boot/vmlinuz                                   : The Linux kernel file.  File naming conventions may include release
+                                                  information
 /dev/fd0                                        : Device file for the first floppy disk drive on the system
-/dev/fd0H1440                                   : Device driver for the first floppy drive in high density mode, commonly invoked when formatting a floppy diskette for that density
+/dev/fd0H1440                                   : Device driver for the first floppy drive in high density mode, commonly invoked
+                                                  when formatting a floppy diskette for that density
 /dev/hda                                        : Device file for the first IDE hard drive on the system
-/dev/hdc                                        : Commonly, the IDE CDROM drive device file which often is a symbolic link called to /dev/cdrom, the real CDROM driver file.
-/dev/null                                       : A dummy device which contains nothing.  It is sometimes useful to send output to this device to make it go away forever.
-/etc/aliases                                    : Contains aliases used by sendmail and other mail transport agents. Whenever this file is changed, the newaliases utility must be run to notify sendmail of the changes
+/dev/hdc                                        : Commonly, the IDE CDROM drive device file which often is a symbolic link called
+                                                  to /dev/cdrom, the real CDROM driver file.
+/dev/null                                       : A dummy device which contains nothing.  It is sometimes useful to send output
+                                                  to this device to make it go away forever.
+/etc/aliases                                    : Contains aliases used by sendmail and other mail transport agents. Whenever
+                                                  this file is changed, the newaliases utility must be run to notify sendmail of
+                                                  the changes
 /etc/bashrc                                     : Contains global defaults and aliases used by the bash shell
-/etc/crontab                                    : A parent shell script to run commands periodically.  It invokes hourly, daily, weekly, and monthly scripts.
-/etc/exports                                    : Contains a list of filesystems which may be made available to other systems on the network via NFS.
-/etc/fstab                                      : The file system table contains the description of what disk devices are available at what mount points.
+/etc/crontab                                    : A parent shell script to run commands periodically.  It invokes hourly, daily,
+                                                  weekly, and monthly scripts.
+/etc/exports                                    : Contains a list of filesystems which may be made available to other systems on
+                                                  the network via NFS.
+/etc/fstab                                      : The file system table contains the description of what disk devices are
+                                                  available at what mount points.
 /etc/group                                      : Holds information regarding security group definitions.
 /etc/grub.conf                                  : The grub boot loader configuration file
-/etc/hosts                                      : Contains host names and their corresponding IP addresses used for name resolution whenever a DNS server is unavailable
+/etc/hosts                                      : Contains host names and their corresponding IP addresses used for name
+                                                  resolution whenever a DNS server is unavailable
 /etc/hosts.allow                                : Contains a list of hosts allowed to access services on this computer.
 /etc/hosts.deny                                 : Contains a list of hosts forbidden to access services on this computer.
 /etc/inittab                                    : Describes how the INIT process should set up the system in various runlevels
-/etc/issue                                      : Contains the pre-login message, often overwritten by the /etc/rc.d/rc.local script in Red Hat and some other rpm-based Linux distributions
+/etc/issue                                      : Contains the pre-login message, often overwritten by the /etc/rc.d/rc.local
+                                                  script in Red Hat and some other rpm-based Linux distributions
 /etc/lilo.conf                                  : The lilo boot loader configuration file
 /etc/modules.conf                               : Holds options for configurable system modules
-/etc/motd                                       : This is the ?message of the day? file which is printed upon login. It can be overwritten by /etc/rc.d/rc.local Red Hat on startup.
+/etc/motd                                       : This is the ?message of the day? file which is printed upon login. It can be
+                                                  overwritten by /etc/rc.d/rc.local Red Hat on startup.
 /etc/mtab                                       : Status information for currently mounted devices and partitions
-/etc/passwd                                     : Contains information regarding registered system users. Passwords are typically kept in a shadow file for better security.
+/etc/passwd                                     : Contains information regarding registered system users. Passwords are typically
+                                                  kept in a shadow file for better security.
 /etc/printcap                                   : Holds printer setup information
 /etc/profile                                    : Contains global defaults for the bash shell
 /etc/resolv.conf                                : A list of domain name servers (DNS) used by the local machine
 /etc/securetty                                  : This file contains a list of terminals where root can login
 /etc/shadow                                     : Here the hashed passwords are stored
-/etc/termcap                                    : An extensive ASCII text file defining the properties of consoles, terminals, and printers
+/etc/termcap                                    : An extensive ASCII text file defining the properties of consoles, terminals,
+                                                  and printers
 /proc/cpuinfo                                   : Contains CPU related information
 /proc/filesystems                               : Holds information regarding filesystems that are currently in use
 /proc/interrupts                                : Stores the interrupts that are currently being used
@@ -2621,12 +2699,14 @@ $HOME/.viminfo
 /proc/meminfo                                   : Contains memory usage information for both physical memory and swap
 /proc/modules                                   : Lists currently loaded kernel modules
 /proc/mounts                                    : Displays currently mounted file systems
-/proc/stat                                      : Contains various statistics about the system, such as the number of page faults since the system was last booted
+/proc/stat                                      : Contains various statistics about the system, such as the number of page faults
+                                                  since the system was last booted
 /proc/swaps                                     : Holds swap file utilization information
 /proc/version                                   : Contains Linux version information
 /var/log/lastlog                                : Stores information about the last boot process
 /var/log/messages                               : Contains messages produced by the syslog daemon during the boot process
-/var/log/wtmp                                   : A binary data file holding login time and duration for each user currently on the system
+/var/log/wtmp                                   : A binary data file holding login time and duration for each user currently on
+                                                  the system
 
 ================================================
 |                  References                  |
