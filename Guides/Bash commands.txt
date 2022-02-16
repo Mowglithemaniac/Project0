@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.13.00
+ Version     : 2.13.01
  Date        : 29/09-20
- Last Updated: 10/02-22
+ Last Updated: 16/02-22
  Copyright   : Do not alter, this file without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
@@ -228,6 +228,12 @@ su                                              : Switch user
         - [Username]                            - will change to other specified user on the username.
         [username]                              - Will switch to other user, but remain in your own home directory
 systemctl                                       : Control the systemd system and service Manager
+        start                                   - Start a service
+        stop                                    - Stop a service
+        restart                                 - Restart a service
+        status                                  - See status as a whole or of a service
+        enable                                  - Enable a service on boot
+        disable                                 - Disable a service on boot
 journalctl                                      : Query the systemd journal
 
 [Example]
@@ -347,25 +353,27 @@ and so on
 |! -------------------------------------------> : Read bit, for 'User'
 ! --------------------------------------------> : {-, d, l, b, c, s, p}
 
-- File
-d Directory,
-b Block file
-c Character file ()
-s 
-p Named pipe
-Link file, (soft link or hard link)
+File type letter                                 Description
+------------------------------------------------|---------------
+-                                               : Regular file, RAR, txt, jpg, png and so on.
+                                                - Can be created in multiple ways, easiest with 'touch' command
+d                                               : Directory
+                                                - Command: mkdir
+b                                               : Block special
+                                                - Command: fdisk
+c                                               : Character file
+                                                - Command: mknod
+l                                               : Link file, (soft link or hard link)
+                                                - Command: ln
+p                                               : Named pipe
+                                                - Command mkfifo
+s                                               : Socket
+                                                : No commands, must be created as part of a program (C-language socket())
 
 When using the 'chmod' command, you  enter 3 numbers
 The first number represents the owner
 The second number represents the group
 The 3rd number represents everybody else.
-
-[Example output of 'ls -la']
-drwxrwxrwx 1 declined declined  4096 Jan 28 22:29  Guides
-                                                : Only included a single sentence
-                                                - User, Group and Other all have 'Read', 'Write' and 'Execute'
-                                                  permission as specified via -rwxrwxrwx, it is owned by user 'declined'
-                                                  owned by group 'declined', it is a directory and the rest is irrelevant for now
 
 [Example]
 $ chmod 744 filename.sh                         : Permission will look like this -rwxr--w--
@@ -373,14 +381,12 @@ $ chmod u+x filename.c                          : Adding execute permission of t
 $ chmod g+w filename.c                          : Adding write permission of the file to Group
 $ chmod o+r filename.c                          : Adding read permission of the file to 'Other users'
 
-With the 'ls -l' command, you can view permissions
-The first permission character have multiple meanings
-d                                               : Directory
-1                                               : Symbolic link
-b                                               : Block device
-c                                               : Character device
-s                                               : Socket
-p                                               : Named pipe
+[Example output of 'ls -la']
+drwxrwxrwx 1 declined declined  4096 Jan 28 22:29  Guides
+                                                : Only included a single sentence
+                                                - User, Group and Other all have 'Read', 'Write' and 'Execute'
+                                                  permission as specified via -rwxrwxrwx, it is owned by user 'declined'
+                                                  owned by group 'declined', it is a directory and the rest is irrelevant for now
                                                 
 [Example output of "ls -lG"]
 drwxrwxrwx 1 declined  4096 Jul 17 14:02  Guides
@@ -406,7 +412,6 @@ on the group ownership of the directory rather  - Behave differently when setgid
 than the default group of the user that created
 the file.
 
-
 [Example]
 $ chmod +t [directory]                          : Add the sticky bit to [directory]
 $ chmod -t [directory]                          : Remove the sticky bit from {directory]
@@ -426,7 +431,6 @@ $ chmod -t [directory]                          : Remove the sticky bit from {di
 There is a bonus concept called file attributes.
 It is a list of supplemental flag, that can be
 set on files to request special handling.
-
 
 Flag            : File System                    Description
 ----------------|-------------------------------|---------------
@@ -464,6 +468,7 @@ commands such as 'top' and 'htop'.
 Commands                                         Description
 ------------------------------------------------|---------------
 uname                                           : Print system information
+printenv                                        : Print all or part of environment (aka how is your shell setup)
 who                                             : Show who is logged on
 w                                               : Show who is logged on and what they are doing.
                                                 - Also include statistical data and lists what they're doing
@@ -495,7 +500,6 @@ ps                                              : Processor Status, it is a high
         -e                                      : Select all processes, identical to -A
         up "[process id(s)]"
 sar                                             : Collect, report, or save system activity information.
-tar                                             : An archiving utility
 free                                            : Displays the total amount of free space available along with the
                                                   amount of memory used and swap memory in the system, and also the
                                                   buffers used by the kernel
@@ -510,7 +514,8 @@ echo <text>                                     : Prints echoes the <print> in t
         -e                                      : Interprets escape characters
 printf                                          : An advanced version of echo
 
-[Examples]
+[Examples]                                       Description
+------------------------------------------------|---------------
 $ cal 2021                                      : Will display the calender for the year 2021
 $ echo $PATH                                    : Prints the entire path variable
 $ echo $PS1                                     : Prints the entire PS1 settings variable, for
@@ -518,6 +523,7 @@ $ echo $PS1                                     : Prints the entire PS1 settings
 $ echo "herp derp" >> filename1.txt             : Insert "herp derp" into a file named 'filename1.txt'
                                                 - This command either appends, or creates the file if it does not exist
 $ echo -e "derp\a"                              : Prints 'derp' and should also beep
+$ printf "%s %d\n" "This many" 4                :
 $ ps aux                                        : See all running processes
 $ ps -eo pid,user,uid,gid,vsz,rss,comm --sort=-vsz
                                                 : Showing the selected categories, sorted descending by vsz
@@ -620,6 +626,7 @@ adduser                                         : Add a user to the system
 addgroup                                        : Add a group to the system
 usermod                                         : Modify a user account
 groupadd                                        : Add a new group
+groups                                          : Print the groups a user is in
 deluser                                         : Deletes user, Debian based distribution, for other types, use
                                                   "userdel" command instead.
         --remove-home [username]                - This syntax is for Debian Distributions
@@ -628,11 +635,9 @@ chgrp                                           : Change group ownership
         -R                                      - Recursively, to include all files and sub folders located with
                                                   the directory.
 chown                                           : Change file owner and group
-groups                                          : Print the groups a user is in
-
 
 [Example]
-$ useradd -m derp -G sudo -s /bin/sh            : Create user 'derp' part og group sudo, using the /bin/sh shell
+$ useradd -m derp -G sudo -s /bin/sh            : Create user 'derp' part of group sudo, using the /bin/sh shell
 $ passwd derp                                   : Change password of 'derp'
 $ sudo deluser --remove-home derp               : Removes user 'derp'
 $ sudo su - [username]                          : Use root pw to pretend being another user, using their environment variables 
@@ -700,9 +705,6 @@ history                                         : Shows a list of commands used 
 mkdir                                           : Make directory (folder)
         [Directory name]                        : new directory
 tree                                            : List contents of directories in a tree-like format.
-touch                                           : Update the date of a file, without making changes to the file
-        [file name]                             : Can create a new file, if that file does not exist
-dd                                              : Copy a file, converting and formatting 
 rmdir                                           : Remove directory
         *                                       : wildcard
         [a_zA_Z]*                               - Remove directories starting with specified [a-zA_Z]
@@ -721,8 +723,8 @@ $ mkdir ab{cd,ef}                               - Creates 2 directories, named '
 ================================================
 If you've got no idea what you're looking at,
 it's always nice to know how you can acquire
-acquire information about the subject.
-Or how to search for something
+information about the subject. Or how to search
+for something.
 
 Commands                                         Description
 ------------------------------------------------|---------------
@@ -739,6 +741,7 @@ man [operator] [command]                        : Manual page for Bash commands
                                                   linked to the search word.
                                                   Each manual page, has a number, that refers to a category
                                                   To find out what the category means, look at the manual page for man
+tldr [command]                                  : Display a tl;dr about command line argument examples
 locate                                          : Able to locate specific command locations, and references
                                                   Requires a database to work. (updatedb*)
 which                                           : Locate a command
@@ -749,13 +752,16 @@ locate [detail]                                 : Locates a detail on the comput
 compgen [Operator] [word]                       : Display possible completions depending on the operator
         -c                                      - List commands, if 'word' is supplied, list those starting with 'word'
 
-
 [Example]
 $ man man                                       - Manual page for the manual command
 $ man pipe                                      - Manual page for the pipe command
 $ man -k pipe                                   - Shows a list of commands and manual pages related to 'pipe'
 $ man 5 <tab><tab>                              - Double tab, to display a list of al manual pages in category 5.
                                                   See table 1.3 found at the bottom, for a description of this concept.
+$ compgen -c gr                                 - List commands starting with 'gr'
+$ compgen -c | sort                             - List all commands sorted alphabetically
+$ tldr man                                      - Displa a few common command options for man
+$ info                                          - Info reader documentation (type 'q' to quit)
 
 Commands include a help method, referenced
 [command] --help
@@ -764,9 +770,6 @@ Commands include a help method, referenced
 $ ls --help                                     : List a help category for 'ls' command.
 $ chmod --help                                  : List a help category for 'chmod' command
 
-[Example]
-$ compgen -c gr                                 : List commands starting with 'gr'
-$ compgen -c | sort                             : List all commands sorted alphabetically
 
 ================================================
 |           File access, edit, format          |
@@ -800,7 +803,9 @@ rm                                              : Remove (PERMANENTLY)
         [a_zA_Z]*                               - Will remove everything, starting with the specified name, from current
                 directory.
         -r [directory]                          - will remove way too much, DO NOT USE
-
+touch                                           : Update the date of a file, without making changes to the file
+        [file name]                             : Can create a new file, if that file does not exist
+dd                                              : Copy a file, converting and formatting 
 
 File information                                 Description
 ------------------------------------------------|---------------
@@ -809,8 +814,6 @@ stat [option] [file]                            : Display file or file system st
      -f [FILE]                                  : File system status
 wc [behavior] [filename]                        : Word count - count the number of words in a file
         -l                                      - Count lines, not words
-wget [website link]                             : Download a file from the internet (pdf, rar, and so on)
-
 
 Displaying content                               Description
 ------------------------------------------------|---------------
@@ -836,11 +839,18 @@ od [option] [filename]                          : Display a file in Octal or oth
 Sorting, Comparing and Searching                 Description
 ------------------------------------------------|---------------
 diff                                            : Compare files line by line
+comm                                            : Compare two sorted files line by line
+cmp                                             : Compare two files byte by byte
+md5sum                                          : Compute and check MD5 message digest
+        --check                                 - Check the Message digest found within a file
+shasum                                          : Same as md5sum except with more recent SHA-algorithms
+        -a 256                                  : Use SHA-256 algorithm
 rev [filename]                                  : Reverse lines characterwise
 grep                                            : Print lines that match patterns
 cut                                             : Remove sections from each line of lines
         -d[character]                           : Use [character] as a delimiter
-awk                                             : Pattern scannoing and processing language
+awk                                             : Pattern scanning and processing language
+sed                                             : Stream editor for filtering and transforming text
 uniq                                            : Displaying unique sentences, has additional options over 'sort -u'
                                                   Unique refers to 2 adjacent sentences, therefore often used
                                                   in conjunction with the 'sort' command.
@@ -851,27 +861,40 @@ sort                                            : Sort via parameters, alphabeti
         -r                                      - Sort in reversed order
         -n                                      - Sort according to string numeral value
         -u                                      - Only show unique occurences of a sentence
+        -c                                      - Check if sorted, if it is print nothing else an print an error
+        -b                                      - Ignore leading whitespaces in lines
 
 
 Compression and Decompression                    Description
 ------------------------------------------------|---------------
-$ tar cf compressed.tar [files]                 : Compress using .tar extension
-$ tar xf compressed.tar                         : Extract using .tar extension
-$ tar cfz compressed.tar.gz files               : Compress into compressed.tar.gz format
-$ tar xfz compressed.tar.gz                     : Extract from compressed.tar.gz format
-$ gzip file.txt > compressed.txt.gz             : Compress into compressed.txt.gz format
-$ gzip -d compressed.txt.gz                     : Extract from compressed.txt.gz format
-$ tar cfj compressed.tar.bz2 files              : Compress into compressed.tar.bz2 format
-$ tar xfj compressed.tar.bz2                    : Extract from  format
-$ zip compressed.zip files                      : Compress into compressed.zip format
-$ unzip compressed.zip                          : Extract from compressed.zip format
+tar                                             : An archiving utility
+compress
+zcat
+bunzip2                                         : A block-sorting file compressor
+bzip2                                           : a block-sorting file compressor
+bzcat                                           : Decompresses files to stdout
+zip                                             : Package and compress (archive) files
+munpack                                         : Unpack messages in MIME or split-uuencode format
+mpack                                           : Pack a file in MIME format
+
+[Examples Compression & Decompression]           Description
+------------------------------------------------|---------------
+tar cf compressed.tar [files]                   : Compress using .tar extension
+tar xf compressed.tar                           : Extract using .tar extension
+tar cfz compressed.tar.gz files                 : Compress into compressed.tar.gz format
+tar xfz compressed.tar.gz                       : Extract from compressed.tar.gz format
+gzip file.txt > compressed.txt.gz               : Compress into compressed.txt.gz format
+gzip -d compressed.txt.gz                       : Extract from compressed.txt.gz format
+tar cfj compressed.tar.bz2 files                : Compress into compressed.tar.bz2 format
+tar xfj compressed.tar.bz2                      : Extract from  format
+zip compressed.zip files                        : Compress into compressed.zip format
+unzip compressed.zip                            : Extract from compressed.zip format
 
 Depending on your desktop environment, specific
 commands may vary, for how to open folders
 Types: Gnome, KDE, Xfce, LXDE.
 
 xdg-open [foldername]                           : Opens a folder, should work on a full Linux distribution
-$ man -k xdg                                    - Use this command to check status of xdg commands in general
 
 [Examples]
 $ stat --printf='%n\n%a\n%b\n' [FILE]           : Prints 3 options, %n, %a, %b, with line breaks.
@@ -880,14 +903,20 @@ $ cat file1.txt | less                          : Display file1.txt in the conso
 $ cat file1.txt | head                          : Display the first 10 lines of file1.txt in the console
 $ cat file1.txt | tail                          : Display the last 10 lines of file1.txt in the console
 $ ls -a | sort -r | less                        : List content of directory, in reversed alphabetical
-                                                  order, using 'less' format.
+order, using 'less' format.
 $ diff <(wc file1) <(wc file2)                  : Compares the wordcount of 2 different files
 $ cp a.txt b.txt ; rev b.txt > a.txt ; rm b.txt : Reversing the content of a file, line by line.
 $ sort sometxt.txt | uniq -c | sort -nr         : Sort a file, and display in order how many times a sentence occured
-$ cat /etc/passwd |cut -d: -f1 | wc -l          : Count the number of users on a system
-						- cat ... show the content in the terminal
-						- cut use a delimiter ':', and focus on the first column
+$ cat /etc/passwd |cut -d: -f1                  : Count the number of users on a system
+                                                - cat ... show the content in the terminal
+                                                - cut use a delimiter ':', and focus on the first column
 $ ls -l | awk '{ print $2 }'                    : Print only the 2nd column
+$ sed 's/linux/derp/g' somefile.txt             : Replaces all occurences of the word 'linux' in a file with the word 'derp'
+$ man -k xdg                                    - Use this command to check status of xdg commands in general
+$ md5sum derp > something.txt                   : Store the Message Digest, along with the filename within 'something.txt'
+$ md5sum --check something.txt                  - Compares the cheksum found within, against the checksum of the filename
+                                                  specified in the file
+$ md5sum [file] | md5sum --check                : Create and check on the same line
 
 ================================================
 |          Packages and installations          |
@@ -902,11 +931,15 @@ Wish I could say the same for .rpm distros.
 Debian based distros use "apt" or "apt-get"
 For a detailed list, use these two commands.
 
-$ sudo apt-get --help
-$ sudo apt --help
+$ apt-get --help
+$ apt --help
+
+There is also a debian tool called 'dpkg'
+In order to run most of the options you need
+to use sudo privileges.
 
 These are the most commonly used debian based
-commands:
+commands:                                        Description
 ------------------------------------------------|---------------
 $ sudo apt-get update                           : Retrieve new lists of packages
 $ sudo apt-get upgrade                          : Perform an upgrade of packages
@@ -916,20 +949,24 @@ $ sudo apt search [NAME]                        : Display a list of available pa
 $ sudo apt-get install [PACKAGE]                : Install package
 $ sudo apt install [PACKAGE]                    : Install package
 $ sudo apt-get dist-upgrade                     : Update the kernel packages
+$ sudo apt autoremove                           : Uninstall dependencies that are no longer needed
 
-[Example DEB based]
+[Example DEB based]                              Description
+------------------------------------------------|---------------
+$ apt-cache search media                        : Find packages related to media
 $ sudo apt search music                         : Find packages related to music
 $ sudo apt-get install [PACKAGENAME]            : Install a specific package, i.e. nmap
 $ sudo apt install nmap                         : install nmap
 
 And similar for .rpm distros, these two are the
-primary method for managing and installation.
+primary method for managing and installation.    Description
+------------------------------------------------|---------------
 yum [option] [command]                          : (For RPM distros) Install, Uninstall, Update Packages
                                                   Now outdated 
 dnf [option] [command]                          : (For RPM distros) 'Dandified YUM', it is an upgraded version of YUM,
                                                   available since version 18 of Fedora. Syntax somewhat identical to YUM
 
-.rmp usecases
+.rmp usecases                                    Description
 ------------------------------------------------|---------------
 $ yum provides dvdrecord                        : A method to search for packages, if you know either the 'configuration file',
                                                   'library name' or 'command', but don't known which package it is located in.
@@ -946,6 +983,19 @@ $ yum update                                    : Update a single package or to 
 $ yum grouplist                                 : Show a list of package groups
 $ yum groupinstall [name]                       : Installing a package group
 
+
+It is possible to directly download and install
+packages, but be vary of this method, as it may
+cause some problems with the package managers
+on your system.
+In either case, once you've downloaded the file
+which is usually a .tar.gz or tar.bz2 format.
+You unzip it, and then run these 3 commands.
+
+$ ./configure    
+$ make
+$ sudo make install
+
 ================================================
 |                  Networking                  |
 ================================================
@@ -961,37 +1011,73 @@ ip                                              : ip - show/manipulate routing, 
 ifconfig                                        : Configure a network interface
 nmap                                            : Network exploration tool and security/port scanner
 route                                           : Show/manipulate the IP routing table
+arp                                             : Manipulate the system ARP cache
+        -e                                      - Use default Linux style output format (with fixed columns).
+arp-scan                                        : The ARP scanner
 wget                                            : Retrieve web pages/files to disks
         -O [newname] [link]                     - Output option, in case you want to rename the file
         -b                                      - Run in background, to see the status use the command "tail -f wget-log"
         -C                                      - Resume download, in case networking dropped, rather than starting from scratch.
+curl                                            : Transfer a URL (pretty much the same as wget)
 ftp                                             : Copy files to/from a remote host
 sftp                                            : Same as 'ftp' only this is a secure version
 scp [from] [to]                                 : Secure copy (remote file copy program)
-                                                - Use ssh in the background
-        -P
-        -v
+                                                - Uses ssh in the background
+        -P                                      - Port Number
 whois                                           : Client for the whois directory service
 iptables                                        : administration tool for IPv4/IPv6 packet filtering and NAT
+host                                            : DNS lookup utility
 ping -[operator] [website]                      : Pings a website with packages
 traceroute                                      : Print the route packets trace to network host
 dig                                             : DNS lookup utility
 nslookup                                        : Query Internet name servers interactively
                                                   There is a paragraph dedicated to the usage of this command
-tcpdump                                         :Dump traffic on a network
+tcpdump                                         : Dump traffic on a network
 socat                                           : Multipurpose relay (SOcat CAT)
                                                 - The socat utility is a relay for bidirectional data transfers between two
                                                   independent data channels. 
 ufw                                             : Program for managing a netfilter firewall
 
-[Example]
+[Example ssh server]                             Description
+------------------------------------------------|---------------
+$ service ssh status                            : View status of the ssh server
+$ service ssh restart                           : Restart the server
+$ sudo systemctl status ssh                     : View status of the ssh server
+$ service ssh start                             : Start the ssh
+$ service ssh stop                              : Stop the ssh
+$ sudo systemctl stop ssh                       : Start the ssh
+$ sudo systemctl start ssh                      : Stop the ssh
+$ sudo systemctl enable ssh                     : Enable automatic start when computer boots
+$ sudo systemctl disable ssh                    : Disable automatic start when computer boots
+$ ip a                                          : Use this command to find the ip of your server
+
+For settings on the server, edit the ssh config
+file located at /etc/ssh/sshd_config:
+| PubkeyAuthentification yes                    :
+| PasswordAuthentification yes                  :
+| PermitRootLogin no                            :
+
+[Firewall example]
+------------------------------------------------|---------------
+$ sudo ufw status                               : Show status of firewall and ufw managed rules
+$ sudo ufw allow ssh                            : added ssh access to the firewall
+$ sudo ufw delete allow ssh                     : Removed ssh access from the firewall
+
+[General examples]
+------------------------------------------------|---------------
 $ ping -c 100 google.com                        : Pings google.com with 100 packets, and provide you with statistics afterwards.
+$ host google.com                               : Show DNS information about google.com
 $ ip addr show                                  : View all loaded network interfaces
 $ ip monitor
+$ ip route                                      : Show the routing table (includes default gateway)
 $ traceroute yahoo.com                          : Display a traceroute to yahoo.com with 2 sec 
-$ sudo ufw status                               : Show status of firewall and ufw managed rules
-$ sudo ufw allow http                           : added http access to the firewall
-$ sudo ufw delete allow http                    : Removed http access from the firewall
+$ netstat -antu                                 : Display the active network connections: all connections, don't resolve host names,
+                                                  meaning that port 80 isn't translated to http, display TCP and UDP connections
+
+For RHEL systems, check file:
+/etc/sysconfig/network-scripts/ifcfg-eth0
+For Debian systems, check file:
+/etc/network/interfaces 
 
 [Example socat]
 $ socat TCP-LISTEN:400,reuseaddr,pf=ip4,fork -
@@ -1012,6 +1098,11 @@ $ scp -P [port number] derp.txt user@yourserverip:/some/remote/directory
                                                 : Move a file called 'derp.txt' located at
                                                   the current directory on your local machine to
                                                   to the server at '/some/remote/directory' specified by the absolute path.
+
+The host file is located at 
+/etc/hosts
+On the website someoneonewhocares.org is an
+interesting host file you can use.
 
 ================================================
 |                   VARIABLES                  |
@@ -1215,6 +1306,8 @@ dmesg                                           : Print or control the kernel ri
 journalctl                                      : Query the systemd journal
                                                   Can be used to view boot messages, and show messages
                                                   messages associated with a particular boot instance.
+fdisk                                           : Manipulate disk partition table
+                                                - Display more information than the lsblk command
 lsblk                                           : List block devices
         -f                                      - Output  info  about  filesystems
 lspci                                           : List all PCI devices
@@ -1225,6 +1318,8 @@ lshw                                            : List hardware (warning, should
 modinfo                                         : Show information about a Linux Kernel module
 rmmod                                           : Simple program to remove a module from the linux Kernel
 modprobe                                        : Add and remove modules from the Linux Kernel
+mount                                           :
+umount                                          : Unmount file systems   
 
 [Example]
 $ lscpu | grep cache                            : Display cache levels for the CPU
@@ -1267,23 +1362,38 @@ NTFS                                            : Standard file system for Windo
 
 Ext4 is the standard file system for Linux.
 
-To add a new physical storage medium (usb, hdd,
-ssd, or similar), to your computer, so that it
-can be used by Linux, you need to connect it
-physically, and then partition it.
-Usually done this way.
-1. Install the new hard drive or insert the new
-   USB flash drive.
-2. Partition the new disk.
-3. Create the file system on the new disk.
-4. Mount the filesystems
-
 You can view disk partitions with the command:
 $ parted -l 
-
+You can display the disk list using the lsblk
+command.
+$ lsblk
 This is the syntax for the 'mount' command.
 mount [options] <-t type> [-o mount options] <device> <mounting point>
                                                 : Syntax for the mount command
+
+For most scenarios, these are the steps that you
+are going to go through:
+1. Display the disk list using the lsblk command
+2. Create a new directory to be mounted (this is
+where you will access the USB stick drive).
+3. Mount the USB drive using the mount command
+
+Assuming you've plugged in the drive/usb.
+Step 1. use the lsblk command
+$ lsblk
+Find the disk we're looking for, so that we have
+the path, to be used for the next step.
+
+Step 2. Create a directory
+$ mkdir /mnt/derpydirectory
+
+Step 3. Mount the drive/use to the mount point
+$ sudo mount /dev/sdb1 /mnt/derpydirectory      : Remember to substitute /dev/sdb1 with the correct path for your drive
+
+All done, once you're complete, you can unmount
+the drive with the command umount.
+
+$ umount /mnt/derpydirectory
 
 ================================================
 |                 VIM tutorial                 |
@@ -1460,13 +1570,17 @@ single input, you can use python to simulate it.
 ./program < <(python -c "print('someinput')")   : The output of the python is treated as an input to the program.
                                                   The -c option, mean that the (python)program, is passed in as a string
 
-
 objdump                                         :
 nm
 readelf
 $ objdump -d <binary_name>
 
-
+[Security]
+$ ssh-keygen -t rsa -b 4096                     : Creating a 4096 bit RSA public key, to be stored in
+                                                  /home/user/.ssh/id_rsa.pub
+                                                - The '-t' option refers to the type of key to generate, RSA is the most common.
+                                                  Could also have been other types such as: dsa, ecdsa, ecdsa-sk, ed25519, ed25519-sk  
+                                                - The '-b' option refers to the bit length. Minimum is 1024 default is 3072 bits.
 [DTU specific]
 Details for accessing the LSF 10 cluster on DTU
 via a linux terminal
@@ -1545,7 +1659,7 @@ Sources:
 ================================================================================
 
 ================================================
-|            Configuring your shell            |
+|      Creating your own shell environment     |
 ================================================
 It is possible to make alterations to the shell
 to work more efficently.
@@ -1590,6 +1704,29 @@ use this command $ source $HOME/.bashrc
 Alternatively, restart the console.
 Can be done with the command 
 $ exec bash
+
+There is also a specific command called 'set',
+this command is used to alter shell attributes
+and positional parameters, and can even be used
+within shell scripts.
+
+The current set of flags can be found in $-
+Use the command '$ echo $-' to view them.
+Some default flags are 'himBHs'.
+It is often used in conjuction with shell
+scripting.
+
+Command                                          Description
+------------------------------------------------|---------------
+set [-abefhkmnptuvxBCHP] [-o option-name] [--] [arg ...]
+                                                : Command format for 'set'
+
+One big advantage is that it is possible to
+alter how command line editing works with set.
+[Example]                                        Description
+------------------------------------------------|---------------
+$ set -o emacs                                  : Use emacs editing style
+$ set -o vi                                     : Use vi editing style
 
 ================================================
 |              Setting your prompt             |
@@ -2302,7 +2439,7 @@ File                                             Description
                                                   .bashrc file. This is a good place to add environment
                                                   variables because, once set, the are inherited by future
                                                   shells.
-~/.bashrc                                       : This contains the inforamtion that is speific to your bash
+~/.bashrc                                       : This contains the information that is specific to your bash
                                                   shells. It is read when you log in and also each time you
                                                   open a new bash shell. This is the best location to add
                                                   aliases so that your shell picks them up.
@@ -2422,7 +2559,7 @@ Directory                                        Description
                                                   particular). If the medium has a volume name, that name is typically used
                                                   as the mount point. For example, a USB drive with a volume name of myusb
                                                   would be mounted on /media/myusb
-/lib                                            : Contains shred libraries needed by applicatiosn in /bin and /sbin to
+/lib                                            : Contains shared libraries needed by applicatiosn in /bin and /sbin to
                                                   boot systems.
 /media                                          : Mount points for filesystems on removable media
 /mnt                                            : A common mount point for many devices before it was supplanted by the 
@@ -2627,6 +2764,61 @@ var1 -lt var2                                   : Is the first variable not equa
 var1 != var2                                    : Is the first variable not equal to the second variable?
 var1 -ne var2                                   : Is the firat variable not equal to the second variable?
 
+A lot of additional operators for commands can
+be found in the manual for bash.
+$ man bash
+Example:
+read operators                                   Description
+------------------------------------------------|---------------
+-a                                              : aname
+                                                - The words are assigned to sequential indices of the array variable aname,
+                                                  starting at 0.  aname is unset before any new values are assigned.
+                                                  Other name arguments are ignored.
+-d                                              : delim
+                                                - The first character of delim is used to terminate the input line, rather than
+                                                  newline. If delim is the empty string, read will terminate a line when it reads
+                                                  a NULL character.
+-e                                              : If the standard input is coming from a terminal, readline (see READLINE) is
+                                                  used to obtain the line. Readline uses the current (or default, if line editing
+                                                  was  not  previously active) editing settings, but uses Readline's
+                                                  default filename completion.
+-i                                              : text
+                                                - If readline is being used to read the line, text is placed into the editing
+                                                  buffer before editing begins.
+-n                                              : nchars
+                                                - read  returns  after  reading nchars characters rather than waiting for a
+                                                  complete line of input, but honors a delimiter if fewer than nchars characters
+                                                  are read before the delimiter.
+-N                                              : nchars
+                                                - read returns after reading exactly nchars characters rather than waiting for a
+                                                  complete line of input, unless EOF is encountered or read times out.
+                                                  Delimiter  characters  encountered  in  the  input  are not treated specially
+                                                  and do not cause read to return until nchars characters are read.  The result
+                                                  is not split on the characters in IFS; the intent is that the variable i
+                                                  assigned exactly the characters read (with the exception of backslash; see the
+                                                  -r option below).
+-p                                              : prompt
+                                                - Display prompt on standard error, without a trailing newline, before attempting
+                                                  to read any input. The prompt is displayed only if input is coming from a
+                                                  terminal.
+-r                                              : Backslash does not act as an escape character.  The backslash is considered to
+                                                  be part of the line.  In particular, a backslash-newline pair may not then be
+                                                  used as a line continuation.
+-s                                              : Silent mode. 
+                                                - If input is coming from a terminal, characters are not echoed.
+-t                                              : timeout
+                                                - Cause  read  to  time out and return failure if a complete line of input (or a
+                                                  specified number of characters) is not read within timeout seconds.  timeout
+                                                  maybe a decimal number with a fractional portion following the decimal point.
+                                                  This option is only effective if read is reading input from a terminal, pipe,
+                                                  or other special file; it has no effect  when reading  from  regular files.
+                                                  If read times out, read saves any partial input read into the specified
+                                                  variable name.  If timeout is 0, read returns immediately, without trying to
+                                                  read any data.  The exit status is 0 if input is available on the specified
+                                                  file descriptor, non-zero otherwise.  The exit status is greater than 128 if
+                                                  the timeout is exceeded.
+-u                                              : File descriptor (fd)
+                                                - Read input from file descriptor fd.
 ================================================
 |                  Table: 1.8                  |
 ================================================
@@ -2639,10 +2831,12 @@ As well as their location
 
 File and location                                Description
 ------------------------------------------------|---------------
-$HOME/.bashrc
-$HOME/.bash_profile
-$HOME/.bash_history
-$HOME/.viminfo
+$HOME/.bashrc                                   : This is a shell script that is run whenever a user start a new terminal
+                                                  as such, it is a good place to configure your personal shell expericence
+                                                  such as prompt, additional aliases, and settings for the terminal
+$HOME/.bash_profile                             : This is a configuration file
+$HOME/.bash_history                             :
+$HOME/.viminfo                                  :
 
 .login ... ?
 .logout ... ?
