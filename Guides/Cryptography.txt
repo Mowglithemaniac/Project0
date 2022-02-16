@@ -461,7 +461,7 @@ Asymmetric Encryption
        ║     ║              ║     ║─┬──────────> ║     ║         └─────┘
        ║     ║              ║     ║ |            ║     ║            | 
        ║     ║              ║     ║ |            ║     ║            |
-       ║     ║              ║     ║ |            ║     ║            | 
+       ║     ║              ║     ║ |            ║     ║            |
        ║     ║              ║     ║ |            ║     ║            |
        ║     ║              ║     ║ |            ║     ║            |
        ╚═════╝              ╠═════╣ |            ╠═════╣            |
@@ -492,9 +492,9 @@ Secret value
     |  ║     ║              ║     ║             ║     ║  |   ┌─────┐
     ├──║     ║────────────> ║     ║  Transmit   ║     ║──┴──>|  H  | 
     |  ║     ║              ║     ║─┬──────────>║     ║      └─────┘
-    |  ║     ║              ║     ║ |           ║     ║         | 
     |  ║     ║              ║     ║ |           ║     ║         |
-    |  ║     ║              ║     ║ |           ║     ║         | 
+    |  ║     ║              ║     ║ |           ║     ║         |
+    |  ║     ║              ║     ║ |           ║     ║         |
     |  ║     ║              ║     ║ |           ║     ║         |
     |  ║     ║              ║     ║ |           ║     ║         |
     |  ╚═════╝              ╠═════╣ |           ╠═════╣         V
@@ -798,7 +798,10 @@ Known attack method terminology
 Buffer Overflow
 Crypto analysis
 Traffic Analysis                                :
+Reverse shell
 Priveledge Escalation
+ARP poisoning
+DNS poisoning
 Replay Attacks
 Phishing
 DDoS
