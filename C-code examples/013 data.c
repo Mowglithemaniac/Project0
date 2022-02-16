@@ -31,13 +31,13 @@ void main(void){
     for(int i = 0; i < 32; i ++){
         printf(BYTE_TO_BINARY_PATTERN"\t\t", '\0','\0', '\0', BYTE_TO_BINARY(showcase<<3)); //Binary, ensuring that the first 3 bits are ignored when printing
         printf("%.2x\t\t\t", showcase);                                                     // Hexadecimal, showing 2 digits
-        printf("%o\t\t\t", showcase);                                                       // Unsigned Octal, meaning it's always positive
-        if(0x10 & showcase) printf("-%d\t\t\t", showcase & 0x0F);                           //Signed Magnitude, negative
-        else printf("%d\t\t\t", showcase);                                                  //Signed Magnitude, positive
-        if (0x10 & showcase) printf("-%d\t\t\t", (~showcase & 0xF));                        // 1's Complement, negative
-        else printf("%d\t\t\t", showcase);                                                  // 1's Complement, positive
-        if (0x10 & showcase) printf("-%d", (~showcase & 0xF)+1);                            // 2's Complement, negative
-        else printf("%d", showcase);                                                        // 2's Complement, positive
+        printf("%2o\t\t\t", showcase);                                                       // Unsigned Octal, meaning it's always positive
+        if(0x10 & showcase) printf("-%2d\t\t\t", showcase & 0x0F);                           //Signed Magnitude, negative
+        else printf("%3d\t\t\t", showcase);                                                  //Signed Magnitude, positive
+        if (0x10 & showcase) printf("-%2d\t\t\t", (~showcase & 0xF));                        // 1's Complement, negative
+        else printf("%3d\t\t\t", showcase);                                                  // 1's Complement, positive
+        if (0x10 & showcase) printf("-%2d", (~showcase & 0xF)+1);                            // 2's Complement, negative
+        else printf("%3d", showcase);                                                        // 2's Complement, positive
         
         
         printf("\n");
