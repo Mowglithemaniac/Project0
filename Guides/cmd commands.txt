@@ -90,6 +90,11 @@ netstat                                         : Displays protocol statistics a
                                                   Requires additional priveledges to run
     -n                                          - Display addresses and port numbers in numerical form
     -o                                          - Include the PID of the associated process
+arp                                             : Displays and modifies the IP-to-Physical address translation
+                                                  tables used by address resolution protocol (ARP).
+    -a                                          : Display the arp table
+    -s                                          : Adds an IP address to a MAC address and store the entry in the ARP
+    -d                                          : Deletes the host specified by the inet address
 
 [Example]
 > ping -n 100 google.com                        : Sends 100 packets to google, and include statistics afterwards
