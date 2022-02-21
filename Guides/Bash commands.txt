@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.13.02
+ Version     : 2.13.03
  Date        : 29/09-20
- Last Updated: 19/02-22
+ Last Updated: 21/02-22
  Copyright   : Do not alter, this file without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
@@ -349,16 +349,16 @@ Meaning that:
 and so on
 
 -rwxrwxrwx
-|||||||||!------------------------------------> : Execute bit, for 'Other'
-||||||||! ------------------------------------> : Write bit, for 'Other'
-|||||||! -------------------------------------> : Read bit, for 'Other'
-||||||! --------------------------------------> : Execute bit, for 'Group'
-|||||! ---------------------------------------> : Write bit, for 'Group'
-||||! ----------------------------------------> : Read bit, for 'Group'
-|||! -----------------------------------------> : Execute bit, for 'User'
-||! ------------------------------------------> : Write bit, for 'User'
-|! -------------------------------------------> : Read bit, for 'User'
-! --------------------------------------------> : {-, d, l, b, c, s, p}
+|||||||||└────────────────────────────────────> : Execute bit, for 'Other'
+||||||||└─────────────────────────────────────> : Write bit, for 'Other'
+|||||||└──────────────────────────────────────> : Read bit, for 'Other'
+||||||└───────────────────────────────────────> : Execute bit, for 'Group'
+|||||└────────────────────────────────────────> : Write bit, for 'Group'
+||||└─────────────────────────────────────────> : Read bit, for 'Group'
+|||└──────────────────────────────────────────> : Execute bit, for 'User'
+||└───────────────────────────────────────────> : Write bit, for 'User'
+|└────────────────────────────────────────────> : Read bit, for 'User'
+└─────────────────────────────────────────────> : {-, d, l, b, c, s, p}
 
 File type letter                                 Description
 ------------------------------------------------|---------------
@@ -493,8 +493,6 @@ w                                               : Show who is logged on and what
 whoami                                          : Print effective userid
 id                                              : ID number, and associated details with the user such as group
 users                                           : Print the user names of users currently logged in to the current host
-fuser                                           : Identify processes using files or sockets
-        -c                                      - Check for current directory
 hostname                                        : Show or set the system's host name (usually shown in your prompt)
                                                   WARNING This is a complicated topic, DO NOT alter your hostname!!!
 date                                            : Display the date
@@ -502,6 +500,8 @@ cal                                             : Calender
         [month optional] [year]                 - month, and/or year.
 iostat                                          : Report Central Processing Unit (CPU) statistics and input/output statistics for
                                                   devices and partitions.
+fuser                                           : Identify processes using files or sockets
+        -c                                      - Check for current directory
 lsof                                            : List open files
 file                                            : Determine file type
 df [option] [file]                              : Report file system disk space usage
@@ -509,6 +509,8 @@ df [option] [file]                              : Report file system disk space 
         -H                                      - Print sizes in powers of 1000 (e.g., 1.1G)
 du                                              : Estimate file space,
                                                   Summarize disk usage of the set of FILEs, recursively for directories.
+                                                  Unlike df, du does not include files that are referenced
+        -h                                      - Human readable
 top                                             : Provides a dynamic overview of the running processes
 htop                                            : Interactive process viewer
 ps                                              : Processor Status, it is a highly integrated part of Linux.
@@ -517,7 +519,9 @@ ps                                              : Processor Status, it is a high
         -o                                      : User defined format
         -e                                      : Select all processes, identical to -A
         up "[process id(s)]"
-sar                                             : Collect, report, or save system activity information.
+vmstat                                          : Reports information about processes, memory, paging, block IO, traps, disks
+                                                  and CPU activity
+sar                                             : Collect, report, or save system activity information
 free                                            : Displays the total amount of free space available along with the
                                                   amount of memory used and swap memory in the system, and also the
                                                   buffers used by the kernel
@@ -786,6 +790,8 @@ Commands include a help method, referenced
 [Examples]
 $ ls --help                                     : List a help category for 'ls' command.
 $ chmod --help                                  : List a help category for 'chmod' command
+$ find . -name  "*.txt"                         : Find all files who end with a '.txt' format , starting from the current
+                                                  directory and recursively look through all sub directories.
 
 ╔==============================================╗
 ║           File access, edit, format          ║
@@ -1673,6 +1679,7 @@ Sources:
 ║               -  System calls                                                ║
 ║               -  [Command] nslookup                                          ║
 ║               -  [Command] tmux                                              ║
+║               -  [Command] cron                                              ║
 ║          : Table list                                                        ║
 ║               -  Table 1.0: Useful abbreviations                             ║
 ║               -  Table 1.1: Bash Configuration files                         ║
@@ -2358,7 +2365,7 @@ reattach, it can allow multiple users on the
 same system to access the same shell
 concurrently.
 
-Tmux Navigation			                 Description
+Tmux Navigation                                  Description
 ------------------------------------------------|---------------
 [Ctrl + B + ,]                                  : Rename a window
 [Ctrl + B] + [%]                                : Split windows vertically
@@ -2403,6 +2410,54 @@ Remember to log out with
 [Ctrl + b] + [d]
 
 ╔==============================================╗
+║                     cron                     ║
+╚==============================================╝
+Also known as 'cron job', it is a command-line
+utility famous as a 'job scheduler'.
+It is used to schedule jobs to run periodically
+at fixed times, dates, intervals.
+
+
+File location                                    Description
+------------------------------------------------|---------------
+/var/log/cron                                   : Log files
+/var/spool/cron                                 : Configuration files for different users are stored here
+
+
+Cron syntax                                      Description
+------------------------------------------------|---------------
+crontab                                         : Command for using cron jobs.
+        -u user                                 : Configuration for a specific user
+        -e                                      : View cronjobs for the current user
+        -l                                      : Current crontab will be displayed on standard output
+        -r                                      : Causes current crontab to be removed
+
+This is the format which you specify both which
+commands to use, but also when to use them.
+[a] [b] [c] [d] [e] [/directory/command] [output]
+ |   |   |   |   └─────────────────────────────>: Minute, range 0 to 59
+ |   |   |   └─────────────────────────────────>: Hour, range 0 to 23
+ |   |   └─────────────────────────────────────>: Day of Month, 1 to 31
+ |   └─────────────────────────────────────────>: Month of the Year, 1 to 12
+ └─────────────────────────────────────────────>: Day of the week, 0 to 6 (0 is sunday)
+
+Configuration operator                           Description
+------------------------------------------------|---------------
+* (Asterisk)                                    : All values
+, (Comma)                                       : Specific separate values
+- (Dash)                                        : A range of values
+/ (Forward slash)                               : Used divide values into steps
+
+
+[Examples]                                       Description
+------------------------------------------------|---------------
+* * * * * $home/derpscript.sh                   : Run shell script as cron job every minutes
+20 * * * * $home/derpscript.sh                  : Run shell script as cron job every 20 minutes
+* 0 * * * $home/derpscript.sh                   : Run shell script as cron job every hour
+* 1 6,17,28 * * $home/derpscript.sh             : Run at 1 am, on date 6, 17 and 28 of every month.
+* 1 1-7 * 0 ps aux >> $home/log.txt             : Run on at 1 am, on the first Synday of every month
+
+╔==============================================╗
 ║                  Table: 1.0                  ║
 ╚==============================================╝
 Abbreviation list.
@@ -2424,6 +2479,9 @@ Filesystem                                      : Method for storing and organiz
 Kernel                                          : Controls hardware, and makes the hardware interact with applications
                                                 - Example: Linux kernel
 Linux                                           : An operating system
+PID                                             : Processor ID, it is used to uniquely identify a process.
+PPID                                            : Parent Processor ID. When a process is cloned from another process, it becomes
+                                                  a child of the other process, but retains the parents PID, in its own PPID variable.
 Prompt                                          : A symbol on a display screen indicating that the computer is waiting for input.
                                                   Once the computer has displayed a prompt, it waits for you to enter some
                                                   information.
@@ -2665,7 +2723,7 @@ SIGALRM            14                              :
 SIGTERM         15                              : Termination signal
 SIGSTKFLT       16                              : 
 SIGSTOP         17,(19,23)                      : The SIGSTOP signal stops the process. It cannot be handled,
-                                                  ignored, or blocked.
+                                                  ignored, or blocked. (suspend the process)
 SIGCONT         18,(19,25)                      : Continue if stopped
 SIGSTOP         19                              : 
 SIGTSTP         20                              : An interactive stop signal. Unlike SIGSTOP, this signal can
@@ -2948,3 +3006,6 @@ https://www.geeksforgeeks.org/introduction-of-system-call/
                                                 : System calls
 - http://www.dba-oracle.com/linux/important_files_directories.htm
                                                 : Important files
+- https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.txt
+                                                : Another manual for the bash, not concise at all, but there are very relevant
+                                                  topics, even if they're poorly described
