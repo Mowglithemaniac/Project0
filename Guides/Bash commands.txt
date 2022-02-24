@@ -1,9 +1,9 @@
 /*============================================================================
  Name        : Bash commands.txt
  Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.13.03
+ Version     : 2.13.05
  Date        : 29/09-20
- Last Updated: 21/02-22
+ Last Updated: 22/02-24
  Copyright   : Do not alter, this file without permission
                For non commercial use only.
  Licence     : CC BY-NC-ND
@@ -375,7 +375,7 @@ l                                               : Link file, (soft link or hard 
 p                                               : Named pipe
                                                 - Command mkfifo
 s                                               : Socket
-                                                : No commands, must be created as part of a program (C-language socket())
+                                                - No commands, must be created as part of a program (C-language socket())
 
 When using the 'chmod' command, you  enter 3 numbers
 The first number represents the owner
@@ -766,7 +766,14 @@ tldr [command]                                  : Display a tl;dr about command 
 locate                                          : Able to locate specific command locations, and references
                                                   Requires a database to work. (updatedb*)
 which                                           : Locate a command
-find                                            : Search for files in a directory hierarchy
+find                                            : Search for files in a directory hierarchy, it has an unusual syntax
+        -name [pattern]                         : Search for pattern
+        -iname [pattern]                        : Same as '-name' except case sensitive
+        -perm                                   : Check for specific permissions
+        -lname pattern                          : The name (-name), pathname (-path), or symbolic link
+        -regex regexp                           : The path (relative to the directory tree being searched)
+                                                  must match the given regular expression.
+        -type [f,d,l,b,c,p,s]                   : Only only specific types of files
 type [command]                                  : Display where a command is located.
         -a                                      - Display all instances of where the command is located
 locate [detail]                                 : Locates a detail on the computer
@@ -808,9 +815,12 @@ VIM                                             : VIM text editor suite
 nano                                            : text editor
         [filename]                              - opens specific file
         [empty]                                 - Open a new document in nano (unsaved version)
+emacs                                           : Incredibly powerful, with literally thousands of commands
+                                                - Within emacs, use the command '^h' [Ctrl  + h] for help
 
 Additional text exditors:
 vi, gedit, jed, joe, kate, kedit, mcedit, nedit
+emacs, micro
 
 
 File alteration                                  Description
@@ -1351,6 +1361,7 @@ rmmod                                           : Simple program to remove a mod
 modprobe                                        : Add and remove modules from the Linux Kernel
 mount                                           :
 umount                                          : Unmount file systems   
+eject                                           : Used to eject USB/DVD and similarly mountable drives
 
 [Example]
 $ lscpu | grep cache                            : Display cache levels for the CPU
@@ -1425,6 +1436,14 @@ All done, once you're complete, you can unmount
 the drive with the command umount.
 
 $ umount /mnt/derpydirectory
+
+Printing                                         Description
+------------------------------------------------|---------------
+lpr                                             : Print a file.
+        -P [PrinterName] MyFile                 - Print a specific file on a specific printer which has been setup
+        -a                                      - List the queue for all printers
+lpq                                             : View the print queue.
+lprm                                            : Remove a print job from the queue
 
 ╔==============================================╗
 ║                 VIM tutorial                 ║
@@ -1589,10 +1608,30 @@ make                                            : GNU make utility to maintain g
 rm .test.c.sw*                                  : Deletes both .sw files for 'test.c' (In case of errors)
                                                   //compiler course
 chage                                           : Change user password expiry information
-
 size                                            : Display the size of a compiled C program, and how data is stored.
 time                                            : Display the time used to execute a command and print the time for
                                                   {real-time, CPU-time and system CPU time}
+screen                                          : Screen manager with VT100/ANSI terminal emulation
+                                                  It is a full-screen window manager that multiplexes a physical
+                                                  terminal between several processes.
+                                                  Beware that running text editors may be problematic, as 'screen'
+                                                  have full control over the keyboard unless control is relinquished.
+xargs [options] [command]                       : Build and execute command lines from standard input
+                                                  This tool is incredibly powerfull, as you can supply it with
+                                                  different paths which can be used as arguments, and then processed.
+
+[Example]
+find . -type f -print | xargs grep -l derp      : Find any files with the word "derp" located within.
+
+
+Spell Checking                                   Description
+------------------------------------------------|---------------
+look                                            : Look up the spelling of a word quickly.
+aspell                                          : Interactive spelling checker.
+        -c [file]                               : Check spelling on all words within a file
+        dump master                             : Show the content of the master dictionary
+        help                                    : See the help page
+spell                                           : Batch spelling checker.
 
 Python trick for C programming.
 If you've compiled a C program that requires a
@@ -1677,6 +1716,7 @@ Sources:
 ║               -  Managing groups                                             ║
 ║               -  Shell scripting                                             ║
 ║               -  System calls                                                ║
+║               -  Commmon knowledge                                           ║
 ║               -  [Command] nslookup                                          ║
 ║               -  [Command] tmux                                              ║
 ║               -  [Command] cron                                              ║
@@ -2072,14 +2112,16 @@ Special meaning                                  Description
 $STRING                                         : Name of a variable.
 
 Commonly used parameter expansions in bash
-shell scripting:
+shell scripting:                                 Description
+------------------------------------------------|---------------
 ${var:-value}                                   : If variable is unset or empty expand this to value.
 ${var#pattern}                                  : Chop the shortest match for pattern from the front of var's value.
 ${var##pattern}                                 : Chop the longest match for pattern from the front of var's value.
 ${var%pattern}                                  : Chop the shortest match for pattern from the end of var's value.
 ${var%%pattern}                                 : Chop the longest match for pattern from the end of var's value.
 
-[Examples]                                      : Try these to see the output.
+[Examples]                                       Try these to see the output.
+------------------------------------------------|---------------
 $ THIS="This is an example"
 $ THIS=${THIS:-"Not set"}
 $ THAT=${THAT:-"Not set"}
@@ -2172,6 +2214,14 @@ unset [-f] [-v] [-n] [name ...]                 : Unset a function
         -v                                      - Treat each NAME as a shell variable
         -n                                      - Treat each NAME as a name reference and unset the variable itself
                                                   rather than the variable it references
+
+Common Commands                                  Description
+------------------------------------------------|---------------
+read [VARIABLE]                                 : 
+        -p "string containing a prompt"         : 
+echo
+
+
 
 ╔==============================================╗
 ║                 System calls                 ║
@@ -2292,6 +2342,40 @@ Windows has close to 2000, (divided between
 No details about Mac.
 
 ╔==============================================╗
+║               Common knowledge               ║
+╚==============================================╝
+Some common programs or tools on Linux, used for
+specific purposes.
+
+
+Server types
+------------------------------------------------|---------------
+Name                                            : Bind, dnsmasq, djbdns
+Mail                                            : postfix, qmail, sendmail
+file                                            : ftp, NFS, Samba, CVS, Subversion, Git
+DHCP                                            : With or without DDNS
+Database                                        : PostgreSQL, MySQL
+Print                                           : CUPS, lpd
+CMS                                             : Drupal, Joomla, WordPress)
+Web                                             : NginX, Lighthttpd, Tomcat, Apache)
+Other                                           : Wiki, SSL, PHP, VoIP, VPN
+PXE Boot                                        : PXE boot 
+
+
+Software Category                                Common programs
+------------------------------------------------|---------------
+Desktop (GUI)                                   : KDE, Cinnamon, Unity or GNOME desktop
+                                                - Graphical access to “cryptic” system functions
+                                                - Easy access to dvd/cdrom/USB stick, the print system
+Browsing                                        - Firefox, Opera, Chrome
+Mail                                            : Thunderbird, Kmail, Evolution
+Chat                                            : Konversation (IRC); Pidgin (IM)
+Office programs                                 : LibreOffice, GNOME Office, KOffice
+Image programs                                  : The GIMP (PhotoShop); Digikam (Photo management)
+Music                                           : Audacity (editing); Amarok or Banshee (MP3, Ipod) 
+
+
+╔==============================================╗
 ║                   nslookup                   ║
 ╚==============================================╝
 'nslookup' is tool to query Internet name
@@ -2353,7 +2437,7 @@ $ nslookup dtu.dk google.com                    : Here we send our query to goog
 ╔==============================================╗
 ║                     tmux                     ║
 ╚==============================================╝
-Terminal Multiplexer.
+tmux is a Terminal Multiplexer.
 It enables a number of terminals to be created,
 accessed, and controlled from a single screen.
 What makes it powerful is the ability to be
@@ -2421,7 +2505,11 @@ at fixed times, dates, intervals.
 File location                                    Description
 ------------------------------------------------|---------------
 /var/log/cron                                   : Log files
+/var/cron/tabs                                  :
 /var/spool/cron                                 : Configuration files for different users are stored here
+/etc/cron.allow                                 : Configuration file that specify which users are allowed to create cron jobs
+                                                  one name per line
+/etc/cron.deny                                  : Reverse meaning compared to 'allow'
 
 
 Cron syntax                                      Description
@@ -2455,7 +2543,7 @@ Configuration operator                           Description
 20 * * * * $home/derpscript.sh                  : Run shell script as cron job every 20 minutes
 * 0 * * * $home/derpscript.sh                   : Run shell script as cron job every hour
 * 1 6,17,28 * * $home/derpscript.sh             : Run at 1 am, on date 6, 17 and 28 of every month.
-* 1 1-7 * 0 ps aux >> $home/log.txt             : Run on at 1 am, on the first Synday of every month
+* 1 1-7 * 0 ps aux >> $home/log.txt             : Run on at 1 am, on the first Sunday of every month
 
 ╔==============================================╗
 ║                  Table: 1.0                  ║
