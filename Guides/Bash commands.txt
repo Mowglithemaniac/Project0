@@ -1,46 +1,49 @@
-/*============================================================================
- Name        : Bash commands.txt
- Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID) 
- Version     : 2.13.05
- Date        : 29/09-20
- Last Updated: 22/02-24
- Copyright   : Do not alter, this file without permission
-               For non commercial use only.
- Licence     : CC BY-NC-ND
-               https://creativecommons.org/about/cclicenses/
- Description : A rough guide for new users to understand bash console commmands
-               Made for course 62588 Operating systems at DTU Denmark Fall 2020.
-               To be used by the teacher at his discretion.
- Teacher     : Bhupjit Singh - bhsi@dtu.dk
- ============================================================================*/
 ╔==============================================================================╗
-║    Sections:                                                                 ║
-║        - Introduction                                                        ║
-║        - Guide info                                                          ║
-║        - General tips                                                        ║
-║        - Elevated priviledge                                                 ║
-║        - System Commands                                                     ║
-║          * Permission explanation                                            ║
-║        - System/User Info                                                    ║
-║          * Process details                                                   ║
-║        - User administration                                                 ║
-║        - Directory commands                                                  ║
-║        - Help section                                                        ║
-║        - File access, edit, format                                           ║
-║        - Packages and installations                                          ║
-║        - Networking                                                          ║
-║        - VARIABLES                                                           ║
-║        - FUNCTIONS-(NOT COMMANDS)                                            ║
-║        - Command line shortcuts                                              ║
-║        - Hardware                                                            ║
-║        - VIM tutorial                                                        ║
-║        - Uncategorized                                                       ║
-║        - References                                                          ║
+║Name        : Bash commands.txt                                               ║
+║Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID)          ║
+║Version     : 2.13.06                                                         ║
+║Date        : 29/09-20                                                        ║
+║Last Updated: 26/02-22                                                        ║
+║Copyright   : Do not alter, this file without permission                      ║
+║              For non commercial use only.                                    ║
+║Licence     : CC BY-NC-ND                                                     ║
+║              https://creativecommons.org/about/cclicenses/                   ║
+║Description : A rough guide for new users to understand bash console commmands║
+║              Made for students at DTU.                                       ║
+║              To be used by the teacher(s) at their discretion.               ║
+║Teacher     : Bhupjit Singh - bhsi@dtu.dk                                     ║
 ╚==============================================================================╝
 ╔==============================================================================╗
-║    Advanced topics                                                           ║
-║    This section is well beyond the scope of users new to the command console.║
-║    It include a section list, table overview, and references.                ║
+║    Table of contents:                                                        ║
+║               - Introduction                                                 ║
+║               - Guide info                                                   ║
+║               - General tips                                                 ║
+║               - Elevated priviledge                                          ║
+║               - System Commands                                              ║
+║                 * Permission explanation                                     ║
+║               - System/User Info                                             ║
+║                 * Process details                                            ║
+║               - User administration                                          ║
+║               - Directory commands                                           ║
+║               - Help section                                                 ║
+║               - File access, edit, format                                    ║
+║               - Packages and installations                                   ║
+║               - Networking                                                   ║
+║               - VARIABLES                                                    ║
+║               - FUNCTIONS-(NOT COMMANDS)                                     ║
+║               - Command line shortcuts                                       ║
+║               - Hardware                                                     ║
+║               - VIM tutorial                                                 ║
+║               - Uncategorized                                                ║
+║               - References                                                   ║
+╚==============================================================================╝
+╔==============================================================================╗
+║  Advanced topics:                                                            ║
+║   Found beneath the last paragraph listed here, is another table of contents.║
+║   These sections are setup to go further into depth about a specific complex ║
+║   topic, and are not relevant for new users to the command console.          ║
+║   It includes specific concepts, detailed info about specific commands, and  ║
+║   a list of different relevant tables.                                       ║
 ╚==============================================================================╝
 ╔==============================================╗
 ║                 Introduction                 ║
@@ -118,7 +121,7 @@ Commands                                         Description
 ------------------------------------------------|---------------
 [Command]                                       : Command description
                                                   Related info
-        -K                                      - info about operator
+        -[Operator]                             - info about operator
 
 ╔==============================================╗
 ║                 General tips                 ║
@@ -133,7 +136,6 @@ in the address field.                             Requires that Linux subsystem 
                                                   and that a Linux distribution is virtually installed
                                                   i.e. Microsoft store, Ubuntu (LTS version, which stands
                                                   for 'Long Term Support')
-
 cd                                              : Change Directory, '..' to move up a directory
                                                   When inside a directory and you've typed part of the name
                                                   of a file. hit 'tab' to auto fill out the content.
@@ -142,7 +144,6 @@ cd                                              : Change Directory, '..' to move
                                                 - Use '$ cd /' to go to root directory
                                                 - Use '$ cd ~' to go to HOME directory
 pwd                                             : Print Working directory.
-
 something '>>' filename                         : Append content to file named filename
 something '>' filename                          : Overwrite content of file named filename
                                                   These are great options for pasting output into log files,
@@ -165,6 +166,10 @@ This is equivalent to
 $ ls -la
 Because using a single '-' means that each 
 character is treated as a separate operator.
+Some operators requires that they are directly
+followed by a piece of information, such as
+new filename, port number and similar and must
+therefore not be groupd with other operators.
 If you use '--' the whole word is supplied
 as an argument.
 $ ls --help
@@ -431,12 +436,12 @@ $ chmod -t [directory]                          : Remove the sticky bit from {di
 
 ------?--?                                      : -rwxrwxrwx
 |||||||||!------------------------------------> : 'x' executable for Everyone
-|||||||                                         - 't' for sticky bit and executable,
-|||||||                                         - 'T' for sticky bit
-|||||||                                         - 's for setuid while also as an executable
-|||||||                                         - 'S for setuid
+|||||||||!                                      - 't' for sticky bit and executable,
+|||||||||!                                      - 'T' for sticky bit
+|||||||||!                                      - 's for setuid while also as an executable
+|||||||||!                                      - 'S for setuid
 ||||||!                                         : 's for setgid and also as an executable
-                                                - 'S for setgid
+||||||!                                         - 'S for setgid
 
 [Example]                                        Description
 ------------------------------------------------|---------------
@@ -1217,6 +1222,7 @@ Wildcard types:                                  Description
 ------------------------------------------------|---------------
 *                                               : Used as a wildcard for an string of undetermined length
 ?                                               : Used a wildcard for a single character in strings.
+.                                               : Used a wildcard for a single character in strings.
 [...]                                           : Matches any one of the characters between the brackets, which can
                                                   include a hyphen separated range of letters or numbers.
                                                   Used for pattern matching, case sensitive.
@@ -2286,6 +2292,9 @@ wait                                            : Wait for process to change sta
                                                   available on a Linux OS, which is why it is imperative for programs to reap
                                                   their zombie children.
 read                                            : Read from a file descriptor
+                                                  Note that this specific name, is also used in shell scripting, when reading
+                                                  from the console, and that 2 usefull operators are '-p' for prompt, and '-s'
+                                                  for secret.
 write                                           : Send a message to another user
 pipe                                            : Create a pipe, a unidirectional data channel that can be used for interprocess
                                                   communication. 
