@@ -1,9 +1,9 @@
 ╔==============================================================================╗
 ║Name        : Bash commands.txt                                               ║
 ║Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID)          ║
-║Version     : 2.13.06                                                         ║
+║Version     : 2.14.00                                                         ║
 ║Date        : 29/09-20                                                        ║
-║Last Updated: 26/02-22                                                        ║
+║Last Updated: 15/03-22                                                        ║
 ║Copyright   : Do not alter, this file without permission                      ║
 ║              For non commercial use only.                                    ║
 ║Licence     : CC BY-NC-ND                                                     ║
@@ -18,21 +18,21 @@
 ║               - Introduction                                                 ║
 ║               - Guide info                                                   ║
 ║               - General tips                                                 ║
-║               - Elevated priviledge                                          ║
+║               - Help section                                                 ║
+║               - Directory commands                                           ║
 ║               - System Commands                                              ║
 ║                 * Permission explanation                                     ║
 ║               - System/User Info                                             ║
 ║                 * Process details                                            ║
-║               - User administration                                          ║
-║               - Directory commands                                           ║
-║               - Help section                                                 ║
 ║               - File access, edit, format                                    ║
+║               - Elevated priviledge                                          ║
+║               - User administration                                          ║
 ║               - Packages and installations                                   ║
 ║               - Networking                                                   ║
+║               - Hardware                                                     ║
 ║               - VARIABLES                                                    ║
 ║               - FUNCTIONS-(NOT COMMANDS)                                     ║
 ║               - Command line shortcuts                                       ║
-║               - Hardware                                                     ║
 ║               - VIM tutorial                                                 ║
 ║               - Uncategorized                                                ║
 ║               - References                                                   ║
@@ -95,6 +95,7 @@ Mail/FTP/DNS/router/firewall and more
 There is a list of useful abbreviations found in
 table 1.0 near the end of the document.
 
+
 ╔==============================================╗
 ║                  Guide info                  ║
 ╚==============================================╝
@@ -122,6 +123,7 @@ Commands                                         Description
 [Command]                                       : Command description
                                                   Related info
         -[Operator]                             - info about operator
+
 
 ╔==============================================╗
 ║                 General tips                 ║
@@ -168,7 +170,7 @@ Because using a single '-' means that each
 character is treated as a separate operator.
 Some operators requires that they are directly
 followed by a piece of information, such as
-new filename, port number and similar and must
+new filename, port number or similar, and must
 therefore not be groupd with other operators.
 If you use '--' the whole word is supplied
 as an argument.
@@ -204,55 +206,126 @@ A similar tool in Linux, to 'Task Manager'
 from Windows, are the commands 'top', 'htop', 
 and 'ps'.
 
-╔==============================================╗
-║              Elevated privilegde             ║
-╚==============================================╝
-For some commands, you require root access,
-this section explains how to acquire that.
-Most of these are centered around administrator
-tasks, such as managing users, packages, access,
-and more.
 
-The prompt symbol for regular users is a dollar
-sign ($), the prompt symbol for superuser
-is hashtag (#), use this as an indicator
-to see if you've got direct root access.
-Or if you need to request it, in order to run
-a command.
+╔==============================================╗
+║                 Help section                 ║
+╚==============================================╝
+If you've got no idea what you're looking at,
+it's always nice to know how you can acquire
+information about the subject. Or how to search
+for something.
 
 Commands                                         Description
 ------------------------------------------------|---------------
-sudo                                            : Execute a command as another user, 'Super user' to be exact.
-                                                  Super user access (creates a timer in the background,
-                                                  before requiring a password again)
-        --help                                  - See a list of options, and their uses
-visudo                                          : visudo edits the sudoers file, which defines the users and groups with
-                                                  administrator rights. (Don't mess with unless you know what you're doing)
-updatedb                                        - Creates or updates a database used by 'locate(1)'
-sudos                                           : Super user access, for extended periods, (generally
-                                                  not a good idea unless you know what you're doing)
-        -s                                      - Disable the timer, and continue on as the super user
-                                                  (WARNING, DON'T FORGET to log out)
-        exit                                    - Will terminate the super user access
-su                                              : Switch user
-        [empty]                                 - Changing to root access ()
-        - [empty]                               - Changing to root user, but remains in the current users home directory
-        - [Username]                            - will change to other specified user on the username.
-        [username]                              - Will switch to other user, but remain in your own home directory
-systemctl                                       : Control the systemd system and service Manager
-        start                                   - Start a service
-        stop                                    - Stop a service
-        restart                                 - Restart a service
-        status                                  - See status as a whole or of a service
-        enable                                  - Enable a service on boot
-        disable                                 - Disable a service on boot
-journalctl                                      : Query the systemd journal
+which                                           : Will show where a command is, or whether it is installed
+        [command name]                          - Shows location of that command
+whatis                                          : Brief description of a command
+        [command]                               - tl;dr of that command
+apropos [operator] [command]                    : Display information about commands and things that are related to the search
+                                                - Display commands related to that command
+info [command]                                  : Shows information about a chosen command
+man [operator] [command]                        : Manual page for Bash commands
+        [command]                               - Shows the manual page for that specific command
+        -k                                      - Works as 'apropos', so you can search through man pages,
+                                                  linked to the search word.
+                                                  Each manual page, has a number, that refers to a category
+                                                  To find out what the category means, look at the manual page for man
+tldr [command]                                  : Display a tl;dr about command line argument examples
+locate                                          : Able to locate specific command locations, and references
+                                                  Requires a database to work. (updatedb*)
+which                                           : Locate a command
+find                                            : Search for files in a directory hierarchy, it has an unusual syntax
+        -name [pattern]                         : Search for pattern
+        -iname [pattern]                        : Same as '-name' except case sensitive
+        -perm                                   : Check for specific permissions
+        -lname pattern                          : The name (-name), pathname (-path), or symbolic link
+        -regex regexp                           : The path (relative to the directory tree being searched)
+                                                  must match the given regular expression.
+        -type [f,d,l,b,c,p,s]                   : Only specific types of files
+type [command]                                  : Display information about commands, such as shell built-in, location, alias
+        -a                                      - Display all instances of where the command is located
+locate [detail]                                 : Locates a detail on the computer
+compgen [Operator] [word]                       : Display possible completions depending on the operator
+        -c                                      - List commands, if 'word' is supplied, list those starting with 'word'
+help [command]                                  : Provides info about shell built-in commands such as read and pwd    
+                                                  Use command 'type' to check if a command is a shell built-in
 
 [Example]
-$ sudo apt-get update                           : Update packages, a command that require Root access.
-$ systemclt Status                              : Show system status
-$ systemclt status [subject]                    : Show detailed information about a currently active [subject]
-                                                  followed by most recent log data from the journal.
+$ help                                          - See a list of shell built-in commands
+$ help read                                     - Provides information about the built-in command read, such as options
+$ help set                                      - Setting shell variables and positional parameters
+$ info bash                                     - Provides info about the bash shell in general
+$ man man                                       - Manual page for the manual command
+$ man pipe                                      - Manual page for the pipe command
+$ man -k pipe                                   - Shows a list of commands and manual pages related to 'pipe'
+$ man 5 <tab><tab>                              - Double tab, to display a list of al manual pages in category 5.
+                                                  See table 1.3 found at the bottom, for a description of this concept.
+$ compgen -c gr                                 - List commands starting with 'gr'
+$ compgen -c | sort                             - List all commands sorted alphabetically
+$ tldr man                                      - Displa a few common command options for man
+$ info                                          - Info reader documentation (type 'q' to quit)
+
+Commands include a help method, referenced
+[command] --help
+
+[Examples]
+$ help --help                                   - Provides info about the help command such as options
+$ ls --help                                     : List a help category for 'ls' command.
+$ chmod --help                                  : List a help category for 'chmod' command
+$ find . -name  "*.txt"                         : Find all files who end with a '.txt' format , starting from the current
+                                                  directory and recursively look through all sub directories.
+$ bash --version                                : Display the bash version
+
+
+╔==============================================╗
+║              Directory commands              ║
+╚==============================================╝
+Commands related to navigating and altering
+directory information.
+
+Commands                                         Description
+------------------------------------------------|---------------
+pwd                                             : Print working directory
+ls                                              : List content of current directory
+        -a                                      - Display hidden files
+        -l                                      - Provides extra information about each file, the left mode column regarding rwx,
+                                                  concerns users priveledge.
+                                                  Column format: {permissions, number of links to the file, file owner,
+                                                                  group owner, size, date}
+        -la                                     - Extra details and hidden files
+        /[foldername]                           - List content of specified directory
+cd                                              : Change directory
+       [empty]                                  - Move to home directory
+        ~                                       - Move to home directory
+        ..                                      - Move up a directory
+        [Directory Name]/                       - Move to specific directory
+
+        <tab><tab>                              - Auto complete
+pushd                                           : Save directory into a LIFO stack (directory stack)
+                                                  Works much like 'cd' except that the directory you move from
+                                                  is stored in the directory stack
+popd                                            : Pop the directory from the LIFO stack
+dirs                                            : Display directory stack
+        -v                                      : Show the list with a bit of formatting
+history                                         : Shows a list of commands used so far.
+        -c                                      - Reset the the history
+mkdir                                           : Make directory (folder)
+        [Directory name]                        : new directory
+tree                                            : List contents of directories in a tree-like format.
+rmdir                                           : Remove directory
+        *                                       : wildcard
+        [a_zA_Z]*                               - Remove directories starting with specified [a-zA_Z]
+        [directory name]                        - Remove specific directory
+mkdir [options] directories                     : Creates 1 or more directories
+
+[Example]
+$ cd ../../testfolder/                          - Move up two directories, and then down into the testfolder.
+$ touch test.txt                                - Ensu an empty txt file called 
+$ cd test<tab><tab>                             - Will auto complete the name of a folder starting with 'test' (if it exist)
+$ ls -d */                                      - Shows directory names from within that folder.
+$ ls */                                         - Show the name and content of the directories, located within the folder.
+$ mkdir ab{cd,ef}                               - Creates 2 directories, named 'abcd' and 'abef'
+
 
 ╔==============================================╗
 ║                System Commands               ║
@@ -304,7 +377,7 @@ export                                          : Set the export attribute for v
         -p                                      - Display a list of all exported variables
 shutdown                                        : Halt, power-off or reboot the machine
 
-[EXAMPLES]
+[Examples]
 $ chmod 650 [filename]                          : Where 6 is the user, 5 is group, 0 is other
 $ chmod 755 [directory]                         : 755 is recommended for directories
 $ chmod 744 [filename]                          : 644 is recommended for files. 
@@ -322,6 +395,7 @@ $ shutdown -r now                               : Reboot computer now
 $ shutdown -h now                               : Halt computer now
 $ shutdown -r +10 mins                          : Reboot computer in 10 minutes
 $ shutdown -c                                   : Cancel pending shutdown
+
 
 ╔==============================================╗
 ║           * Permission Explanation           ║
@@ -479,6 +553,7 @@ with the commands 'lsattr' and 'chattr'.
 This is important in case a file contains the
 'i' flag.
 
+
 ╔==============================================╗
 ║               System/User Info               ║
 ╚==============================================╝
@@ -491,6 +566,7 @@ commands such as 'top' and 'htop'.
 Commands                                         Description
 ------------------------------------------------|---------------
 uname                                           : Print system information
+        -r                                      - Kernel release
 printenv                                        : Print all or part of environment (aka how is your shell setup)
 who                                             : Show who is logged on
 w                                               : Show who is logged on and what they are doing.
@@ -499,6 +575,8 @@ whoami                                          : Print effective userid
 id                                              : ID number, and associated details with the user such as group
 users                                           : Print the user names of users currently logged in to the current host
 hostname                                        : Show or set the system's host name (usually shown in your prompt)
+                                                  WARNING This is a complicated topic, DO NOT alter your hostname!!!
+hostnamectl                                     : Control the system hostname, run without arguments to see information only
                                                   WARNING This is a complicated topic, DO NOT alter your hostname!!!
 date                                            : Display the date
 cal                                             : Calender
@@ -556,6 +634,8 @@ $ ps -eo pid,user,uid,gid,vsz,rss,comm --sort=-vsz
                                                 : Showing the selected categories, sorted descending by vsz
 $ ps -eo pid,user,vsz,rss,comm --sort=rss       : Showing the selected categories, sorted ascending by rss
 $ ps up "342 8525"                              : Show specific details regarding the two processes with the ID342 and 8525
+$ cat /etc/os-release                           : Print information aout the Operating System
+
 
 ╔==============================================╗
 ║               * Process details              ║
@@ -636,174 +716,6 @@ k                                               : Killing a process. Use the pro
                                                   process outright.
                                                   Note comparison, command 'kill' vs 'killall'
 
-╔==============================================╗
-║              User administration             ║
-╚==============================================╝
-In general, unless you know exactly what you're
-doing, I HIGHLY recommend not touching anything
-because of how easily something can go wrong.
-
-Commands                                         Description
-------------------------------------------------|---------------
-passwd                                          : Used to change the password of users
-useradd                                         : Create a new user or update default new user information
-        -m                                      - Remembering to also create their home ID
-adduser                                         : Add a user to the system
-addgroup                                        : Add a group to the system
-usermod                                         : Modify a user account
-groupadd                                        : Add a new group
-groups                                          : Print the groups a user is in
-deluser                                         : Deletes user, Debian based distribution, for other types, use
-                                                  "userdel" command instead.
-        --remove-home [username]                - This syntax is for Debian Distributions
-                                                  Will delete the user
-chgrp                                           : Change group ownership
-        -R                                      - Recursively, to include all files and sub folders located with
-                                                  the directory.
-chown                                           : Change file owner and group
-
-[Example]
-$ useradd -m derp -G sudo -s /bin/sh            : Create user 'derp' part of group sudo, using the /bin/sh shell
-$ passwd derp                                   : Change password of 'derp'
-$ sudo deluser --remove-home derp               : Removes user 'derp'
-$ sudo su - [username]                          : Use root pw to pretend being another user, using their environment variables 
-                                                  Remember to exit when done
-$ sudo usermod -a -G [groupname] [username]     : Add [username] to group [groupname]
-$ groups [username]                             : View the groups that [username] is part of
-$ chgrp [group] [file]                          : Alter the group ownership of that directory/file
-$ chown [user] [file]                           : Change ownership of file to specified user
-$ chown :[group] [file]                         : Change ownership of file to specified group
-$ chown [user]:[gropu] [file]                   : Change ownership of file for both user and group
-
-There is a utility called 'Access Control List'
-which can be used to set permissions on files
-for different users. In order to access the
-commands, ACL must be enabled when the
-filesystem is mounted.
-
-setfacl                                         : Setting the ACL status of a file
-getfacl                                         : Getting the ACL status of a file
-
-[Example]
-$ setfacl -m u:username:rwx filename            : -m option, modify permission, for username, to rwx, on file filename
-$ getfacl temp.txt                              :
-
-To see whether the ACL status is available on an
-ext4 file system use the 'tune2fs -l' command,
-to view the implemented mount options.
-
-[Example]
-mount -t ext3 -o acl [device-name] [partition]
-$ mount -t ext3 -o acl /dev/folderA/folderAA /work
-
-╔==============================================╗
-║              Directory commands              ║
-╚==============================================╝
-Commands related to navigating and altering
-directory information.
-
-Commands                                         Description
-------------------------------------------------|---------------
-pwd                                             : Print working directory
-ls                                              : List content of current directory
-        -a                                      - Display hidden files
-        -l                                      - Provides extra information about each file, the left mode column regarding rwx,
-                                                  concerns users priveledge.
-                                                - Column format: {permissions, number of links to the file, file owner,
-                                                                  group owner, size, date}
-        -la                                     - Extra details and hidden files
-        /[foldername]                           - List content of specified directory
-cd                                              : Change directory
-       [empty]                                  - Move to home directory
-        ~                                       - Move to home directory
-        ..                                      - Move up a directory
-        [Directory Name]/                       - Move to specific directory
-
-        <tab><tab>                              - Auto complete
-pushd                                           : Save directory into a LIFO stack (directory stack)
-                                                  Works much like 'cd' except that the directory you move from
-                                                  is stored in the directory stack
-popd                                            : Pop the directory from the LIFO stack
-dirs                                            : Display directory stack
-        -v                                      : Show the list with a bit of formatting
-history                                         : Shows a list of commands used so far.
-        -c                                      - Reset the the history
-mkdir                                           : Make directory (folder)
-        [Directory name]                        : new directory
-tree                                            : List contents of directories in a tree-like format.
-rmdir                                           : Remove directory
-        *                                       : wildcard
-        [a_zA_Z]*                               - Remove directories starting with specified [a-zA_Z]
-        [directory name]                        - Remove specific directory
-mkdir [options] directories                     : Creates 1 or more directories
-
-[Example]
-$ cd ../../testfolder/                          - Move up two directories, and then down into the testfolder.
-$ cd test<tab><tab>                             - Will auto complete the name of a folder starting with 'test' (if it exist)
-$ ls -d */                                      - Shows directory names from within that folder.
-$ ls */                                         - Show the name and content of the directories, located within the folder.
-$ mkdir ab{cd,ef}                               - Creates 2 directories, named 'abcd' and 'abef'
-
-╔==============================================╗
-║                 Help section                 ║
-╚==============================================╝
-If you've got no idea what you're looking at,
-it's always nice to know how you can acquire
-information about the subject. Or how to search
-for something.
-
-Commands                                         Description
-------------------------------------------------|---------------
-which                                           : Will show where a command is, or whether it is installed
-        [command name]                          - Shows location of that command
-whatis                                          : Brief description of a command
-        [command]                               - tl;dr of that command
-apropos [operator] [command]                    : Display information about commands and things that are related to the search
-                                                - Display commands related to that command
-info [command]                                  : Shows information about a chosen command
-man [operator] [command]                        : Manual page for Bash commands
-        [command]                               - Shows the manual page for that specific command
-        -k                                      - Works as 'apropos', so you can search through man pages,
-                                                  linked to the search word.
-                                                  Each manual page, has a number, that refers to a category
-                                                  To find out what the category means, look at the manual page for man
-tldr [command]                                  : Display a tl;dr about command line argument examples
-locate                                          : Able to locate specific command locations, and references
-                                                  Requires a database to work. (updatedb*)
-which                                           : Locate a command
-find                                            : Search for files in a directory hierarchy, it has an unusual syntax
-        -name [pattern]                         : Search for pattern
-        -iname [pattern]                        : Same as '-name' except case sensitive
-        -perm                                   : Check for specific permissions
-        -lname pattern                          : The name (-name), pathname (-path), or symbolic link
-        -regex regexp                           : The path (relative to the directory tree being searched)
-                                                  must match the given regular expression.
-        -type [f,d,l,b,c,p,s]                   : Only only specific types of files
-type [command]                                  : Display where a command is located.
-        -a                                      - Display all instances of where the command is located
-locate [detail]                                 : Locates a detail on the computer
-compgen [Operator] [word]                       : Display possible completions depending on the operator
-        -c                                      - List commands, if 'word' is supplied, list those starting with 'word'
-
-[Example]
-$ man man                                       - Manual page for the manual command
-$ man pipe                                      - Manual page for the pipe command
-$ man -k pipe                                   - Shows a list of commands and manual pages related to 'pipe'
-$ man 5 <tab><tab>                              - Double tab, to display a list of al manual pages in category 5.
-                                                  See table 1.3 found at the bottom, for a description of this concept.
-$ compgen -c gr                                 - List commands starting with 'gr'
-$ compgen -c | sort                             - List all commands sorted alphabetically
-$ tldr man                                      - Displa a few common command options for man
-$ info                                          - Info reader documentation (type 'q' to quit)
-
-Commands include a help method, referenced
-[command] --help
-
-[Examples]
-$ ls --help                                     : List a help category for 'ls' command.
-$ chmod --help                                  : List a help category for 'chmod' command
-$ find . -name  "*.txt"                         : Find all files who end with a '.txt' format , starting from the current
-                                                  directory and recursively look through all sub directories.
 
 ╔==============================================╗
 ║           File access, edit, format          ║
@@ -885,6 +797,7 @@ shasum                                          : Same as md5sum except with mor
         -a 256                                  : Use SHA-256 algorithm
 rev [filename]                                  : Reverse lines characterwise
 grep                                            : Print lines that match patterns
+tr                                              : Translate or delete characters
 cut                                             : Remove sections from each line of lines
         -d[character]                           : Use [character] as a delimiter
 awk                                             : Pattern scanning and processing language
@@ -934,7 +847,9 @@ Types: Gnome, KDE, Xfce, LXDE.
 
 xdg-open [foldername]                           : Opens a folder, should work on a full Linux distribution
 
-[Examples]
+[Examples]                                       Description
+------------------------------------------------|---------------
+
 $ stat --printf='%n\n%a\n%b\n' [FILE]           : Prints 3 options, %n, %a, %b, with line breaks.
 $ cat file1.txt | more                          : Display file1.txt in the console, using 'more' format
 $ cat file1.txt | less                          : Display file1.txt in the console, using 'less' format
@@ -955,6 +870,119 @@ $ md5sum derp > something.txt                   : Store the Message Digest, alon
 $ md5sum --check something.txt                  - Compares the cheksum found within, against the checksum of the filename
                                                   specified in the file
 $ md5sum [file] | md5sum --check                : Create and check on the same line
+$ echo prldxqtprldxqtprlh | tr lqx ei" " | rev  : Output -> herpti derpti derp, characters are substituted 1 by 1
+
+
+╔==============================================╗
+║              Elevated privilegde             ║
+╚==============================================╝
+For some commands, you require root access,
+this section explains how to acquire that.
+Most of these are centered around administrator
+tasks, such as managing users, packages, access,
+and more.
+
+The prompt symbol for regular users is a dollar
+sign ($), the prompt symbol for superuser
+is hashtag (#), use this as an indicator
+to see if you've got direct root access.
+Or if you need to request it, in order to run
+a command.
+
+Commands                                         Description
+------------------------------------------------|---------------
+sudo                                            : Execute a command as another user, 'Super user' to be exact.
+                                                  Super user access (creates a timer in the background,
+                                                  before requiring a password again)
+        --help                                  - See a list of options, and their uses
+visudo                                          : visudo edits the sudoers file, which defines the users and groups with
+                                                  administrator rights. (Don't mess with unless you know what you're doing)
+updatedb                                        - Creates or updates a database used by 'locate(1)'
+sudos                                           : Super user access, for extended periods, (generally
+                                                  not a good idea unless you know what you're doing)
+        -s                                      - Disable the timer, and continue on as the super user
+                                                  (WARNING, DON'T FORGET to log out)
+        exit                                    - Will terminate the super user access
+su                                              : Switch user
+        [empty]                                 - Changing to root access ()
+        - [empty]                               - Changing to root user, but remains in the current users home directory
+        - [Username]                            - will change to other specified user on the username.
+        [username]                              - Will switch to other user, but remain in your own home directory
+systemctl                                       : Control the systemd system and service Manager
+        start                                   - Start a service
+        stop                                    - Stop a service
+        restart                                 - Restart a service
+        status                                  - See status as a whole or of a service
+        enable                                  - Enable a service on boot
+        disable                                 - Disable a service on boot
+
+[Example]
+$ sudo apt-get update                           : Update packages, a command that require Root access.
+$ systemclt Status                              : Show system status
+$ systemclt status [subject]                    : Show detailed information about a currently active [subject]
+                                                  followed by most recent log data from the journal.
+
+
+╔==============================================╗
+║              User administration             ║
+╚==============================================╝
+In general, unless you know exactly what you're
+doing, I HIGHLY recommend not touching anything
+because of how easily something can go wrong.
+
+Commands                                         Description
+------------------------------------------------|---------------
+passwd                                          : Used to change the password of users
+useradd                                         : Create a new user or update default new user information
+        -m                                      - Remembering to also create their home ID
+adduser                                         : Add a user to the system
+addgroup                                        : Add a group to the system
+usermod                                         : Modify a user account
+groupadd                                        : Add a new group
+groups                                          : Print the groups a user is in
+deluser                                         : Deletes user, Debian based distribution, for other types, use
+                                                  "userdel" command instead.
+        --remove-home [username]                - This syntax is for Debian Distributions
+                                                  Will delete the user
+chgrp                                           : Change group ownership
+        -R                                      - Recursively, to include all files and sub folders located with
+                                                  the directory.
+chown                                           : Change file owner and group
+
+[Example]
+$ useradd -m derp -G sudo -s /bin/sh            : Create user 'derp' part of group sudo, using the /bin/sh shell
+$ passwd derp                                   : Change password of 'derp'
+$ sudo deluser --remove-home derp               : Removes user 'derp'
+$ sudo su - [username]                          : Use root pw to pretend being another user, using their environment variables 
+                                                  Remember to exit when done
+$ sudo usermod -a -G [groupname] [username]     : Add [username] to group [groupname]
+$ groups [username]                             : View the groups that [username] is part of
+$ chgrp [group] [file]                          : Alter the group ownership of that directory/file
+$ chown [user] [file]                           : Change ownership of file to specified user
+$ chown :[group] [file]                         : Change ownership of file to specified group
+$ chown [user]:[group] [file]                   : Change ownership of file for both user and group
+
+There is a utility called 'Access Control List'
+which can be used to set permissions on files
+for different users. In order to access the
+commands, ACL must be enabled when the
+filesystem is mounted.
+
+setfacl                                         : Setting the ACL status of a file
+getfacl                                         : Getting the ACL status of a file
+
+[Example]
+$ setfacl -m u:username:rwx filename            : -m option, modify permission, for username, to rwx, on file filename
+$ getfacl temp.txt                              :
+
+To see whether the ACL status is available on an
+ext4 file system use the 'tune2fs -l' command,
+to view the implemented mount options.
+
+[Example]
+mount -t ext3 -o acl [device-name] [partition]
+$ mount -t ext3 -o acl /dev/folderA/folderAA /work
+
 
 ╔==============================================╗
 ║          Packages and installations          ║
@@ -1042,6 +1070,7 @@ $ ./configure
 $ make
 $ sudo make install
 
+
 ╔==============================================╗
 ║                  Networking                  ║
 ╚==============================================╝
@@ -1049,7 +1078,15 @@ Commands related to networks.
 
 Commands                                         Description
 ------------------------------------------------|---------------
+ssh-keygen                                      : OpenSSH authentication key utility
+        -t [key-type]                           - dsa, ecdsa, ecdsa-sk, ed25519, ed25519-sk, rsa
+        -C [comment]                            - Provides a comment to the generated keys
+        -b [bits]                               - Number of bits in the key, there are some standard values
 ssh                                             : OpenSSH remote login client, remote access to a host
+        -p [port]                               - Specify port number
+        -L [...]                                - Multiple syntax options, used for specifying connection and setting up tunnels
+        -f                                      - ssh is sent to the background. (See paragraph about 'Job control')
+        -N                                      - Do not execute a remote commands. This is useful for just forwarding ports.
 netstat                                         : Printing network connections, routing tables, interface statistics,
                                                   masquerade connections, and multicast memberships
 ss                                              : Another utility to investigate sockets
@@ -1103,6 +1140,16 @@ file located at /etc/ssh/sshd_config:
 | PasswordAuthentification yes                  :
 | PermitRootLogin no                            :
 
+[Example key-generation]                         Description
+------------------------------------------------|---------------
+ssh-keygen -t rsa -b 4096 -C user@email.com     - Creates a private/public key-pair.
+                                                  It will be placed at $HOME/.ssh/
+                                                  The file for the public key will be called "id_rsa.pub"
+                                                  The file for the private key will be called "id_rsa"
+                                                  It is recommended to hit the enter key, without adding
+                                                  additional information (aka do not set a password unless
+                                                  you're sure to remember it).                                                  
+
 [Firewall example]
 ------------------------------------------------|---------------
 $ sudo ufw status                               : Show status of firewall and ufw managed rules
@@ -1117,8 +1164,9 @@ $ ip addr show                                  : View all loaded network interf
 $ ip monitor
 $ ip route                                      : Show the routing table (includes default gateway)
 $ traceroute yahoo.com                          : Display a traceroute to yahoo.com with 2 sec 
-$ netstat -antu                                 : Display the active network connections: all connections, don't resolve host names,
-                                                  meaning that port 80 isn't translated to http, display TCP and UDP connections
+$ netstat -antu                                 : Display the active network connections: all connections, don't resolve host
+                                                  names, meaning that port 80 isn't translated to http, display TCP and UDP
+                                                  connections.
 
 For RHEL systems, check file:
 /etc/sysconfig/network-scripts/ifcfg-eth0
@@ -1150,193 +1198,6 @@ The host file is located at
 On the website someoneonewhocares.org is an
 interesting host file you can use.
 
-╔==============================================╗
-║                   VARIABLES                  ║
-╚==============================================╝
-For a complete list of variables, use command
-$ echo $<tab><tab>                              : Two tabs, for an auto complete
-
-Some usefull variable names                      Description
-------------------------------------------------|---------------
-$HOME                                           : Home directory
-                                                  It is your current working directory each time you log in
-                                                  or type the cd command with any option.
-$PATH                                           : OS variable path.
-                                                  It is a colon-separated list of directories used to.
-                                                  find commands that you type.
-$OSTYPE                                         : This name identifies the current Operating System type.
-$PWD                                            : Print working directory.
-$BASH_VERSION                                   : Represents the current bash version.
-$USER                                           : Abbreviation of the username, this is a system variable.
-$PS1                                            : Where the bash shell formatting is stored, i.e. format and colors.
-                                                  There is a paragraph dedidacted to this called "Setting your prompt".
-
-These are used in programming (and herefore
-NOT the commmand line)
-stdin                                           : Standard input (console), where the program reads from. (0)
-                                                - File descriptor 0
-stdout                                          : Standard output (console/screen) where the info will be displayed.
-                                                - File descriptor 1
-stderr                                          : Standard error, using file descriptor #2, usually writes to console.
-                                                - File descriptor 2
-
-╔==============================================╗
-║           FUNCTIONS-(NOT COMMANDS)           ║
-╚==============================================╝
-
-Navigate command history                         Description
-------------------------------------------------|---------------
-[arrow up]                                      : Display previous command.
-[arrow down]                                    : Display next command.
-[ctrl + R]                                      : Reverse search of command history
-[ctrl + Q]                                      : Exit reverse search of command history, without activating command.
-
-
-Expressions                                      Description
-------------------------------------------------|---------------
-$[expression]                                   : Arithmetic expression, direct.
-$((expression))                                 : Arithmetic expression, direct.
-$(expression)                                   : Arithmetic expression, via function.
-
-[Example]
-$ echo "Derp $[56 - 43]"                        : Echoes "Derp 13" in the console.
-$ echo $[56 - 43]                               : Echoes "13" in the console.
-$ echo "Derp $((3+4*2))"                        : Echoes "Derp 11" in the console.
-$ echo $((3+4*2))                               : Echoes "11" in the console.
-$ echo "Derp $(ls | wc -w)"                     : The content of ls is piped to word count command that prints
-                                                  the number of words in the folder.
-
-|                                               : Pipeline character, Special circumstance(!!!).
-                                                  This character is used to send the output of one command, to another command
-                                                 
-                                                  
-<('content')                                    : A method to condense the input, and use it as an argument.
-./[filename]                                    : Running an executable file (compiled file, or shell file).
-
-[Example]
-$ history | less                                : Will show the history using the 'less' format
-$ history | grep derp                           : Will search the history and 
-$ diff <(wc file1) <(wc file2)                  : Compare at the difference between the word count of 2 files
-
-Wildcard types:                                  Description
-------------------------------------------------|---------------
-*                                               : Used as a wildcard for an string of undetermined length
-?                                               : Used a wildcard for a single character in strings.
-.                                               : Used a wildcard for a single character in strings.
-[...]                                           : Matches any one of the characters between the brackets, which can
-                                                  include a hyphen separated range of letters or numbers.
-                                                  Used for pattern matching, case sensitive.
-{...}                                           : Pattern generation, strings are separated by comma, numbers by 2 dots (..)
-[set]                                           : Any single character in the given set, most commonly a sequence of characters,
-                                                  like [aeiouAEIOU] for all vowels, or a range with a dash, like [A-Z] for all
-                                                  capital letters.
-[^set]                                          : Any single character NOT in the given set, such as [^0-9] to exclude any
-                                                  digits.
-[!set]                                          : Same as [^set]
-
-[Examples]
-$ touch derp{1..4}                              : Creates 4 files, derp1, derp2, derp3, derp4
-$ touch derp{ty,ti}                             : Creates 2 files names derpty and derpti
-$ rm derp*                                      : Remove all files starting with the name "derp"
-$ ls [0A]*                                      : List all files starting with 0 or A
-$ ls ?[2A]*                                     : List all files where the 2nd character is either '2' or 'A'
-$ sudo dmidecode | grep -A20 '^System Information'
-						: Display 20 lines, starting from the line 'System Information'
-
-Boolean operators                                Description
-------------------------------------------------|---------------
-;                                               : Combining commands to be run in a sequence
-&&                                              : Run a sequence of commands, but stop execution if any of them fails,
-||                                              : Run a sequence of commands, but stop when the first command is true
-
-[Examples]
-$ command1 && command2 && command3              : Execute command1, then command2, then command3
-$ cd .. ; cd folder1/                           : Move up 1 directory, then move back down into another directory
-$ apt-get update || echo "Derped out"           : Without root access, this will derp out.
-
-!!                                              : Rerun previous command
-!*                                              : Last parameter from previous command
-!?[string]?                                     : Reruns a previous command, containing the [string]
-
-[Examples]
-$ !?cal?                                        : Reruns a previous command containing 'cal' if found
-$ sudo !!                                       : Redo last command as root user
-$ ls z* && rm !*                                : Here '!*' is treated as 'z*', so first we list all files starting with z,
-                                                  Then delete those files
-
-clear                                           : Clears the bash terminal of text
-exit                                            : Terminates current access (Super User, bash, cmd, ...)
-logout                                          : Logs out, but recommended to use 'exit' instead.
---                                              : "end of options", meaning that anything shown after that option will be
-                                                  disregarded.
-
->> [filename]                                   : Append into the file (add at the end of the file)
-> [filename]                                    : Save content into file
-<                                               : Directs the standard output of a command to a file. If the file exists,
-                                                  the content of that file is overwritten
-2>                                              : Directs standard error(error messages) to the file.
-&>                                              : Directs both standard output and standard error to the file
-2>&1                                            : Appends stderr to stdout
-$?                                              : Returns the error code from the previous command or executed program
-
-[Examples]
-$ ./derp >> derpy.txt                           - Will send the content from the compiled program (derp) to be
-                                                  appended in the file 'derpy.txt' rather than shown on the console.
-$ ./derp > derpy.txt                            - Will send the content from the compiled program (derp) to 
-                                                  overwrite content of file 'derpy.txt' rather than shown on the console.
-$ ./derp 2> /dev/null                           - Display normal messages (stdout) on the screen, but error messages (stderr) are
-                                                  discarded
-$ ./derp 1> /dev/null                           - Only display error messages, since normal messages (stdout) are discarded 
-$ ./derp 2>&1                                   - stderr messages are appended to the stdout messages
-
-There is also a command called 'expr' which can
-do basic math calculations, and regex.
-
-[Examples]
-$ expr 324 - 5123                               : Output -4799
-$ expr length 32094ij+NJIfe3#¤                  : Output 16
-
-╔==============================================╗
-║            Command line shortcuts            ║
-╚==============================================╝
-How to navigate the command console.
-Mostly useful commands pasted first.
-Rest unsorted.
-
-Shortcut                                         Description
-------------------------------------------------|---------------
-[ctrl + C]                                      : Kills a command, if a command is continuously running (example: htop).
-[ctrl + D]                                      : Terminate command window. (same as exit)
-[ctrl + A]                                      : Beginning of line, go to the beginning of the current line.
-[ctrl + E]                                      : End of line, go to the end of the line.
-[ctrl + L]                                      : Clears the bash terminal of text.
-[alt + .]                                       : Paste the argument from the previous command
-
-[ctrl + K]                                      : Cut end of line, cut text to the end of the line.
-[ctrl + U]                                      : Cut beginning of line, cut text to the beginning of the line.
-[ctrl + R]                                      : Reverse search of command history
-[ctrl + Q]                                      : Exit reverse search of command history, without activating command.
-
-[ctrl + F]                                      : Character forward, go forward one character.
-[ctrl + B]                                      : Character backward, aka. go backward one character.
-[ctrl + D]                                      : Delete the current character (aka 'delete' key).
-[ctrl + T]                                      : Transpose words, switch positions of current and previous characters.
-[ctrl + V]                                      : Insert special character, add a special character.
-                                                - For example, to add a Tab character, press [Ctrl+V+Tab].
-[ctrl + W]                                      : Cut previous word, cut the word located behind the cursor.
-[ctrl + Y]                                      : Paste recent text, paste most recently cut text.
-[alt + Y]                                       : Paste earlier text, rotate back to previously cut text and paste it.
-
-[alt + F]                                       : Word forward, go forward one word
-[alt + B]                                       : Word backward, go backward one word
-[alt + T]                                       : Transpose words, switch positions of current and previous character
-[alt + U]                                       : Uppercase word, change the current word to upper case
-[alt + L]                                       : Lowercase word, change the current word to lower case
-[alt + C]                                       : Change the current word to an initial capital
-[alt + D]                                       : Cut the word following the cursor
-[alt + 1]                                       : Access the 1st argument from the previous command
-[alt + 2]                                       : Access the 2nd argument from the previous command
-...                                             : And so on
 
 ╔==============================================╗
 ║                   HARDWARE                   ║
@@ -1360,17 +1221,26 @@ lsblk                                           : List block devices
 lspci                                           : List all PCI devices
 lsusb                                           : List all USB devices
 lscpu                                           : List all PCU devices
-lsmod                                           : Show the status of modules in the Linux kernel
 lshw                                            : List hardware (warning, should be run as a super user)
-modinfo                                         : Show information about a Linux Kernel module
-rmmod                                           : Simple program to remove a module from the linux Kernel
-modprobe                                        : Add and remove modules from the Linux Kernel
-mount                                           :
+mount                                           : Mount a file system
 umount                                          : Unmount file systems   
 eject                                           : Used to eject USB/DVD and similarly mountable drives
 
 [Example]
 $ lscpu | grep cache                            : Display cache levels for the CPU
+
+Kernel related                                   Description
+------------------------------------------------|---------------
+lsmod                                           : Show the status of modules in the Linux kernel
+insmod                                          : Install al specific module
+modinfo                                         : Show information about a Linux Kernel module
+modprobe                                        : Add and remove modules from the Linux Kernel
+rmmod                                           : Simple program to remove a module from the linux Kernel
+
+[Example]
+$ tail -f /var/kernel/kern.log                  : View the kernel log file in realtime
+$ insmod somefile.ko                            : In a new terminal, insert the new module. (.ko means 'kernel object')
+$ rmmod somefile                                : Remove the file from the kernel
 
 Hard drives, can be divided into several
 partitions, each with their own file system.
@@ -1450,6 +1320,211 @@ lpr                                             : Print a file.
         -a                                      - List the queue for all printers
 lpq                                             : View the print queue.
 lprm                                            : Remove a print job from the queue
+
+
+╔==============================================╗
+║                   VARIABLES                  ║
+╚==============================================╝
+For a complete list of variables, use command
+$ echo $<tab><tab>                              : Two tabs, for an auto complete
+
+Some usefull variable names                      Description
+------------------------------------------------|---------------
+$HOME                                           : Home directory
+                                                  It is your current working directory each time you log in
+                                                  or type the cd command with any option.
+$PATH                                           : OS variable path.
+                                                  It is a colon-separated list of directories used to.
+                                                  find commands that you type.
+$OSTYPE                                         : This name identifies the current Operating System type.
+$PWD                                            : Print working directory.
+$BASH_VERSION                                   : Represents the current bash version.
+$USER                                           : Abbreviation of the username, this is a system variable.
+$PS1                                            : Where the bash shell formatting is stored, i.e. format and colors.
+                                                  There is a paragraph dedidacted to this called "Setting your prompt".
+$UID                                            : ID of the user executing a command
+$EUID                                           : ID of the end user, executing a command.
+
+These are used in programming (and herefore
+NOT the commmand line)
+stdin                                           : Standard input (console), where the program reads from. (0)
+                                                - File descriptor 0
+stdout                                          : Standard output (console/screen) where the info will be displayed.
+                                                - File descriptor 1
+stderr                                          : Standard error, using file descriptor #2, usually writes to console.
+                                                - File descriptor 2
+
+
+╔==============================================╗
+║           FUNCTIONS-(NOT COMMANDS)           ║
+╚==============================================╝
+Some tips about: format, regex, syntax, boolean,
+history-command, output redirection.
+
+Navigate command history                         Description
+------------------------------------------------|---------------
+[arrow up]                                      : Display previous command.
+[arrow down]                                    : Display next command.
+[ctrl + R]                                      : Reverse search of command history
+[ctrl + Q]                                      : Exit reverse search of command history, without activating command.
+
+
+Expressions                                      Description
+------------------------------------------------|---------------
+$[expression]                                   : Arithmetic expression, direct.
+$((expression))                                 : Arithmetic expression, direct.
+$(expression)                                   : Arithmetic expression, via function.
+
+[Example]
+$ echo "Derp $[56 - 43]"                        : Echoes "Derp 13" in the console.
+$ echo $[56 - 43]                               : Echoes "13" in the console.
+$ echo "Derp $((3+4*2))"                        : Echoes "Derp 11" in the console.
+$ echo $((3+4*2))                               : Echoes "11" in the console.
+$ echo "Derp $(ls | wc -w)"                     : The content of ls is piped to word count command that prints
+                                                  the number of words in the folder.
+
+|                                               : Pipeline character, Special circumstance(!!!).
+                                                  This character is used to send the output of one command, to another command
+                                                 
+                                                  
+<('content')                                    : A method to condense the input, and use it as an argument.
+./[filename]                                    : Running an executable file (compiled file, or shell file).
+
+[Example]
+$ history | less                                : Will show the history using the 'less' format
+$ history | grep derp                           : Will search the history and 
+$ diff <(wc file1) <(wc file2)                  : Compare at the difference between the word count of 2 files
+
+Regular expression (regex)                       Description
+------------------------------------------------|---------------
+*                                               : Used as a wildcard for an string of undetermined length
+?                                               : Used a wildcard for a single character in strings.
+.                                               : Used a wildcard for a single character in strings.
+[...]                                           : Matches any one of the characters between the brackets, which can
+                                                  include a hyphen separated range of letters or numbers.
+                                                  Used for pattern matching, case sensitive.
+{...}                                           : Pattern generation, strings are separated by comma, numbers by 2 dots (..)
+[set]                                           : Any single character in the given set, most commonly a sequence of characters,
+                                                  like [aeiouAEIOU] for all vowels, or a range with a dash, like [A-Z] for all
+                                                  capital letters.
+[^set]                                          : Any single character NOT in the given set, such as [^0-9] to exclude any
+                                                  digits.
+[!set]                                          : Same as [^set]
+
+
+[Examples]
+$ touch derp{1..4}                              : Creates 4 files, derp1, derp2, derp3, derp4
+$ touch derp{ty,ti}                             : Creates 2 files names derpty and derpti
+$ rm derp*                                      : Remove all files starting with the name "derp"
+$ ls [0A]*                                      : List all files starting with 0 or A
+$ ls ?[2A]*                                     : List all files where the 2nd character is either '2' or 'A'
+$ sudo dmidecode | grep -A20 '^System Information'
+                                                : Display 20 lines, starting from the line 'System Information'
+$ echo .[!.]*                                   : Display all files starting with dot, where the second character is not a dot.
+$ echo *                                        : Substitute for command 'ls'
+
+
+Boolean operators                                Description
+------------------------------------------------|---------------
+;                                               : Combining commands to be run in a sequence
+&&                                              : Run a sequence of commands, but stop execution if any of them fails,
+||                                              : Run a sequence of commands, but stop when the first command is true
+
+[Examples]
+$ command1 && command2 && command3              : Execute command1, then command2, then command3
+$ cd .. ; cd folder1/                           : Move up 1 directory, then move back down into another directory
+$ apt-get update || echo "Derped out"           : Without root access, this will derp out.
+
+!!                                              : Rerun previous command
+!*                                              : Last parameter from previous command
+!?[string]?                                     : Reruns a previous command, containing the [string]
+
+[Examples]
+$ !?cal?                                        : Reruns a previous command containing 'cal' if found
+$ sudo !!                                       : Redo last command as root user
+$ ls z* && rm !*                                : Here '!*' is treated as 'z*', so first we list all files starting with z,
+                                                  Then delete those files
+
+clear                                           : Clears the bash terminal of text
+exit                                            : Terminates current access (Super User, bash, cmd, ...)
+logout                                          : Logs out, but recommended to use 'exit' instead.
+--                                              : "end of options", meaning that anything shown after that option will be
+                                                  disregarded.
+
+>> [filename]                                   : Append into the file (add at the end of the file)
+> [filename]                                    : Save content into file
+<                                               : Directs the standard output of a command to a file. If the file exists,
+                                                  the content of that file is overwritten
+2>                                              : Directs standard error(error messages) to the file.
+&>                                              : Directs both standard output and standard error to the file
+2>&1                                            : Appends stderr to stdout
+$?                                              : Returns the error code from the previous command or executed program
+
+[Examples]
+$ ./derp >> derpy.txt                           - Will send the content from the compiled program (derp) to be
+                                                  appended in the file 'derpy.txt' rather than shown on the console.
+$ ./derp > derpy.txt                            - Will send the content from the compiled program (derp) to 
+                                                  overwrite content of file 'derpy.txt' rather than shown on the console.
+$ ./derp 2> /dev/null                           - Display normal messages (stdout) on the screen, but error messages (stderr) are
+                                                  discarded
+$ ./derp 1> /dev/null                           - Only display error messages, since normal messages (stdout) are discarded 
+$ ./derp 2>&1                                   - stderr messages are appended to the stdout messages
+
+
+Math                                             Description
+------------------------------------------------|---------------
+expr                                            : Evaluate expressions
+bc                                              : An arbitrary precision calculator language
+
+[Example]
+$ expr 324 - 5123                               : Output -4799
+$ expr length 32094ij+NJIfe3#¤                  : Output 16
+$ echo "3.8 + 0.1" | bc
+$ echo "9 / 5" | bc
+
+
+╔==============================================╗
+║            Command line shortcuts            ║
+╚==============================================╝
+How to navigate the command console.
+Mostly useful commands pasted first.
+Rest unsorted.
+
+Shortcut                                         Description
+------------------------------------------------|---------------
+[ctrl + C]                                      : Kills a command, if a command is continuously running (example: htop).
+[ctrl + D]                                      : Terminate command window. (same as exit)
+[ctrl + A]                                      : Beginning of line, go to the beginning of the current line.
+[ctrl + E]                                      : End of line, go to the end of the line.
+[ctrl + L]                                      : Clears the bash terminal of text.
+[alt + .]                                       : Paste the argument from the previous command
+
+[ctrl + K]                                      : Cut end of line, cut text to the end of the line.
+[ctrl + U]                                      : Cut beginning of line, cut text to the beginning of the line.
+[ctrl + R]                                      : Reverse search of command history
+[ctrl + Q]                                      : Exit reverse search of command history, without activating command.
+
+[ctrl + F]                                      : Character forward, go forward one character.
+[ctrl + B]                                      : Character backward, aka. go backward one character.
+[ctrl + D]                                      : Delete the current character (aka 'delete' key).
+[ctrl + T]                                      : Transpose words, switch positions of current and previous characters.
+[ctrl + V]                                      : Insert special character, add a special character.
+                                                - For example, to add a Tab character, press [Ctrl+V+Tab].
+[ctrl + W]                                      : Cut previous word, cut the word located behind the cursor.
+[ctrl + Y]                                      : Paste recent text, paste most recently cut text.
+[alt + Y]                                       : Paste earlier text, rotate back to previously cut text and paste it.
+
+[alt + F]                                       : Word forward, go forward one word
+[alt + B]                                       : Word backward, go backward one word
+[alt + T]                                       : Transpose words, switch positions of current and previous character
+[alt + U]                                       : Uppercase word, change the current word to upper case
+[alt + L]                                       : Lowercase word, change the current word to lower case
+[alt + C]                                       : Change the current word to an initial capital
+[alt + D]                                       : Cut the word following the cursor
+[alt + 1]                                       : Access the 1st argument from the previous command
+[alt + 2]                                       : Access the 2nd argument from the previous command
+...                                             : And so on
+
 
 ╔==============================================╗
 ║                 VIM tutorial                 ║
@@ -1591,6 +1666,7 @@ If you want an interactive tutorial use the
 command: "vimtutor"
 $vimtutor
 
+
 ╔==============================================╗
 ║                 Uncategorized                ║
 ╚==============================================╝
@@ -1655,9 +1731,11 @@ $ objdump -d <binary_name>
 $ ssh-keygen -t rsa -b 4096                     : Creating a 4096 bit RSA public key, to be stored in
                                                   /home/user/.ssh/id_rsa.pub
                                                 - The '-t' option refers to the type of key to generate, RSA is the most common.
-                                                  Could also have been other types such as: dsa, ecdsa, ecdsa-sk, ed25519, ed25519-sk  
+                                                  Could also have been other types such as: dsa, ecdsa, ecdsa-sk, ed25519
+                                                  ed25519-sk
                                                 - The '-b' option refers to the bit length. Minimum is 1024 default is 3072 bits.
-[DTU specific]
+
+[Start DTU specific]
 Details for accessing the LSF 10 cluster on DTU
 via a linux terminal
 http://www.cc.dtu.dk/?page_id=2501
@@ -1679,6 +1757,7 @@ $ bsub < example.sh
 To look at the job queue, use the command
 'bjobs'
 [DTU end]
+
 
 ╔==============================================╗
 ║                  References                  ║
@@ -1707,7 +1786,6 @@ Sources:
 - https://vim.rtorr.com/                        : VIM shortcuts
 - http://samrowe.com/wordpress/advancing-in-the-bash-shell/
                                                 : Details concerning the use of colon (:) operators for arguments
-
 
 
 ╔==============================================================================╗
@@ -1809,6 +1887,7 @@ alter how command line editing works with set.
 $ set -o emacs                                  : Use emacs editing style
 $ set -o vi                                     : Use vi editing style
 
+
 ╔==============================================╗
 ║              Setting your prompt             ║
 ╚==============================================╝
@@ -1875,6 +1954,7 @@ If you want to try this in practice, login to
 the LSF 10 cluster on DTU, and change the PS1
 variable, in the .bashrc file.
 
+
 ╔==============================================╗
 ║         Adding environment variables         ║
 ╚==============================================╝
@@ -1933,6 +2013,7 @@ $ vi $DERP/troll
 The 'export' command is a built-in command of
 the Bash shell. It is used to mark variables and
 functions to be passed to child processes.
+
 
 ╔==============================================╗
 ║                  Job control                 ║
@@ -2046,6 +2127,7 @@ $ jobs -l
 And for good measure, we clean up the background.
 $ disown -a
 
+
 ╔==============================================╗
 ║                Managing groups               ║
 ╚==============================================╝
@@ -2069,6 +2151,7 @@ Then open the cockpit interface via the web
 browser. In the address field, type in:
 (hostname:9090)
 From there you can manage accounts.
+
 
 ╔==============================================╗
 ║                Shell scripting               ║
@@ -2228,7 +2311,6 @@ read [VARIABLE]                                 :
 echo
 
 
-
 ╔==============================================╗
 ║                 System calls                 ║
 ╚==============================================╝
@@ -2350,12 +2432,12 @@ Windows has close to 2000, (divided between
 'Plan 9' has 51.
 No details about Mac.
 
+
 ╔==============================================╗
 ║               Common knowledge               ║
 ╚==============================================╝
 Some common programs or tools on Linux, used for
 specific purposes.
-
 
 Server types
 ------------------------------------------------|---------------
@@ -2443,6 +2525,7 @@ $ nslookup -query=hinfo  -timeout=10 [website]  : Generates a query, using the h
 $ nslookup dtu.dk google.com                    : Here we send our query to google.com which will query dtu.dk on our behalf
                                                   and then google will provide us with the result.
 
+
 ╔==============================================╗
 ║                     tmux                     ║
 ╚==============================================╝
@@ -2502,6 +2585,7 @@ $ tmux -S /tmp/shareds attach -t [sessionname]  : Simply replace [sessionname] w
 Remember to log out with
 [Ctrl + b] + [d]
 
+
 ╔==============================================╗
 ║                     cron                     ║
 ╚==============================================╝
@@ -2554,6 +2638,7 @@ Configuration operator                           Description
 * 1 6,17,28 * * $home/derpscript.sh             : Run at 1 am, on date 6, 17 and 28 of every month.
 * 1 1-7 * 0 ps aux >> $home/log.txt             : Run on at 1 am, on the first Sunday of every month
 
+
 ╔==============================================╗
 ║                  Table: 1.0                  ║
 ╚==============================================╝
@@ -2599,6 +2684,7 @@ X Window system                                 : An open source, cross platform
                                                   provides a GUI in a distributed network environment.
                                                 - (client server architecture)
 
+
 ╔==============================================╗
 ║                  Table: 1.1                  ║
 ╚==============================================╝
@@ -2629,6 +2715,7 @@ File                                             Description
                                                   aliases so that your shell picks them up.
 ~/.bash_logout                                  : This executes each time you log out. (exit the last bash
                                                   shell)
+
 
 ╔==============================================╗
 ║                  Table: 1.2                  ║
@@ -2665,6 +2752,7 @@ Special character                                Description
 \u                                              : This prints your current username
 \w                                              : This displays the full path to the current working directory
 
+
 ╔==============================================╗
 ║                  Table: 1.3                  ║
 ╚==============================================╝
@@ -2698,6 +2786,7 @@ Number  Type                                     Description
 8       System administration commands          : Commands that require root or other administrative privileges to use
         - Tools and Daemons
 9       Kernel routines                         : Non standard
+
 
 ╔==============================================╗
 ║                  Table: 1.4                  ║
@@ -2789,6 +2878,7 @@ Directory                                        Description
 /var/spool                                      : Spooling (that is, storage) directories for printers, mail, etc.
 /var/tmp                                        : More temporary space (preserved between reboots)
 
+
 ╔==============================================╗
 ║                  Table: 1.5                  ║
 ╚==============================================╝
@@ -2869,6 +2959,7 @@ SIGRTMAX-2      62                              :
 SIGRTMAX-1      63                              :
 SIGRTMAX        64                              :
 
+
 ╔==============================================╗
 ║                  Table: 1.6                  ║
 ╚==============================================╝
@@ -2899,6 +2990,7 @@ Name spaces (ns)                                : Separates cgroups into namespa
                                                   see the namespaces associated with the cgroup. Namespaces can include
                                                   separate process tables, mount tables, and network interfaces.
 
+
 ╔==============================================╗
 ║                  Table: 1.7                  ║
 ╚==============================================╝
@@ -2907,7 +2999,18 @@ Operators for test expressions(Shell scripting)
 Shell scripting if/else statements operators.
 These can be found using the bash command:
 $ help test
-Operator                                         What is being tested
+
+There are 5 basic categories of operators in
+bash/shell scripting:
+Types                                            Description
+------------------------------------------------|---------------
+Arithmetic                                      : Mathematical
+Relational                                      :
+Boolean                                         :
+Bitwise                                         :
+File test                                       :
+
+Fil Operator                                     What is being tested
 ------------------------------------------------|---------------
 -a file                                         : Does the file exist?
 -b file                                         : Is the file a block special device?
@@ -2921,7 +3024,6 @@ Operator                                         What is being tested
 -h file                                         : Is the file a symbolic link? (Same as -L)
 -k file                                         : Does the file have the sticky bit set?
 -L file                                         : Is the file a symbolic link?
--n string                                       : Is the length of the string greater than 0 bytes?
 -O file                                         : Do you own the file?
 -p file                                         : Is the file a named pipe?
 -r file                                         : Is the file readably by you?
@@ -2931,22 +3033,33 @@ Operator                                         What is being tested
 -u file                                         : Does the file have the set user id(SUID) bit set?
 -w file                                         : Is the file writable by you?
 -x file                                         : Is the file executable by you?
--z string                                       : Is the length of the string 0 (zero) bytes?
-expr1 -a expr2                                  : Are both the first expression and the second expression true?
-expr1 -o expr2                                  : Is either of the two expressions true?
+-O                                              : True if the file is effectively owned by you
+-G                                              : True if the file is effectively owned by your group.
+-N                                              : True if the file has been modified since it was last read
 file1 -nt file2                                 : Is the first file newer than the second file (using the modification time
                                                   stamp)?
 file1 -ot file2                                 : Is the first file older than the second file (using the modification time
                                                   stamp)?
 file1 -ef file2                                 : Are the two files associated by a link (a hard link or a symbolic link)?
-var1 = var2                                     : Is the first variable equal to the second variable?
+
+
+expr1 -a expr2                                  : Are both the first expression and the second expression true?
+expr1 -o expr2                                  : Is either of the two expressions true?
 var1 -eq var2                                   : Is the first variable equal to the second variable?
 var1 -ge var2                                   : Is the first variable greater than or equal to the second variable?
 var1 -gt var2                                   : Is the first variable greater than the second variable?
 var1 -le var2                                   : Is the first variable less than the second variable?
 var1 -lt var2                                   : Is the first variable not equal to the second variable?
-var1 != var2                                    : Is the first variable not equal to the second variable?
 var1 -ne var2                                   : Is the firat variable not equal to the second variable?
+
+String                                           What is being tested
+------------------------------------------------|---------------
+-n string                                       : Is the length of the string greater than 0 bytes?
+-z string                                       : Is the length of the string 0 (zero) bytes?
+string1 == string2                              : Is the first variable equal to the second variable?
+string1 = string1                               : Is the first variable equal to the second variable?
+string1 != string2                              : Is the first variable not equal to the second variable?
+
 
 A lot of additional operators for commands can
 be found in the manual for bash.
@@ -3004,6 +3117,7 @@ read operators                                   Description
 -u                                              : File descriptor (fd)
                                                 - Read input from file descriptor fd.
 
+
 ╔==============================================╗
 ║                  Table: 1.8                  ║
 ╚==============================================╝
@@ -3019,15 +3133,9 @@ File and location                                Description
 $HOME/.bashrc                                   : This is a shell script that is run whenever a user start a new terminal
                                                   as such, it is a good place to configure your personal shell expericence
                                                   such as prompt, additional aliases, and settings for the terminal
-$HOME/.bash_profile                             : This is a configuration file
+$HOME/.bash_profile                             : This is a configuration file found on MAC
 $HOME/.bash_history                             :
 $HOME/.viminfo                                  :
-
-.login ... ?
-.logout ... ?
-.profile ... /etc/profile
-.wm_style ... ?
-
 /boot/vmlinuz                                   : The Linux kernel file.  File naming conventions may include release
                                                   information
 /dev/fd0                                        : Device file for the first floppy disk drive on the system
@@ -3062,6 +3170,7 @@ $HOME/.viminfo                                  :
 /etc/motd                                       : This is the ?message of the day? file which is printed upon login. It can be
                                                   overwritten by /etc/rc.d/rc.local Red Hat on startup.
 /etc/mtab                                       : Status information for currently mounted devices and partitions
+/etc/os-release                                 : Contains information about the Operating System
 /etc/passwd                                     : Contains information regarding registered system users. Passwords are typically
                                                   kept in a shadow file for better security.
 /etc/printcap                                   : Holds printer setup information
@@ -3086,6 +3195,8 @@ $HOME/.viminfo                                  :
 /var/log/messages                               : Contains messages produced by the syslog daemon during the boot process
 /var/log/wtmp                                   : A binary data file holding login time and duration for each user currently on
                                                   the system
+
+
 ╔==============================================╗
 ║                  References                  ║
 ╚==============================================╝
