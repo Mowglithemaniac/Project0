@@ -1,9 +1,9 @@
 ╔==============================================================================╗
 ║Name        : Bash commands.txt                                               ║
 ║Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID)          ║
-║Version     : 2.14.00                                                         ║
+║Version     : 2.14.01                                                         ║
 ║Date        : 29/09-20                                                        ║
-║Last Updated: 15/03-22                                                        ║
+║Last Updated: 18/03-22                                                        ║
 ║Copyright   : Do not alter, this file without permission                      ║
 ║              For non commercial use only.                                    ║
 ║Licence     : CC BY-NC-ND                                                     ║
@@ -150,6 +150,7 @@ something '>>' filename                         : Append content to file named f
 something '>' filename                          : Overwrite content of file named filename
                                                   These are great options for pasting output into log files,
                                                   when writing and testing C-programs.
+
 [Example]
 echo yolo > derpy.txt                           : Overwrites the content of file derpy.txt "yolo"
 echo yolo >> derpy.txt                          : Append "yolo" to the content of file derpy.txt
@@ -243,6 +244,8 @@ find                                            : Search for files in a director
                                                   must match the given regular expression.
         -type [f,d,l,b,c,p,s]                   : Only specific types of files
 type [command]                                  : Display information about commands, such as shell built-in, location, alias
+                                                  Important to note that built-in commands to not have a manual page, instead
+                                                  use the command 'help' followed by the command name.
         -a                                      - Display all instances of where the command is located
 locate [detail]                                 : Locates a detail on the computer
 compgen [Operator] [word]                       : Display possible completions depending on the operator
@@ -264,8 +267,11 @@ $ compgen -c gr                                 - List commands starting with 'g
 $ compgen -c | sort                             - List all commands sorted alphabetically
 $ tldr man                                      - Displa a few common command options for man
 $ info                                          - Info reader documentation (type 'q' to quit)
+$ find . -name  "*.txt"                         : Find all files who end with a '.txt' format , starting from the current
+                                                  directory and recursively look through all sub directories.
+$ find / -perm -u=s -type f 2>/dev/null         : Find all files with the SUID bit set, and discard all errors.
 
-Commands include a help method, referenced
+Most commands include a help method, referenced
 [command] --help
 
 [Examples]
@@ -360,10 +366,8 @@ nice                                            : Run a program with modified sc
 renice                                          : Alter the 'niceness' priority of a running processes.
 gcc                                             : Compile program from c language.
         -o                                      - Output, next argument will be the created filename
-whois                                           : shows some whois data about a website or ip
-        [ip or website]
+whois   [ip or website]                         : shows some whois data about a website or ip
         | more/less                             - Displayed using the more or less format
-
 pstree                                          : Display a tree of process
 fsck                                            : Check and repair a Linux filesystem
 parted                                          : A partition manipulation program
@@ -628,7 +632,7 @@ $ echo $PS1                                     : Prints the entire PS1 settings
 $ echo "herp derp" >> filename1.txt             : Insert "herp derp" into a file named 'filename1.txt'
                                                 - This command either appends, or creates the file if it does not exist
 $ echo -e "derp\a"                              : Prints 'derp' and should also beep
-$ printf "%s %d\n" "This many" 4                :
+$ printf "%s %d\n" "This many" 4                : Prints This many 4
 $ ps aux                                        : See all running processes
 $ ps -eo pid,user,uid,gid,vsz,rss,comm --sort=-vsz
                                                 : Showing the selected categories, sorted descending by vsz
@@ -786,6 +790,13 @@ strings                                         : Display text that's embedded i
 od [option] [filename]                          : Display a file in Octal or other formats (use option '-x' for Hex)
 
 
+[Example]
+$ tail -f /var/kernel/kern.log                  : View the kernel log file in realtime
+$ tail -n 5 somefile.txt                        : View the last 5 lines of somefile.txt
+$ tail -n +5 somefile.txt                       : View the entirety starting at line 5 from somefile.txt
+$ strings compiledcode                          : Go have a look at function names, libraries, menu strings and similar
+$ more README.txt                               : View the README file in more format.
+
 Sorting, Comparing and Searching                 Description
 ------------------------------------------------|---------------
 diff                                            : Compare files line by line
@@ -939,6 +950,7 @@ adduser                                         : Add a user to the system
 addgroup                                        : Add a group to the system
 usermod                                         : Modify a user account
 groupadd                                        : Add a new group
+groupdel                                        : Delete a group
 groups                                          : Print the groups a user is in
 deluser                                         : Deletes user, Debian based distribution, for other types, use
                                                   "userdel" command instead.
@@ -948,6 +960,11 @@ chgrp                                           : Change group ownership
         -R                                      - Recursively, to include all files and sub folders located with
                                                   the directory.
 chown                                           : Change file owner and group
+chage                                           : Change user password expiry information
+        -d                                      - Set number of days since January 1st, 1970 when the password was
+                                                  last changed, alternatively use format YYYY-MM-DD
+pwconv                                          : Creates /etc/shadow from /etc/passwd and an optionally existing shadow
+chsh                                            : Change the login shell
 
 [Example]
 $ useradd -m derp -G sudo -s /bin/sh            : Create user 'derp' part of group sudo, using the /bin/sh shell
@@ -961,6 +978,7 @@ $ chgrp [group] [file]                          : Alter the group ownership of t
 $ chown [user] [file]                           : Change ownership of file to specified user
 $ chown :[group] [file]                         : Change ownership of file to specified group
 $ chown [user]:[group] [file]                   : Change ownership of file for both user and group
+$ chage -d 0 [user]                             : 
 
 There is a utility called 'Access Control List'
 which can be used to set permissions on files
@@ -982,6 +1000,32 @@ to view the implemented mount options.
 [Example]
 mount -t ext3 -o acl [device-name] [partition]
 $ mount -t ext3 -o acl /dev/folderA/folderAA /work
+
+
+Information regarding users can be found in
+these two files
+/etc/shadow
+/etc/passwd
+Root generally has UID 0, there are 9 categories
+where colon (:) is used a delimiter
+Passwords are stored
+
+Categories for /etc/shadow                       Description
+------------------------------------------------|---------------
+
+
+Categories for /etc/passwd                       Description
+------------------------------------------------|---------------
+Login name                                      : 
+Encrypted password                              :
+Date of last password change                    : Records the time at which the users password was last changed
+                                                  This field is filled in by the passwd command
+Minimum number of days between password changes :
+Maximum number of days between password changes :
+Days for countdown warning for pass expiration  :
+Days after pass expiration that acc is disabled : 
+Account expiration date                         :
+Reserved for future use                         : This field is currently always empty
 
 
 ╔==============================================╗
@@ -1232,7 +1276,7 @@ $ lscpu | grep cache                            : Display cache levels for the C
 Kernel related                                   Description
 ------------------------------------------------|---------------
 lsmod                                           : Show the status of modules in the Linux kernel
-insmod                                          : Install al specific module
+insmod                                          : Install a specific module
 modinfo                                         : Show information about a Linux Kernel module
 modprobe                                        : Add and remove modules from the Linux Kernel
 rmmod                                           : Simple program to remove a module from the linux Kernel
@@ -1383,17 +1427,21 @@ $ echo $((3+4*2))                               : Echoes "11" in the console.
 $ echo "Derp $(ls | wc -w)"                     : The content of ls is piped to word count command that prints
                                                   the number of words in the folder.
 
-|                                               : Pipeline character, Special circumstance(!!!).
-                                                  This character is used to send the output of one command, to another command
-                                                 
-                                                  
-<('content')                                    : A method to condense the input, and use it as an argument.
+Command interpretation                           Description
+------------------------------------------------|---------------
+$([command])                                    : Command substitution, Executes a command inside another command
+                                                  Should be placed inside quotation marks to avoid word-splitting
+                                                  Also note that command is run in a subshell.
+`[command]`                                     : Backticks
+<('content')                                    : 'Process substitution' A method to condense the input, and use it as an argument.
+
 ./[filename]                                    : Running an executable file (compiled file, or shell file).
 
 [Example]
-$ history | less                                : Will show the history using the 'less' format
-$ history | grep derp                           : Will search the history and 
 $ diff <(wc file1) <(wc file2)                  : Compare at the difference between the word count of 2 files
+$ echo `echo \`echo foo\`` bar                  : Outputs foo bar
+$ echo $(ls -la)                                : This turns into a mess
+$ echo "$(ls -la)"                              : This is properly formatted
 
 Regular expression (regex)                       Description
 ------------------------------------------------|---------------
@@ -1411,7 +1459,6 @@ Regular expression (regex)                       Description
                                                   digits.
 [!set]                                          : Same as [^set]
 
-
 [Examples]
 $ touch derp{1..4}                              : Creates 4 files, derp1, derp2, derp3, derp4
 $ touch derp{ty,ti}                             : Creates 2 files names derpty and derpti
@@ -1423,6 +1470,27 @@ $ sudo dmidecode | grep -A20 '^System Information'
 $ echo .[!.]*                                   : Display all files starting with dot, where the second character is not a dot.
 $ echo *                                        : Substitute for command 'ls'
 
+Quotes and apostrophe can be used to specify how
+strings are treated, unfortunately there does
+not seem to be a unified standard of
+interpretation, and they may differ slightly
+from one use-case to another.
+POSIX format is one example                     - POSIX Portable Operating System Interface
+Single quotes can't be imbedded within double
+quotes, and vice versa.
+
+Quotes and Apostrohe                              Description
+------------------------------------------------|---------------
+""                                              : Treat content as string with options
+''                                              : Do not alter content within
+none                                            : Content subject to full 
+
+[Example]
+$ echo "$USER owe root $1 for coffee?!"          : Output declined owe root  for coffee?!
+$ echo '$USER owe root $1 for coffee?!'          : Output $USER owe root $1 for coffee?!
+$ echo $USER owe root $1 for coffee?!            : Output declined owe root for coffee?!
+$ echo declined owe root for coffee !!           : Output .... I'll let you figure that one out yourself
+$ echo "$USER won't owe root" '$1 !!'            : Output declined can't owe root $1 !!
 
 Boolean operators                                Description
 ------------------------------------------------|---------------
@@ -1451,16 +1519,30 @@ logout                                          : Logs out, but recommended to u
 --                                              : "end of options", meaning that anything shown after that option will be
                                                   disregarded.
 
+Redirection                                      Description
+------------------------------------------------|---------------
+$?                                              : Returns the error code from the previous command or executed program or command
+|                                               : Pipeline character, Special circumstance(!!!).
+                                                  This character is used to send the output of one command, to another command
 >> [filename]                                   : Append into the file (add at the end of the file)
 > [filename]                                    : Save content into file
 <                                               : Directs the standard output of a command to a file. If the file exists,
                                                   the content of that file is overwritten
 2>                                              : Directs standard error(error messages) to the file.
-&>                                              : Directs both standard output and standard error to the file
-2>&1                                            : Appends stderr to stdout
-$?                                              : Returns the error code from the previous command or executed program
+&>                                              : Encompasses both standard error and standard output. 
+>&                                              : Same as the above
+2>&1                                            : Appends stderr to stdout, place this at the end of the command
+tee                                             : This command redirects from standard imput and write to two places at once
+{ [command]; [command]; } | ...                 : Grouping commands for redirection
+([command]; [command];) | ...                   : Grouping commands for redirection, done in a subshell
+[command] << EOL ... ... EOL                    : EOL stands for End of Line, using this option has a very different syntax
+                                                  Usefull when making lists on different lines
+[command] << 'EOL' ... ... EOL                  : Alternate syntax that ensures that each line is treated as a string
+[command] <<- EOL [tab]... [tab]... EOL         : Used for stripping leading tabs in the lines
 
 [Examples]
+$ history | less                                : Will show the history using the 'less' format
+$ history | grep derp                           : Will search the history and display the commands that contain derp
 $ ./derp >> derpy.txt                           - Will send the content from the compiled program (derp) to be
                                                   appended in the file 'derpy.txt' rather than shown on the console.
 $ ./derp > derpy.txt                            - Will send the content from the compiled program (derp) to 
@@ -1469,7 +1551,18 @@ $ ./derp 2> /dev/null                           - Display normal messages (stdou
                                                   discarded
 $ ./derp 1> /dev/null                           - Only display error messages, since normal messages (stdout) are discarded 
 $ ./derp 2>&1                                   - stderr messages are appended to the stdout messages
-
+$ ./derp > file.txt 2>&1                        - Redirection order matters, stderr is added to stdout
+$ echo $?                                       - Display the error code of the previously run command
+$ ls -la | tee tmp.txt                          - Write the output into a file, and also display on the console
+$ ls -la | tee  tmp.txt |  awk '{ print $9 }'   - Write entire output of command into a text file, but display only the names
+                                                  in list format, in the console
+$ ./test 2> /dev/null 3>&1 1>&2 2>&3            : Swapping stdout and stderr, then discarding original stdout
+                                                  Notice the order of the redirections
+$ grep derp << EOF                              : Will display 2 lines.
+> herpti                                        - One command written using multiple lines, useful method in shell scripts
+> derpti                                        - .
+> derp                                          - .
+> EOF                                           - .
 
 Math                                             Description
 ------------------------------------------------|---------------
@@ -1477,10 +1570,11 @@ expr                                            : Evaluate expressions
 bc                                              : An arbitrary precision calculator language
 
 [Example]
+
 $ expr 324 - 5123                               : Output -4799
 $ expr length 32094ij+NJIfe3#¤                  : Output 16
-$ echo "3.8 + 0.1" | bc
-$ echo "9 / 5" | bc
+$ echo "3.8 + 0.1" | bc                         : Output 3.9
+$ echo "9 / 5" | bc                             : Output 1
 
 
 ╔==============================================╗
@@ -1689,7 +1783,6 @@ make                                            : GNU make utility to maintain g
                                                   Requires additional knowledge to setup for projects via makefile
 rm .test.c.sw*                                  : Deletes both .sw files for 'test.c' (In case of errors)
                                                   //compiler course
-chage                                           : Change user password expiry information
 size                                            : Display the size of a compiled C program, and how data is stored.
 time                                            : Display the time used to execute a command and print the time for
                                                   {real-time, CPU-time and system CPU time}
@@ -1710,9 +1803,9 @@ Spell Checking                                   Description
 ------------------------------------------------|---------------
 look                                            : Look up the spelling of a word quickly.
 aspell                                          : Interactive spelling checker.
-        -c [file]                               : Check spelling on all words within a file
-        dump master                             : Show the content of the master dictionary
-        help                                    : See the help page
+        -c [file]                               - Check spelling on all words within a file
+        dump master                             - Show the content of the master dictionary
+        help                                    - See the help page
 spell                                           : Batch spelling checker.
 
 Python trick for C programming.
@@ -1727,9 +1820,13 @@ nm
 readelf
 $ objdump -d <binary_name>
 
+set                                             : Shell builtin
+        -o noclobber                            - Prevent commands from overwriting files during redirections
+        +o noclobber                            - Allow commands to overwrite files during redirections
+
 [Security]
 $ ssh-keygen -t rsa -b 4096                     : Creating a 4096 bit RSA public key, to be stored in
-                                                  /home/user/.ssh/id_rsa.pub
+                                                  /home/user/.ssh/id_rsa.pub and /home/user/.ssh/id_rsa
                                                 - The '-t' option refers to the type of key to generate, RSA is the most common.
                                                   Could also have been other types such as: dsa, ecdsa, ecdsa-sk, ed25519
                                                   ed25519-sk
@@ -1765,9 +1862,10 @@ To look at the job queue, use the command
 Sources:
 - 62588 Operating Systems Lectures
 - 62501 Linux Server and Network materials
+- 62597 Backend development
 - Linux manual pages
 - https://www.youtube.com/watch?v=oxuRxtrO2Ag
-- Linux Pocket guide
+- Linux Pocket guide 3rd edition                : By Daniel J. Barrett
 - Linux Bible by Christopher Negus (Once you get past the fluff, it's ok)
 - https://en.wikipedia.org/wiki/Linux_distribution
 - https://en.wikipedia.org/wiki/List_of_Linux_distributions
@@ -1786,7 +1884,13 @@ Sources:
 - https://vim.rtorr.com/                        : VIM shortcuts
 - http://samrowe.com/wordpress/advancing-in-the-bash-shell/
                                                 : Details concerning the use of colon (:) operators for arguments
-
+- Bash Cookbook, 2nd edition by Carl Albing & JP Vossen
+- Kali Linux Penetration Testing Bible,         : by Gus Khawaja
+- Unix and Linux System Administration Handbook, Fifth Edition
+                                                : By Evi Nemeth, Garth Snyder, Trent R. Hein, Ben Whaley, Dan Macking
+                                                - with James Garnett, Fabricio Branca and Adrian Mouat
+- Bash Redirections Cheat Sheet                 : 
+  https://github.com/pkrumins/bash-redirections-cheat-sheet/blob/master/bash-redirections-cheat-sheet.pdf
 
 ╔==============================================================================╗
 ║    Advanced topics                                                           ║
@@ -2233,16 +2337,28 @@ fi                                              : indicates the end of the 'if'-
 filename="$HOME"
 if [ -f "$filename" ] ; then
    echo "$filename is a regular file"
+   exit 0
 elif [ -d "$filename" ]
    echo "$filename is a directory"
+   exit 1
 else
    echo "No clue what $filename is."
+   exit 2
 fi
 
 There is also a shorthand method for an 
 if-statement with a single command.
 [statement] || [command]                        : If statement fails run [command]
 [statement] && [command]                        : If statement succeed run [command]
+
+[Example shorthand method]                      : Same thing as the example above
+filename="$HOME"
+[ -f "$filename" ] \
+   && { echo "$filename is a regular file" ; exit 0 } \
+   [ -d "$filename" ] \
+       && { echo "$filename is a directory" ; exit 1 } \
+       || { echo "No clue what $filename is." ; exit 2 } 
+   
 
 The 'case' command, otherwise known as a switch,
 ')' is used for different cases, and '*)' is
@@ -2272,6 +2388,22 @@ case $(date +%a) in
         echo "Either it's weekend, or I screwed up"
         ;;
 esac
+----------------------[END]---------------------
+
+Function example                                : Source, bash Coockbook 2nd edition, page 71
+--------------------[Example]-------------------
+#Global variable choice
+function choice {
+        CHOICE=''
+        local prompt="$*"
+        local answer
+        read -p "$prompt" answer
+                case "$answer" in
+                [yY1] ) CHOICE='y';;
+                [nN0] ) CHOICE='n';;
+                * ) CHOICE="$answer";;
+        esac
+}
 ----------------------[END]---------------------
 
 Loop types.
@@ -3166,6 +3298,8 @@ $HOME/.viminfo                                  :
 /etc/issue                                      : Contains the pre-login message, often overwritten by the /etc/rc.d/rc.local
                                                   script in Red Hat and some other rpm-based Linux distributions
 /etc/lilo.conf                                  : The lilo boot loader configuration file
+/etc/nsswitch.conf                              : Name Service Switch configuration file, used by the GNU C Library to configure
+                                                  how the system uses various database and name resolution mechanics
 /etc/modules.conf                               : Holds options for configurable system modules
 /etc/motd                                       : This is the ?message of the day? file which is printed upon login. It can be
                                                   overwritten by /etc/rc.d/rc.local Red Hat on startup.
