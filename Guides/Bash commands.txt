@@ -1,10 +1,10 @@
 ╔==============================================================================╗
 ║Name        : Bash commands.txt                                               ║
 ║Author      : Daniel Silbermann, s090116, Declined#8151 (Discord ID)          ║
-║Version     : 2.14.01                                                         ║
+║Version     : 2.14.02                                                         ║
 ║Date        : 29/09-20                                                        ║
-║Last Updated: 18/03-22                                                        ║
-║Copyright   : Do not alter, this file without permission                      ║
+║Last Updated: 23/03-22                                                        ║
+║Copyright   : Do not alter this file without permission                       ║
 ║              For non commercial use only.                                    ║
 ║Licence     : CC BY-NC-ND                                                     ║
 ║              https://creativecommons.org/about/cclicenses/                   ║
@@ -151,16 +151,21 @@ something '>' filename                          : Overwrite content of file name
                                                   These are great options for pasting output into log files,
                                                   when writing and testing C-programs.
 
-[Example]
+
+[Example]                                        Description
+------------------------------------------------|---------------
 echo yolo > derpy.txt                           : Overwrites the content of file derpy.txt "yolo"
 echo yolo >> derpy.txt                          : Append "yolo" to the content of file derpy.txt
+
 
 (if intalled)Type 'code .' to open Visual Studio
 Code with that folder already being navigated to.
 
-To compile and run C code files
+[To compile and run C code files]                Description
+------------------------------------------------|---------------
 $ gcc -o newfilename someCcodefile.c            : Will compile the file, and save the compiled version in 'newfilename'
 $ ./newfilename                                 : Executes the compiled file.
+
 
 After writing a command, you sometimes write '-'
 and then add an operator, such as
@@ -191,10 +196,12 @@ Often used in conjunction with the pipeline
 character "|", which forwards the output of a
 command to another command.
 
-[Example]
+[Example]                                        Description
+------------------------------------------------|---------------
 $ grep "some text" myfile.txt                   : Search through myfile looking for "some text" and
                                                   print lines that match.
 $ top | grep root                               : Will present the processes related to root.
+
 
 If you screw up somehow, terminate an active
 process with [CTRL + C], i.e. 'htop' or an
@@ -236,13 +243,13 @@ locate                                          : Able to locate specific comman
                                                   Requires a database to work. (updatedb*)
 which                                           : Locate a command
 find                                            : Search for files in a directory hierarchy, it has an unusual syntax
-        -name [pattern]                         : Search for pattern
-        -iname [pattern]                        : Same as '-name' except case sensitive
-        -perm                                   : Check for specific permissions
-        -lname pattern                          : The name (-name), pathname (-path), or symbolic link
-        -regex regexp                           : The path (relative to the directory tree being searched)
+        -name [pattern]                         - Search for pattern
+        -iname [pattern]                        - Same as '-name' except case sensitive
+        -perm                                   - Check for specific permissions
+        -lname pattern                          - The name (-name), pathname (-path), or symbolic link
+        -regex regexp                           - The path (relative to the directory tree being searched)
                                                   must match the given regular expression.
-        -type [f,d,l,b,c,p,s]                   : Only specific types of files
+        -type [f,d,l,b,c,p,s]                   - Only specific types of files
 type [command]                                  : Display information about commands, such as shell built-in, location, alias
                                                   Important to note that built-in commands to not have a manual page, instead
                                                   use the command 'help' followed by the command name.
@@ -253,7 +260,9 @@ compgen [Operator] [word]                       : Display possible completions d
 help [command]                                  : Provides info about shell built-in commands such as read and pwd    
                                                   Use command 'type' to check if a command is a shell built-in
 
-[Example]
+
+[Example]                                        Description
+------------------------------------------------|---------------
 $ help                                          - See a list of shell built-in commands
 $ help read                                     - Provides information about the built-in command read, such as options
 $ help set                                      - Setting shell variables and positional parameters
@@ -270,17 +279,18 @@ $ info                                          - Info reader documentation (typ
 $ find . -name  "*.txt"                         : Find all files who end with a '.txt' format , starting from the current
                                                   directory and recursively look through all sub directories.
 $ find / -perm -u=s -type f 2>/dev/null         : Find all files with the SUID bit set, and discard all errors.
+$ find / -user root -perm -4000 2>dev/null      : Find all files owned by root with the SUID bit set, and discard all errors.
+
 
 Most commands include a help method, referenced
 [command] --help
 
-[Examples]
+[Example]                                        Description
+------------------------------------------------|---------------
 $ help --help                                   - Provides info about the help command such as options
-$ ls --help                                     : List a help category for 'ls' command.
-$ chmod --help                                  : List a help category for 'chmod' command
-$ find . -name  "*.txt"                         : Find all files who end with a '.txt' format , starting from the current
-                                                  directory and recursively look through all sub directories.
-$ bash --version                                : Display the bash version
+$ ls --help                                     - List a help category for 'ls' command.
+$ chmod --help                                  - List a help category for 'chmod' command
+$ bash --version                                - Display the bash version
 
 
 ╔==============================================╗
@@ -304,19 +314,19 @@ cd                                              : Change directory
        [empty]                                  - Move to home directory
         ~                                       - Move to home directory
         ..                                      - Move up a directory
+        /                                       - Root directory (not Root users home directory)
         [Directory Name]/                       - Move to specific directory
-
         <tab><tab>                              - Auto complete
 pushd                                           : Save directory into a LIFO stack (directory stack)
                                                   Works much like 'cd' except that the directory you move from
                                                   is stored in the directory stack
 popd                                            : Pop the directory from the LIFO stack
 dirs                                            : Display directory stack
-        -v                                      : Show the list with a bit of formatting
+        -v                                      - Show the list with a bit of formatting
 history                                         : Shows a list of commands used so far.
         -c                                      - Reset the the history
 mkdir                                           : Make directory (folder)
-        [Directory name]                        : new directory
+        [Directory name]                        - New directory
 tree                                            : List contents of directories in a tree-like format.
 rmdir                                           : Remove directory
         *                                       : wildcard
@@ -324,7 +334,9 @@ rmdir                                           : Remove directory
         [directory name]                        - Remove specific directory
 mkdir [options] directories                     : Creates 1 or more directories
 
-[Example]
+
+[Example]                                        Description
+------------------------------------------------|---------------
 $ cd ../../testfolder/                          - Move up two directories, and then down into the testfolder.
 $ touch test.txt                                - Ensu an empty txt file called 
 $ cd test<tab><tab>                             - Will auto complete the name of a folder starting with 'test' (if it exist)
@@ -370,7 +382,6 @@ whois   [ip or website]                         : shows some whois data about a 
         | more/less                             - Displayed using the more or less format
 pstree                                          : Display a tree of process
 fsck                                            : Check and repair a Linux filesystem
-parted                                          : A partition manipulation program
 alias                                           : Access to aliases
 unalias                                         : Remove an alias
                                                   Remember that if an alias is set in a  configuration file, it will be
@@ -381,7 +392,9 @@ export                                          : Set the export attribute for v
         -p                                      - Display a list of all exported variables
 shutdown                                        : Halt, power-off or reboot the machine
 
-[Examples]
+
+[Example]                                        Description
+------------------------------------------------|---------------
 $ chmod 650 [filename]                          : Where 6 is the user, 5 is group, 0 is other
 $ chmod 755 [directory]                         : 755 is recommended for directories
 $ chmod 744 [filename]                          : 644 is recommended for files. 
@@ -465,36 +478,46 @@ The first number represents the owner
 The second number represents the group
 The 3rd number represents everybody else.
 
-[Example]
+[Example]                                        Description
+------------------------------------------------|---------------
 $ chmod 744 filename.sh                         : Permission will look like this -rwxr--w--
 $ chmod u+x filename.c                          : Adding execute permission of the file to user
 $ chmod g+w filename.c                          : Adding write permission of the file to Group
 $ chmod o+r filename.c                          : Adding read permission of the file to 'Other users'
 
-[Example output of 'ls -la']
+
+[Example output of 'ls -la']                     Description
+------------------------------------------------|---------------
 drwxrwxrwx 1 declined declined  4096 Jan 28 22:29  Guides
                                                 : Only included a single sentence
                                                 - User, Group and Other all have 'Read', 'Write' and 'Execute'
                                                   permission as specified via -rwxrwxrwx, it is owned by user 'declined'
                                                   owned by group 'declined', it is a directory and the rest is irrelevant for now
-                                                
-[Example output of "ls -lG"]
+
+
+[Example output of "ls -lG"]                     Description
+------------------------------------------------|---------------
 drwxrwxrwx 1 declined  4096 Jul 17 14:02  Guides
+
 
 There are actually 3 additional bits: {setuid,
 setgid, sticky}
-
 Much like rwx, they can be viewed with 'ls -l'
 command and altered with chmod.
-Starting with the sticky bit.
-What it does, is specify that only the user and
-root are allowed to delete or rename the file
-or if the sticky bit is set on a directory, the
-files located within that directory.
 
-setuid and setgid are very similar, but with a
-slight difference. setuid, refers to users.
-setgid refers to group.
+   *** Sticky bit.
+Allow deletion or renaming of files within that
+directory.
+
+   *** setuid $ setgid
+Any user can execute the file with the
+permissions of the owner but those permissions
+don't extend beyond the use of that file.
+Meaning that if root has placed the sticky bit
+on 'cp', 'nano', 'mv' or similar, a user can
+pretend to be root, for the execution or access
+of that command/file.
+
 
 When setgid is set on a directory, it cause     : Great for sharing a directory of files among several users, as long as they
 newly created files within the directory to take  belong to a common group
@@ -510,16 +533,17 @@ $ chmod -t [directory]                          : Remove the sticky bit from {di
         bit, using octal characters.
         $ chmod 1777 [directory]                : Add sticky bit to the directory
         $ chmod 777 [directory]                 : Remove sticky bit from the directory
+        $ chmod 4777 [directory]                : Add SUID bit to the directory
 
 
 ------?--?                                      : -rwxrwxrwx
 |||||||||!------------------------------------> : 'x' executable for Everyone
 |||||||||!                                      - 't' for sticky bit and executable,
 |||||||||!                                      - 'T' for sticky bit
-|||||||||!                                      - 's for setuid while also as an executable
-|||||||||!                                      - 'S for setuid
 ||||||!                                         : 's for setgid and also as an executable
 ||||||!                                         - 'S for setgid
+|||!                                            - 's for setuid while also as an executable
+|||!                                            - 'S for setuid
 
 [Example]                                        Description
 ------------------------------------------------|---------------
@@ -546,6 +570,7 @@ j               :   E                           : Keep a journal for data change
 s               : XBE                           : Force changes to be written synchronously (no buffering)
 X               :  B                            : Avoid data compression if it is the default
 
+
 Where in the file system column:
                   X = XFS
                   B = Btrfs
@@ -571,6 +596,7 @@ Commands                                         Description
 ------------------------------------------------|---------------
 uname                                           : Print system information
         -r                                      - Kernel release
+        -a                                      - All info
 printenv                                        : Print all or part of environment (aka how is your shell setup)
 who                                             : Show who is logged on
 w                                               : Show who is logged on and what they are doing.
@@ -598,6 +624,7 @@ du                                              : Estimate file space,
                                                   Summarize disk usage of the set of FILEs, recursively for directories.
                                                   Unlike df, du does not include files that are referenced
         -h                                      - Human readable
+        -s                                      - Summarize
 top                                             : Provides a dynamic overview of the running processes
 htop                                            : Interactive process viewer
 ps                                              : Processor Status, it is a highly integrated part of Linux.
@@ -623,7 +650,7 @@ echo <text>                                     : Prints echoes the <print> in t
         -e                                      : Interprets escape characters
 printf                                          : An advanced version of echo
 
-[Examples]                                       Description
+[Example]                                        Description
 ------------------------------------------------|---------------
 $ cal 2021                                      : Will display the calender for the year 2021
 $ echo $PATH                                    : Prints the entire path variable
@@ -639,6 +666,7 @@ $ ps -eo pid,user,uid,gid,vsz,rss,comm --sort=-vsz
 $ ps -eo pid,user,vsz,rss,comm --sort=rss       : Showing the selected categories, sorted ascending by rss
 $ ps up "342 8525"                              : Show specific details regarding the two processes with the ID342 and 8525
 $ cat /etc/os-release                           : Print information aout the Operating System
+$ du -sh .                                      : Display the total side of the current directory
 
 
 ╔==============================================╗
@@ -648,6 +676,8 @@ Each process have some information related to it.
 This paragraph refers to specific usage of the
 'ps' and 'top' command.
 
+
+   *** ps
 This part refers primarily to the output of the
 'ps' command, no version of the 'ps' command,
 contain all of these, or even with the same
@@ -676,7 +706,9 @@ TTY or TT                                       : "TeleTYpewriter", aka. the con
 COMMAND                                         : Name of the process, including arguments, if any
                                                   (COMMAND name is often abbreviated)
 WCHAN                                           : Memory address of the event the process is waiting for
+*
 
+   *** top
 Moving on to the command 'top', output varies
 greatly between the versions and distributions.
 General information is found in the 1st row.
@@ -739,6 +771,7 @@ nano                                            : text editor
 emacs                                           : Incredibly powerful, with literally thousands of commands
                                                 - Within emacs, use the command '^h' [Ctrl  + h] for help
 
+
 Additional text exditors:
 vi, gedit, jed, joe, kate, kedit, mcedit, nedit
 emacs, micro
@@ -761,6 +794,7 @@ touch                                           : Update the date of a file, wit
         [file name]                             : Can create a new file, if that file does not exist
 dd                                              : Copy a file, converting and formatting 
 
+
 File information                                 Description
 ------------------------------------------------|---------------
 file [option] [file]                            : Determine file type
@@ -769,6 +803,7 @@ stat [option] [file]                            : Display file or file system st
 wc [behavior] [filename]                        : Word count - count the number of words in a file
         -l                                      - Count lines, not words
 
+
 Displaying content                               Description
 ------------------------------------------------|---------------
 cat [option] [filename]                         : 'Concatenate' Show content of file via the terminal
@@ -776,6 +811,7 @@ cat [option] [filename]                         : 'Concatenate' Show content of 
         >> [Filename]                           - Write something into the file (append), use 'Ctrl + D' to complete.
         > [Filename]                            - overwrite the content of a file, (also create the file if needed)
         << EOF                                  - EOF End of file
+nl                                              : Much like cat displat the content, but include line numbers.
 more                                            : Look at a file, one page at a time using the spacebar
         [filename]                              - Open the specific file in the command prompt
         q                                       : quits, and goes back to the prompt
@@ -786,6 +822,8 @@ less                                            : Same as 'more' just goes one l
 head                                            : View the first lines of a text file
 tail                                            : View the last lines of a text file
         -f                                      - Follow, output appended data as the file grows;
+        -[NUMBER]                               - Display NUMBER of lines
+        +[NUMBER]                               - Display file starting from line NUMBER
 strings                                         : Display text that's embedded in a binary file
 od [option] [filename]                          : Display a file in Octal or other formats (use option '-x' for Hex)
 
@@ -796,6 +834,7 @@ $ tail -n 5 somefile.txt                        : View the last 5 lines of somef
 $ tail -n +5 somefile.txt                       : View the entirety starting at line 5 from somefile.txt
 $ strings compiledcode                          : Go have a look at function names, libraries, menu strings and similar
 $ more README.txt                               : View the README file in more format.
+
 
 Sorting, Comparing and Searching                 Description
 ------------------------------------------------|---------------
@@ -808,6 +847,9 @@ shasum                                          : Same as md5sum except with mor
         -a 256                                  : Use SHA-256 algorithm
 rev [filename]                                  : Reverse lines characterwise
 grep                                            : Print lines that match patterns
+        -E                                      : Enable extended regular expressions
+        -i                                      : Ignore character case.
+        -n                                      : Print the line number of the file where the pattern was found.
 tr                                              : Translate or delete characters
 cut                                             : Remove sections from each line of lines
         -d[character]                           : Use [character] as a delimiter
@@ -839,6 +881,7 @@ zip                                             : Package and compress (archive)
 munpack                                         : Unpack messages in MIME or split-uuencode format
 mpack                                           : Pack a file in MIME format
 
+
 [Examples Compression & Decompression]           Description
 ------------------------------------------------|---------------
 tar cf compressed.tar [files]                   : Compress using .tar extension
@@ -852,15 +895,9 @@ tar xfj compressed.tar.bz2                      : Extract from  format
 zip compressed.zip files                        : Compress into compressed.zip format
 unzip compressed.zip                            : Extract from compressed.zip format
 
-Depending on your desktop environment, specific
-commands may vary, for how to open folders
-Types: Gnome, KDE, Xfce, LXDE.
 
-xdg-open [foldername]                           : Opens a folder, should work on a full Linux distribution
-
-[Examples]                                       Description
+[Example]                                        Description
 ------------------------------------------------|---------------
-
 $ stat --printf='%n\n%a\n%b\n' [FILE]           : Prints 3 options, %n, %a, %b, with line breaks.
 $ cat file1.txt | more                          : Display file1.txt in the console, using 'more' format
 $ cat file1.txt | less                          : Display file1.txt in the console, using 'less' format
@@ -882,6 +919,14 @@ $ md5sum --check something.txt                  - Compares the cheksum found wit
                                                   specified in the file
 $ md5sum [file] | md5sum --check                : Create and check on the same line
 $ echo prldxqtprldxqtprlh | tr lqx ei" " | rev  : Output -> herpti derpti derp, characters are substituted 1 by 1
+
+
+Depending on your desktop environment, specific
+commands may vary, for how to open folders in
+a graphical interface.
+Types: Gnome, KDE, Xfce, LXDE.
+
+xdg-open [foldername]                           : Opens a folder, should work on a full Linux distribution
 
 
 ╔==============================================╗
@@ -919,13 +964,16 @@ su                                              : Switch user
         - [empty]                               - Changing to root user, but remains in the current users home directory
         - [Username]                            - will change to other specified user on the username.
         [username]                              - Will switch to other user, but remain in your own home directory
-systemctl                                       : Control the systemd system and service Manager
+systemctl [operator] [service]                  : Control the systemd system and service Manager
         start                                   - Start a service
         stop                                    - Stop a service
         restart                                 - Restart a service
         status                                  - See status as a whole or of a service
         enable                                  - Enable a service on boot
         disable                                 - Disable a service on boot
+service [service] [operator]                    : Run a System V init script
+        status                                  -
+
 
 [Example]
 $ sudo apt-get update                           : Update packages, a command that require Root access.
@@ -966,7 +1014,9 @@ chage                                           : Change user password expiry in
 pwconv                                          : Creates /etc/shadow from /etc/passwd and an optionally existing shadow
 chsh                                            : Change the login shell
 
-[Example]
+
+[Example]                                        Description
+------------------------------------------------|---------------
 $ useradd -m derp -G sudo -s /bin/sh            : Create user 'derp' part of group sudo, using the /bin/sh shell
 $ passwd derp                                   : Change password of 'derp'
 $ sudo deluser --remove-home derp               : Removes user 'derp'
@@ -978,7 +1028,8 @@ $ chgrp [group] [file]                          : Alter the group ownership of t
 $ chown [user] [file]                           : Change ownership of file to specified user
 $ chown :[group] [file]                         : Change ownership of file to specified group
 $ chown [user]:[group] [file]                   : Change ownership of file for both user and group
-$ chage -d 0 [user]                             : 
+$ chage -d 0 [user]                             : Invalidates a users password and force an update
+
 
 There is a utility called 'Access Control List'
 which can be used to set permissions on files
@@ -986,18 +1037,24 @@ for different users. In order to access the
 commands, ACL must be enabled when the
 filesystem is mounted.
 
+Command                                          Description
+------------------------------------------------|---------------
 setfacl                                         : Setting the ACL status of a file
 getfacl                                         : Getting the ACL status of a file
 
-[Example]
+
+[Example]                                        Description
+------------------------------------------------|---------------
 $ setfacl -m u:username:rwx filename            : -m option, modify permission, for username, to rwx, on file filename
 $ getfacl temp.txt                              :
+
 
 To see whether the ACL status is available on an
 ext4 file system use the 'tune2fs -l' command,
 to view the implemented mount options.
 
-[Example]
+[Example]                                        Description
+------------------------------------------------|---------------
 mount -t ext3 -o acl [device-name] [partition]
 $ mount -t ext3 -o acl /dev/folderA/folderAA /work
 
@@ -1012,12 +1069,22 @@ Passwords are stored
 
 Categories for /etc/shadow                       Description
 ------------------------------------------------|---------------
+Username                                        : This is the login name
+Encrypted password                              : Format is $id$salt$messagedigest
+                                                  $1$ = $md5$ = MD5, $2$ = Blowfish, $5$ = SHA-254, $6$ = SHA-512
+Date of last password change                    : Days since January 1st, 1970 that the password was last changed
+Minimum required days between password changes  : How long until before the user is allowed to change the password
+Maximum number of days the password is valid    : After this date, the user is forced to change password
+Warning                                         : Days before a user is warned that the password expires
+Inactive                                        : How long before the password expires before the account is disabled
+Expire                                          : Days since January 1st, 1970 when that the account is disabled
+
 
 
 Categories for /etc/passwd                       Description
 ------------------------------------------------|---------------
 Login name                                      : 
-Encrypted password                              :
+Encrypted password                              : Password placeholder, denoted 'x' on Linux systems, stored in /etc/shadow
 Date of last password change                    : Records the time at which the users password was last changed
                                                   This field is filled in by the passwd command
 Minimum number of days between password changes :
@@ -1060,14 +1127,15 @@ commands:                                        Description
 ------------------------------------------------|---------------
 $ sudo apt-get update                           : Retrieve new lists of packages
 $ sudo apt-get upgrade                          : Perform an upgrade of packages
-$ sudo apt-get build-essential                  : A collection of packages required to compile and run a number of different
-                                                  programming languages, such as C, C++
+$ sudo apt-get install build-essential          : Install a collection of packages required to compile and run a number of
+                                                  different programming languages, such as C, C++
 $ sudo apt search [NAME]                        : Display a list of available packages related to the search parameter
 $ sudo apt-get install [PACKAGE]                : Install package
 $ sudo apt install [PACKAGE]                    : Install package
 $ sudo apt-get dist-upgrade                     : Update the kernel packages
 $ sudo apt-get purge [PACKAGE]                  : Packages are removed and purged (any configuration files are deleted too).
 $ sudo apt autoremove                           : Uninstall dependencies that are no longer needed
+
 
 [Example DEB based]                              Description
 ------------------------------------------------|---------------
@@ -1076,6 +1144,14 @@ $ sudo apt search music                         : Find packages related to music
 $ sudo apt-get install [PACKAGENAME]            : Install a specific package, i.e. nmap
 $ sudo apt install nmap                         : Install nmap
 
+
+Some common general packages
+------------------------------------------------|---------------
+build-essential                                 : Allows compilation of programs such as C and C++
+coreutils                                       : [Installed automatic] Collection of more utilities from FreeBSD
+wireless-tools                                  : Tools for manipulating Linux Wireless Extensions
+
+
 And similar for .rpm distros, these two are the
 primary method for managing and installation.    Description
 ------------------------------------------------|---------------
@@ -1083,6 +1159,7 @@ yum [option] [command]                          : (For RPM distros) Install, Uni
                                                   Now outdated 
 dnf [option] [command]                          : (For RPM distros) 'Dandified YUM', it is an upgraded version of YUM,
                                                   available since version 18 of Fedora. Syntax somewhat identical to YUM
+
 
 .rmp usecases                                    Description
 ------------------------------------------------|---------------
@@ -1113,6 +1190,9 @@ You unzip it, and then run these 3 commands.
 $ ./configure    
 $ make
 $ sudo make install
+
+Specific commands may vary, check the package
+documentation to view the details.
 
 
 ╔==============================================╗
@@ -1149,7 +1229,7 @@ curl                                            : Transfer a URL (pretty much th
 ftp                                             : Copy files to/from a remote host
 sftp                                            : Same as 'ftp' only this is a secure version
 scp [from] [to]                                 : Secure copy (remote file copy program)
-                                                - Uses ssh in the background
+                                                  Uses ssh in the background
         -P                                      - Port Number
 whois                                           : Client for the whois directory service
 iptables                                        : administration tool for IPv4/IPv6 packet filtering and NAT
@@ -1161,9 +1241,24 @@ nslookup                                        : Query Internet name servers in
                                                   There is a paragraph dedicated to the usage of this command
 tcpdump                                         : Dump traffic on a network
 socat                                           : Multipurpose relay (SOcat CAT)
-                                                - The socat utility is a relay for bidirectional data transfers between two
+                                                  The socat utility is a relay for bidirectional data transfers between two
                                                   independent data channels. 
 ufw                                             : Program for managing a netfilter firewall
+
+
+[General examples]
+------------------------------------------------|---------------
+$ ping -c 100 google.com                        : Pings google.com with 100 packets, and provide you with statistics afterwards.
+$ host google.com                               : Show DNS information about google.com
+$ ip addr show                                  : View all loaded network interfaces
+$ ip monitor
+$ ip route                                      : Show the routing table (includes default gateway)
+$ traceroute yahoo.com                          : Display a traceroute to yahoo.com with 2 sec 
+$ netstat -antu                                 : Display the active network connections: all connections, don't resolve host
+                                                  names, meaning that port 80 isn't translated to http, display TCP and UDP
+                                                  connections.
+$ netstat -tulpn                                : Most commonly used 
+
 
 [Example ssh server]                             Description
 ------------------------------------------------|---------------
@@ -1177,6 +1272,7 @@ $ sudo systemctl start ssh                      : Stop the ssh
 $ sudo systemctl enable ssh                     : Enable automatic start when computer boots
 $ sudo systemctl disable ssh                    : Disable automatic start when computer boots
 $ ip a                                          : Use this command to find the ip of your server
+
 
 For settings on the server, edit the ssh config
 file located at /etc/ssh/sshd_config:
@@ -1192,7 +1288,8 @@ ssh-keygen -t rsa -b 4096 -C user@email.com     - Creates a private/public key-p
                                                   The file for the private key will be called "id_rsa"
                                                   It is recommended to hit the enter key, without adding
                                                   additional information (aka do not set a password unless
-                                                  you're sure to remember it).                                                  
+                                                  you're sure to remember it).
+
 
 [Firewall example]
 ------------------------------------------------|---------------
@@ -1200,17 +1297,6 @@ $ sudo ufw status                               : Show status of firewall and uf
 $ sudo ufw allow ssh                            : added ssh access to the firewall
 $ sudo ufw delete allow ssh                     : Removed ssh access from the firewall
 
-[General examples]
-------------------------------------------------|---------------
-$ ping -c 100 google.com                        : Pings google.com with 100 packets, and provide you with statistics afterwards.
-$ host google.com                               : Show DNS information about google.com
-$ ip addr show                                  : View all loaded network interfaces
-$ ip monitor
-$ ip route                                      : Show the routing table (includes default gateway)
-$ traceroute yahoo.com                          : Display a traceroute to yahoo.com with 2 sec 
-$ netstat -antu                                 : Display the active network connections: all connections, don't resolve host
-                                                  names, meaning that port 80 isn't translated to http, display TCP and UDP
-                                                  connections.
 
 For RHEL systems, check file:
 /etc/sysconfig/network-scripts/ifcfg-eth0
@@ -1244,7 +1330,7 @@ interesting host file you can use.
 
 
 ╔==============================================╗
-║                   HARDWARE                   ║
+║                   Hardware                   ║
 ╚==============================================╝
 Managing the hardware details, such as removable
 USB drives, hardware plugged in during boot, 
@@ -1252,9 +1338,6 @@ and more.
 
 Command                                          Description
 ------------------------------------------------|---------------
-dmesg                                           : Print or control the kernel ring buffers
-                                                  Used to view or alter which hardware was detected and which
-                                                  drivers were loaded by the kernel at boot time.
 journalctl                                      : Query the systemd journal
                                                   Can be used to view boot messages, and show messages
                                                   messages associated with a particular boot instance.
@@ -1268,23 +1351,35 @@ lscpu                                           : List all PCU devices
 lshw                                            : List hardware (warning, should be run as a super user)
 mount                                           : Mount a file system
 umount                                          : Unmount file systems   
+parted                                          : A partition manipulation program
+        -l                                      - List partition layout on all block devices
 eject                                           : Used to eject USB/DVD and similarly mountable drives
 
+
 [Example]
+------------------------------------------------|---------------
 $ lscpu | grep cache                            : Display cache levels for the CPU
+
 
 Kernel related                                   Description
 ------------------------------------------------|---------------
+dmesg                                           : Print or control the kernel ring buffers
+                                                  Used to view or alter which hardware was detected and which
+                                                  drivers were loaded by the kernel at boot time.
+sysctl                                          : Configure kernel parameters at runtime
 lsmod                                           : Show the status of modules in the Linux kernel
 insmod                                          : Install a specific module
 modinfo                                         : Show information about a Linux Kernel module
 modprobe                                        : Add and remove modules from the Linux Kernel
 rmmod                                           : Simple program to remove a module from the linux Kernel
 
-[Example]
+
+[Example]                                        Description
+------------------------------------------------|---------------
 $ tail -f /var/kernel/kern.log                  : View the kernel log file in realtime
 $ insmod somefile.ko                            : In a new terminal, insert the new module. (.ko means 'kernel object')
 $ rmmod somefile                                : Remove the file from the kernel
+
 
 Hard drives, can be divided into several
 partitions, each with their own file system.
@@ -1321,6 +1416,7 @@ exFAT                                           : Often used by USB-drives
                                                   Linux may support it, if not requires additional kernel drivers.
 NTFS                                            : Standard file system for Windows
                                                   Linux may support it, if not requires additional kernel drivers.
+
 
 Ext4 is the standard file system for Linux.
 
@@ -1389,8 +1485,10 @@ $PS1                                            : Where the bash shell formattin
 $UID                                            : ID of the user executing a command
 $EUID                                           : ID of the end user, executing a command.
 
+
 These are used in programming (and herefore
-NOT the commmand line)
+NOT the commmand line)                           Description
+------------------------------------------------|---------------
 stdin                                           : Standard input (console), where the program reads from. (0)
                                                 - File descriptor 0
 stdout                                          : Standard output (console/screen) where the info will be displayed.
@@ -1419,6 +1517,7 @@ $[expression]                                   : Arithmetic expression, direct.
 $((expression))                                 : Arithmetic expression, direct.
 $(expression)                                   : Arithmetic expression, via function.
 
+
 [Example]
 $ echo "Derp $[56 - 43]"                        : Echoes "Derp 13" in the console.
 $ echo $[56 - 43]                               : Echoes "13" in the console.
@@ -1427,48 +1526,6 @@ $ echo $((3+4*2))                               : Echoes "11" in the console.
 $ echo "Derp $(ls | wc -w)"                     : The content of ls is piped to word count command that prints
                                                   the number of words in the folder.
 
-Command interpretation                           Description
-------------------------------------------------|---------------
-$([command])                                    : Command substitution, Executes a command inside another command
-                                                  Should be placed inside quotation marks to avoid word-splitting
-                                                  Also note that command is run in a subshell.
-`[command]`                                     : Backticks
-<('content')                                    : 'Process substitution' A method to condense the input, and use it as an argument.
-
-./[filename]                                    : Running an executable file (compiled file, or shell file).
-
-[Example]
-$ diff <(wc file1) <(wc file2)                  : Compare at the difference between the word count of 2 files
-$ echo `echo \`echo foo\`` bar                  : Outputs foo bar
-$ echo $(ls -la)                                : This turns into a mess
-$ echo "$(ls -la)"                              : This is properly formatted
-
-Regular expression (regex)                       Description
-------------------------------------------------|---------------
-*                                               : Used as a wildcard for an string of undetermined length
-?                                               : Used a wildcard for a single character in strings.
-.                                               : Used a wildcard for a single character in strings.
-[...]                                           : Matches any one of the characters between the brackets, which can
-                                                  include a hyphen separated range of letters or numbers.
-                                                  Used for pattern matching, case sensitive.
-{...}                                           : Pattern generation, strings are separated by comma, numbers by 2 dots (..)
-[set]                                           : Any single character in the given set, most commonly a sequence of characters,
-                                                  like [aeiouAEIOU] for all vowels, or a range with a dash, like [A-Z] for all
-                                                  capital letters.
-[^set]                                          : Any single character NOT in the given set, such as [^0-9] to exclude any
-                                                  digits.
-[!set]                                          : Same as [^set]
-
-[Examples]
-$ touch derp{1..4}                              : Creates 4 files, derp1, derp2, derp3, derp4
-$ touch derp{ty,ti}                             : Creates 2 files names derpty and derpti
-$ rm derp*                                      : Remove all files starting with the name "derp"
-$ ls [0A]*                                      : List all files starting with 0 or A
-$ ls ?[2A]*                                     : List all files where the 2nd character is either '2' or 'A'
-$ sudo dmidecode | grep -A20 '^System Information'
-                                                : Display 20 lines, starting from the line 'System Information'
-$ echo .[!.]*                                   : Display all files starting with dot, where the second character is not a dot.
-$ echo *                                        : Substitute for command 'ls'
 
 Quotes and apostrophe can be used to specify how
 strings are treated, unfortunately there does
@@ -1492,32 +1549,152 @@ $ echo $USER owe root $1 for coffee?!            : Output declined owe root for 
 $ echo declined owe root for coffee !!           : Output .... I'll let you figure that one out yourself
 $ echo "$USER won't owe root" '$1 !!'            : Output declined can't owe root $1 !!
 
+
+Command interpretation                           Description
+------------------------------------------------|---------------
+$([command])                                    : Command substitution, Executes a command inside another command
+                                                  Should be placed inside quotation marks to avoid word-splitting
+                                                  Also note that command is run in a subshell.
+`[command]`                                     : Backticks
+<('content')                                    : 'Process substitution' A method to condense the input, and use it as an argument.
+
+./[filename]                                    : Running an executable file (compiled file, or shell file).
+
+
+[Example]                                        Description
+------------------------------------------------|---------------
+$ diff <(wc file1) <(wc file2)                  : Compare at the difference between the word count of 2 files
+$ echo `echo \`echo foo\`` bar                  : Outputs foo bar
+$ echo $(ls -la)                                : This turns into a mess
+$ echo "$(ls -la)"                              : This is properly formatted
+
+
+Regular expression (regex)                       Description
+------------------------------------------------|---------------
+*                                               : Used as a wildcard for an string of undetermined length**
+?                                               : The preceeding character is marked as optional.
+.                                               : Used a wildcard for a single character in strings, excluding newline
++                                               : The preceeding character has to appear at least once (may match multiple times)
+[...]                                           : Matches any one of the characters between the brackets, which can
+                                                  include a hyphen separated range of letters or numbers.
+                                                  Used for pattern matching, case sensitive.
+        [2-4]                                   : Matching digits in the range 2-4
+        [a-zA-Z]                                : Matching any lower or upper case letter
+        [0-9a-fA-F]                             : Matches hexadecimal digits
+        [0-9 /*+-]                              : Matches any number or those 4 mathematical symbols
+{...}                                           : Pattern generation, strings are separated by comma, numbers by 2 dots (..)
+[set]                                           : Any single character in the given set, most commonly a sequence of characters,
+                                                  like [aeiouAEIOU] for all vowels, or a range with a dash, like [A-Z] for all
+                                                  capital letters.
+[^set]                                          : Any single character NOT in the given set, such as [^0-9] to exclude any
+                                                  digits.
+[!set]                                          : Same as [^set]
+
+
+[Example]                                        Description
+------------------------------------------------|---------------
+$ touch derp{1..4}                              : Creates 4 files, derp1, derp2, derp3, derp4
+$ touch derp{ty,ti}                             : Creates 2 files names derpty and derpti
+$ rm derp*                                      : Remove all files starting with the name "derp"
+$ ls [0A]*                                      : List all files starting with 0 or A
+$ ls ?[2A]*                                     : List all files where the 2nd character is either '2' or 'A'
+$ sudo dmidecode | grep -A20 '^System Information'
+                                                : Display 20 lines, starting from the line 'System Information'
+$ echo .[!.]*                                   : Display all files starting with dot, where the second character is not a dot.
+$ echo *                                        : Substitute for command 'ls'
+
+
+regex shortcuts                                  Description
+------------------------------------------------|---------------
+\d                                              : Digit
+\D                                              : Not digit
+\s                                              : Whitespace
+\S                                              : Not whitespace
+\w                                              : Word
+\W                                              : Not word
+\x                                              : Hexadecimal number (e.g, 0x2B)
+
+
+regex character classes in brackets              Description
+------------------------------------------------|---------------
+[:alnum:]                                       : Any alphanumeric character
+[:alpha:]                                       : Any alphabetic character
+[:cntrl:]                                       : Any control character
+[:digit:]                                       : Any digit
+[:graph:]                                       : Any graphical character
+[:lower:]                                       : Any lowercase character
+[:print:]                                       : Any printable character
+[:punct:]                                       : Any punctuation
+[:space:]                                       : Any whitespace
+[:upper:]                                       : Any uppercase character
+[:xdigit:]                                      : Any hex digit
+
+
+Note, these requires being used inside another
+bracket.
+[Example]                                        Description
+------------------------------------------------|---------------
+$ grep 'X[[:upper:][:space:]] somefile.txt      : Return any string where a capital character is followed by a space
+
+
+Quantifiers, Anchors, Boundaries, as well as
+Back references                                  Description
+------------------------------------------------|---------------
+[CHARACTER]{[NUMBER]}                           : Quantifier: The CHARACTER must appear consecutively exactly [NUMBER] of times
+^[...]                                          : Anchor, Caret character, matching string must start with [...]
+[]$                                             : Anchor, 
+\[NUMBER]                                       : Back reference, where the number refers to the NUMBER occurence of that
+\b...\b                                         : Boundary
+
+
+[Example]                                        Description
+------------------------------------------------|---------------
+Q{7}                                            : Q must appear consecutively 7 times in a row.
+Q{2,3}                                          : Q must appear 2-3 times in a row.
+Q{2,}                                           : Q must appear consecutively 2 times or more.
+$ egrep '<([A-Za-z]*)>.*</\1>' sourcecode.txt   : Finds a matching pair of html brackets such as <br>TEXT</br>.
+[ABC]$                                          : Means that a string must end with capital A, B or C.
+/b[ABC]/b                                       : Include a boundary where the capital characters A, B or C will appear as
+                                                  its own words.
+
+
 Boolean operators                                Description
 ------------------------------------------------|---------------
 ;                                               : Combining commands to be run in a sequence
 &&                                              : Run a sequence of commands, but stop execution if any of them fails,
 ||                                              : Run a sequence of commands, but stop when the first command is true
 
-[Examples]
+
+[Example]                                        Description
+------------------------------------------------|---------------
 $ command1 && command2 && command3              : Execute command1, then command2, then command3
 $ cd .. ; cd folder1/                           : Move up 1 directory, then move back down into another directory
 $ apt-get update || echo "Derped out"           : Without root access, this will derp out.
 
+
+Command history                                  Description
+------------------------------------------------|---------------
 !!                                              : Rerun previous command
 !*                                              : Last parameter from previous command
 !?[string]?                                     : Reruns a previous command, containing the [string]
 
-[Examples]
+
+[Example]                                        Description
+------------------------------------------------|---------------
 $ !?cal?                                        : Reruns a previous command containing 'cal' if found
 $ sudo !!                                       : Redo last command as root user
 $ ls z* && rm !*                                : Here '!*' is treated as 'z*', so first we list all files starting with z,
                                                   Then delete those files
 
+
+Terminal basics                                  Description
+------------------------------------------------|---------------
 clear                                           : Clears the bash terminal of text
 exit                                            : Terminates current access (Super User, bash, cmd, ...)
 logout                                          : Logs out, but recommended to use 'exit' instead.
 --                                              : "end of options", meaning that anything shown after that option will be
                                                   disregarded.
+
 
 Redirection                                      Description
 ------------------------------------------------|---------------
@@ -1540,7 +1717,9 @@ tee                                             : This command redirects from st
 [command] << 'EOL' ... ... EOL                  : Alternate syntax that ensures that each line is treated as a string
 [command] <<- EOL [tab]... [tab]... EOL         : Used for stripping leading tabs in the lines
 
-[Examples]
+
+[Example]                                        Description
+------------------------------------------------|---------------
 $ history | less                                : Will show the history using the 'less' format
 $ history | grep derp                           : Will search the history and display the commands that contain derp
 $ ./derp >> derpy.txt                           - Will send the content from the compiled program (derp) to be
@@ -1562,15 +1741,17 @@ $ grep derp << EOF                              : Will display 2 lines.
 > herpti                                        - One command written using multiple lines, useful method in shell scripts
 > derpti                                        - .
 > derp                                          - .
-> EOF                                           - .
+> EOF                                           - End Of File
+
 
 Math                                             Description
 ------------------------------------------------|---------------
 expr                                            : Evaluate expressions
 bc                                              : An arbitrary precision calculator language
 
-[Example]
 
+[Example]                                        Description
+------------------------------------------------|---------------
 $ expr 324 - 5123                               : Output -4799
 $ expr length 32094ij+NJIfe3#¤                  : Output 16
 $ echo "3.8 + 0.1" | bc                         : Output 3.9
@@ -1591,13 +1772,12 @@ Shortcut                                         Description
 [ctrl + A]                                      : Beginning of line, go to the beginning of the current line.
 [ctrl + E]                                      : End of line, go to the end of the line.
 [ctrl + L]                                      : Clears the bash terminal of text.
-[alt + .]                                       : Paste the argument from the previous command
 
+[alt + .]                                       : Paste the argument from the previous command
 [ctrl + K]                                      : Cut end of line, cut text to the end of the line.
 [ctrl + U]                                      : Cut beginning of line, cut text to the beginning of the line.
 [ctrl + R]                                      : Reverse search of command history
 [ctrl + Q]                                      : Exit reverse search of command history, without activating command.
-
 [ctrl + F]                                      : Character forward, go forward one character.
 [ctrl + B]                                      : Character backward, aka. go backward one character.
 [ctrl + D]                                      : Delete the current character (aka 'delete' key).
@@ -1607,7 +1787,6 @@ Shortcut                                         Description
 [ctrl + W]                                      : Cut previous word, cut the word located behind the cursor.
 [ctrl + Y]                                      : Paste recent text, paste most recently cut text.
 [alt + Y]                                       : Paste earlier text, rotate back to previously cut text and paste it.
-
 [alt + F]                                       : Word forward, go forward one word
 [alt + B]                                       : Word backward, go backward one word
 [alt + T]                                       : Transpose words, switch positions of current and previous character
@@ -1617,7 +1796,6 @@ Shortcut                                         Description
 [alt + D]                                       : Cut the word following the cursor
 [alt + 1]                                       : Access the 1st argument from the previous command
 [alt + 2]                                       : Access the 2nd argument from the previous command
-...                                             : And so on
 
 
 ╔==============================================╗
@@ -1670,6 +1848,7 @@ ce                                              : Change until the end of a worl
                                                 - Notice that ce deletes the word and places you in the 'Insert' mode
 ?text                                           : Search for 'text', then use '/' to move forward, and '?' to move backward.
 
+
 Commands(Command mode)                           Description
 ------------------------------------------------|---------------
 :q                                              : Quit the file (adds a prompt if changes were made to the file)
@@ -1678,6 +1857,7 @@ Commands(Command mode)                           Description
 :ter                                            : Open a terminal window
 :h                                              : Help
 :ju                                             : List of jumps
+
 
 Cursor movement(Command mode)                    Description
 ------------------------------------------------|---------------
@@ -1728,6 +1908,7 @@ zz                                              : Center cursor on screen
 [Ctrl + b]                                      : Move backward one full screen
 [Ctrl + u]                                      : Move backward ½ a screen
 
+
 Some of these commands can be 'prefaced',
 meaning that if you use the command 10b, you
 move back 10 words. Or if you use 11w, move
@@ -1770,10 +1951,13 @@ $vimtutor
 :r                                              : Strip file extension from an argument
 :g                                              : Affect all occurences of a word
 
-[Example]
+[Example]                                        Description
+------------------------------------------------|---------------
 $ mkfifo [pipeline]                             : Create a  (aka a Named pipe) called [pipeline], some arbitrary name
 $ ls -la > [pipeline]                           - Send something through the pipeline
 $ cat < [pipeline]                              - Display the content of the pipeline
+$ find . -type f -print | xargs grep -l derp    : Find any files with the word "derp" located within.
+
 
 awk                                             : Awk is a scripting language used for manipulating data and
                                                   generating reports. By itself it goes beyond the scope of
@@ -1781,8 +1965,6 @@ awk                                             : Awk is a scripting language us
                                                   if the topic is relatively lightweight.
 make                                            : GNU make utility to maintain groups of programs
                                                   Requires additional knowledge to setup for projects via makefile
-rm .test.c.sw*                                  : Deletes both .sw files for 'test.c' (In case of errors)
-                                                  //compiler course
 size                                            : Display the size of a compiled C program, and how data is stored.
 time                                            : Display the time used to execute a command and print the time for
                                                   {real-time, CPU-time and system CPU time}
@@ -1795,9 +1977,6 @@ xargs [options] [command]                       : Build and execute command line
                                                   This tool is incredibly powerfull, as you can supply it with
                                                   different paths which can be used as arguments, and then processed.
 
-[Example]
-find . -type f -print | xargs grep -l derp      : Find any files with the word "derp" located within.
-
 
 Spell Checking                                   Description
 ------------------------------------------------|---------------
@@ -1807,6 +1986,7 @@ aspell                                          : Interactive spelling checker.
         dump master                             - Show the content of the master dictionary
         help                                    - See the help page
 spell                                           : Batch spelling checker.
+
 
 Python trick for C programming.
 If you've compiled a C program that requires a
@@ -1819,10 +1999,6 @@ objdump                                         :
 nm
 readelf
 $ objdump -d <binary_name>
-
-set                                             : Shell builtin
-        -o noclobber                            - Prevent commands from overwriting files during redirections
-        +o noclobber                            - Allow commands to overwrite files during redirections
 
 [Security]
 $ ssh-keygen -t rsa -b 4096                     : Creating a 4096 bit RSA public key, to be stored in
@@ -1891,6 +2067,9 @@ Sources:
                                                 - with James Garnett, Fabricio Branca and Adrian Mouat
 - Bash Redirections Cheat Sheet                 : 
   https://github.com/pkrumins/bash-redirections-cheat-sheet/blob/master/bash-redirections-cheat-sheet.pdf
+- regex
+  http://www.rexegg.com/
+
 
 ╔==============================================================================╗
 ║    Advanced topics                                                           ║
@@ -1918,6 +2097,7 @@ Sources:
 ║               -  Table 1.6: Control group limiting options                   ║
 ║               -  Table 1.7: Operators for test expressions(Shell scripting)  ║
 ║               -  Table 1.8: Important files on the Linux OS                  ║
+║               -  Table 1.9: List of shell builtin commands.                  ║
 ║          : References                                                        ║
 ╚==============================================================================╝
 
@@ -1982,7 +2162,10 @@ scripting.
 Command                                          Description
 ------------------------------------------------|---------------
 set [-abefhkmnptuvxBCHP] [-o option-name] [--] [arg ...]
-                                                : Command format for 'set'
+                                                : Command format for 'set', a shell-builtin
+        -o noclobber                            - Prevent commands from overwriting files during redirections
+        +o noclobber                            - Allow commands to overwrite files during redirections
+
 
 One big advantage is that it is possible to
 alter how command line editing works with set.
@@ -2172,16 +2355,18 @@ Accessing background jobs:                       Description
                                                   any point. The string must be unambiguous or the match fails.
 %--                                             : Refers to the job stopped before the one most recently stopped
 
+
 There  are 2 primary ways (that I know of) to
 send jobs to the background, notice how one
 grants the 'running' status, and the other
-provides the 'stopped' status.
-
+provides the 'stopped' status.                   Description
+------------------------------------------------|---------------
 Add an ampersand '&' at the end of a command    : Automatically sends the process to the background when the process is created,
                                                   and then display 2 numbers, first  number is the JOB_SPEC, the second number
                                                   is the Processor ID (PID). Setting the status to 'running'.
 [CTRL + Z]                                      : Send a SIGTSTP signal, forcing the job to the background
                                                   Setting the status to 'stopped'
+
 
 The command 'bg' is used to alter the status of
 of a background job, from stopped to 'running'.
@@ -2211,7 +2396,9 @@ disown                                          : Disowns background processes i
         -a                                      - Remove all jobs if JOB_SPEC is not supplied
         -r                                      - Remove only Running jobs
 
-[Example of management]
+
+[Example of management]                          Description
+------------------------------------------------|---------------
 $ ping google.com
 [CTRL + Z]
 $ watch free -h & 
@@ -2269,15 +2456,18 @@ There are 2 ways to execute shell scripts.
 By using the 'bash' command, or running the file
 as an executable.
 
-[Example]
-$ bash test.sh
-$ ./test.sh
+[Example]                                        Description
+------------------------------------------------|---------------
+$ bash test.sh                                  : Method 1, using the bash command.
+$ ./test.sh                                     : Method 2 Running it as an executable
+
 
 This link explains a lot of the syntax involved
 https://linuxhint.com/30_bash_script_examples/
 
 The 1st line of a shell script should be:
 #!/bin/bash
+This is commonly referred to as 'shebang'
 
 It's possible to create variables. Variable
 names are case sensitive. 
@@ -2289,10 +2479,12 @@ functions, use a dollar sign, then parenthesis.
 A single hashtag (#) is used as a single line
 comment.
 
-[Examples]
-VAR1=6465.7270
-VAR2="derp"
-VAR3=$(date)
+[Example]                                        Description
+------------------------------------------------|---------------
+VAR1=6465.7270                                  : Storing a value
+VAR2="derp"                                     : Storing a string
+VAR3=$(date)                                    : Storing the output of a command
+
 
 Some characters have special meaning in the shell
 
@@ -2304,6 +2496,7 @@ Special meaning                                  Description
                                                   still considered as such.
 $STRING                                         : Name of a variable.
 
+
 Commonly used parameter expansions in bash
 shell scripting:                                 Description
 ------------------------------------------------|---------------
@@ -2313,7 +2506,8 @@ ${var##pattern}                                 : Chop the longest match for pat
 ${var%pattern}                                  : Chop the shortest match for pattern from the end of var's value.
 ${var%%pattern}                                 : Chop the longest match for pattern from the end of var's value.
 
-[Examples]                                       Try these to see the output.
+
+[Example]                                        Try these to see the output.
 ------------------------------------------------|---------------
 $ THIS="This is an example"
 $ THIS=${THIS:-"Not set"}
@@ -2323,8 +2517,10 @@ This is an example
 $ echo $THAT
 Not set
 
+
 Syntax for 'if', 'else if', 'then', 'then', can
-be setup using this format:
+be setup using this format:                      Description
+------------------------------------------------|---------------
 if  [argument] ; then                           : If argument is true, then do....
 ...
 elif [argument]                                 : 'Else if'-statement
@@ -2346,12 +2542,16 @@ else
    exit 2
 fi
 
+
 There is also a shorthand method for an 
-if-statement with a single command.
+if-statement with a single command.              Description
+------------------------------------------------|---------------
 [statement] || [command]                        : If statement fails run [command]
 [statement] && [command]                        : If statement succeed run [command]
 
+
 [Example shorthand method]                      : Same thing as the example above
+------------------------------------------------|---------------
 filename="$HOME"
 [ -f "$filename" ] \
    && { echo "$filename is a regular file" ; exit 0 } \
@@ -2370,6 +2570,7 @@ but not limited to {variable, command, string}
 Syntax is:
 case [argument] in
 ';;' is used to end each case.
+
 
 --------------------[Example]-------------------
 # Here we're using the date command 'day' output.
@@ -2428,6 +2629,7 @@ done
 It is possible to disable shell functions,
 variables and references with 'unset'.
 
+
 Command-mode                                     Description
 ------------------------------------------------|---------------
 unset [-f] [-v] [-n] [name ...]                 : Unset a function
@@ -2436,11 +2638,12 @@ unset [-f] [-v] [-n] [name ...]                 : Unset a function
         -n                                      - Treat each NAME as a name reference and unset the variable itself
                                                   rather than the variable it references
 
+
 Common Commands                                  Description
 ------------------------------------------------|---------------
-read [VARIABLE]                                 : 
-        -p "string containing a prompt"         : 
-echo
+read [VARIABLE]                                 : Read input from user and store it in VARIABLE.
+        -p "string containing a prompt"         - Include a prompt when using the read command
+echo -e [string]                                : Enable interpretation of backslash-escaped characters
 
 
 ╔==============================================╗
@@ -2461,7 +2664,7 @@ level programs and services, access to the
 kernel.
 
 The specific implementation varies somewhat
-<based on cpu architecture and OS, but for now
+based on cpu architecture and OS, but for now
 assume it is all combined within wrapper
 functions, such as those supplied by glibc on   : C library, https://en.wikipedia.org/wiki/Glibc
 Linux. This allow a higher abstraction level.
@@ -2488,8 +2691,8 @@ see the category they belong to.
 
 System call                                      Description
 ------------------------------------------------|---------------
-open                                            : open, openat, creat - Open and possibly create a file
-close                                           : Close a file descriptor
+open                                            : open, openat, creat - Open and possibly create a file.
+close                                           : Close a file descriptor.
                                                 - File descriptor is integer that uniquely identifies an open file of
                                                   the process.
 fork                                            : Create a child process.
@@ -2505,11 +2708,10 @@ wait                                            : Wait for process to change sta
                                                   Using kill on a zombie won't remove it, and there is a limited amount of PID
                                                   available on a Linux OS, which is why it is imperative for programs to reap
                                                   their zombie children.
-read                                            : Read from a file descriptor
-                                                  Note that this specific name, is also used in shell scripting, when reading
-                                                  from the console, and that 2 usefull operators are '-p' for prompt, and '-s'
-                                                  for secret.
-write                                           : Send a message to another user
+read                                            : Read from a file descriptor.
+                                                  Note that this specific name, is also used in shell scripting, do not mistake
+                                                  the two.
+write                                           : Send a message to another user.
 pipe                                            : Create a pipe, a unidirectional data channel that can be used for interprocess
                                                   communication. 
 exec                                            : Execute a file.
@@ -2539,7 +2741,7 @@ In order to test this for yourself, there are a
 number of commands, and manual pages you can
 read.
 
-Commands                                         Manual description
+Commands                                         Description
 ------------------------------------------------|---------------
 syscall                                         : Indirect system call
 syscalls                                        : Linux system calls
@@ -2550,9 +2752,12 @@ ftrace                                          : Runs the frysk systemcall trac
                                                 - Something about a similar manner to strace, and based on RHEL, rather than DEB.
 truss                                           : Trace system calls and signals
 
-[Example]
+
+[Example]                                        Description
+------------------------------------------------|---------------
 $ strace ls -la */                              : Display system calls, made during the 'ls' command.
 $ ltrace -S ls -la */                           : Also display system and library calls, made during the 'ls' command.
+
 
 To give you a sense of the scale, there are:    : Source https://en.wikipedia.org/wiki/System_call
 More than 300 system calls on Linux,
@@ -2571,7 +2776,7 @@ No details about Mac.
 Some common programs or tools on Linux, used for
 specific purposes.
 
-Server types
+Server types                                     Name of commands/programs
 ------------------------------------------------|---------------
 Name                                            : Bind, dnsmasq, djbdns
 Mail                                            : postfix, qmail, sendmail
@@ -2617,7 +2822,8 @@ nslookup –option1 –option2 host-to-find simulated-dns-server
                                                   and the 2nd is optional.
                                                   If excluded it'll be sent to the default DNS server
 
-Option list                                       Description
+
+Option list                                      Description
 ------------------------------------------------|---------------
 A                                               : Specifies a computer's IP address.
 ANY                                             : Specifies a computer's IP address.
@@ -2651,7 +2857,8 @@ type in:
 > set q=[option]
 > [website]
 
-:Examples
+[Example]                                        Description
+------------------------------------------------|---------------
 $ nslookup -type=mx dtu.dk                      : Info about the mail exchange server for DTU
 $ nslookup -query=hinfo  -timeout=10 [website]  : Generates a query, using the hinfo option, with timeout 10 to dtu.dk.
 $ nslookup dtu.dk google.com                    : Here we send our query to google.com which will query dtu.dk on our behalf
@@ -2745,6 +2952,7 @@ crontab                                         : Command for using cron jobs.
         -l                                      : Current crontab will be displayed on standard output
         -r                                      : Causes current crontab to be removed
 
+
 This is the format which you specify both which
 commands to use, but also when to use them.
 [a] [b] [c] [d] [e] [/directory/command] [output]
@@ -2762,7 +2970,7 @@ Configuration operator                           Description
 / (Forward slash)                               : Used divide values into steps
 
 
-[Examples]                                       Description
+[Example]                                        Description
 ------------------------------------------------|---------------
 * * * * * $home/derpscript.sh                   : Run shell script as cron job every minutes
 20 * * * * $home/derpscript.sh                  : Run shell script as cron job every 20 minutes
@@ -2821,6 +3029,7 @@ X Window system                                 : An open source, cross platform
 ║                  Table: 1.1                  ║
 ╚==============================================╝
 Bash Configuration files.
+
 File                                             Description
 ------------------------------------------------|---------------
 /etc/profile                                    : This sets up user environment information for every user.
@@ -2853,6 +3062,7 @@ File                                             Description
 ║                  Table: 1.2                  ║
 ╚==============================================╝
 Characters to add information to bash prompt.
+
 Special character                                Description
 ------------------------------------------------|---------------
 \!                                              : This shows the current command history number. This includes
@@ -3019,6 +3229,7 @@ Signals available in Linux.
 Use this command, to see a list of supported
 signals on your system:
 $ kill -l
+
 Signal          Number                           Description
 ---------------|--------------------------------|---------------
 SIGHUP           1                              : "Signal hang up" Hang-up detected on controlling terminal or death of
@@ -3134,15 +3345,17 @@ $ help test
 
 There are 5 basic categories of operators in
 bash/shell scripting:
+
 Types                                            Description
 ------------------------------------------------|---------------
 Arithmetic                                      : Mathematical
 Relational                                      :
-Boolean                                         :
-Bitwise                                         :
+Boolean                                         : True or False
+Bitwise                                         : 
 File test                                       :
 
-Fil Operator                                     What is being tested
+
+File Operator                                    What is being tested
 ------------------------------------------------|---------------
 -a file                                         : Does the file exist?
 -b file                                         : Is the file a block special device?
@@ -3175,6 +3388,8 @@ file1 -ot file2                                 : Is the first file older than t
 file1 -ef file2                                 : Are the two files associated by a link (a hard link or a symbolic link)?
 
 
+Mathematical                                     Description
+------------------------------------------------|---------------
 expr1 -a expr2                                  : Are both the first expression and the second expression true?
 expr1 -o expr2                                  : Is either of the two expressions true?
 var1 -eq var2                                   : Is the first variable equal to the second variable?
@@ -3183,6 +3398,7 @@ var1 -gt var2                                   : Is the first variable greater 
 var1 -le var2                                   : Is the first variable less than the second variable?
 var1 -lt var2                                   : Is the first variable not equal to the second variable?
 var1 -ne var2                                   : Is the firat variable not equal to the second variable?
+
 
 String                                           What is being tested
 ------------------------------------------------|---------------
@@ -3329,6 +3545,76 @@ $HOME/.viminfo                                  :
 /var/log/messages                               : Contains messages produced by the syslog daemon during the boot process
 /var/log/wtmp                                   : A binary data file holding login time and duration for each user currently on
                                                   the system
+
+
+╔==============================================╗
+║                  Table: 1.9                  ║
+╚==============================================╝
+There are no regular manual pages for builtins,
+to view information, use the 'help' command.
+
+Command                                          Description
+------------------------------------------------|---------------
+:                                               : A colon, Returns an exit status of zero.
+.                                               : A dot, Execute commands from a file in the current shell
+[                                               : [ arg... ] Evaluate conditional expression.
+alias                                           : Define or display aliases
+bg                                              : Move jobs to the background
+bind                                            : Set Readline key binds and variables
+break                                           : Exit for-, while-, or until- loops.
+builtin                                         : Execute a shell builtin, even if a command of the same name exist
+caller                                          : Return the content of the current subroutine call.
+cd                                              : Change the shell working directory.
+command                                         : Execute a single command or or display information about commands.
+compgen                                         : Display possible completions depending on the options.
+complete                                        : Specify how arguments are to be completed by Readline.
+compopt                                         : Modify or display completion options.
+continue                                        : Resume for-, while-, until- loops
+declare                                         : Set variable values and attributes.
+dirs                                            : Display directory stack
+disown                                          : Remove jobs from the current shell
+echo                                            : Write arguments to the standard output
+enable                                          : Enable and disable builtin shell commands
+eval                                            : Execute arguments as a shell command
+exec                                            : Execute command, replacing this shell with the specific program
+exit                                            : Exit the shell
+export                                          : Set export attribute for shell variables.
+fc                                              : Display or execute commands from the history list.
+fg                                              : Move jobs to the foreground
+getopts                                         : Parse option arguments passed to shell as a script
+hashed                                          : Remember or display program locations.
+help                                            : Display information about builtin commands
+history                                         : Display or manipulate the history list.
+jobs                                            : Display status of jobs.
+kill                                            : Send a signal to a job.
+let                                             : Evaluate arithmetic expressions.
+local                                           : Define local variables.
+logout                                          : Exit a login shell.
+mapfile                                         : Read lines from the standard input into an indexed array variable.
+popd                                            : Remove directories from stack.
+printf                                          : Formats and prints arguments under control of the format.
+pushd                                           : Add directories to the stack.
+pwd                                             : Print working directory
+read                                            : Read a line from the standard input and split it into fields.
+        -p                                      - Include a prompt.
+readarray                                       : Read lines from a file into an array variable. (A synonym for mapfile)
+readonly                                        : Mark shell variables as unchangeable.
+return                                          : Return from a shell function.
+set                                             : Set or unset values of shell options and positional parameters.
+shift                                           : Shift positional parameters.
+shopt                                           : Set and unset shell options.
+source                                          : Execute commands from a file in the current shell.
+test [expr]                                     : Evaluate conditional  expression
+times                                           : Display process times.
+trap                                            : Trap signals and other events
+type                                            : Display information about a command type.
+typeset                                         : Set variable values and attributes
+ulimit                                          : Modify shell resource limits.
+umask                                           : Display or set file mode mask.
+unalias                                         : Remove a name from the list of defined aliases.
+        -a                                      - Remove all alias definitions.
+unset                                           : Unset values and attributes of shell variables and functions.
+wait                                            : Wait for job completion and return exit status.
 
 
 ╔==============================================╗
