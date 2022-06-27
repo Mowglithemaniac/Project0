@@ -3,7 +3,7 @@
  Author      : Declined#8151 (Discord ID)
  Version     : v1.00
  Copyright   : 
- Dato        : 22/12-20
+ Dato        : 21/06-22
  Description : Read file as byte and convert to hex. (3 examples)
  ============================================================================*/
 
