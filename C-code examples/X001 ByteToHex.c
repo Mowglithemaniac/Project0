@@ -3,7 +3,7 @@
  Author      : Declined#8151 (Discord ID)
  Version     : v1.00
  Copyright   : 
- Dato        : 21/06-22
+ Dato        : 27/06-22
  Description : Read file as byte and convert to hex. (3 examples)
  ============================================================================*/
 
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]){
         return 1;
     }
 
-    menu(argv[1], 2);
+    menu(argv[1], 1);
  
     return 0; 
 }
@@ -69,8 +69,8 @@ void menu(char filename[], int method){
             reset();
             break;
         default:
-            fprintf(stderr, "[!] Incorrect usage, terminating program");
-            break;        
+            fprintf(stderr, "[!] Incorrect usage: terminating program");
+            exit(1);
     }
 
 }
@@ -92,7 +92,8 @@ void simplified(char filename[]){
     fclose(fp); // Close the file
 
     for(int i = 0; i < filelength ; i++)
-        printf("%X", buffer[i]);
+        fprintf(stdout, "%02X", (unsigned char)buffer[i]);
+//        printf("%X", buffer[i]);
     free(buffer);
 
 }
@@ -213,13 +214,13 @@ void printList(){
 
     while (Derpina->next != NULL){
         for(int i=0; i < 16; i++){
-            printf("%X", Derpina->data[i]);
+            fprintf(stdout, "%02X", (unsigned char)Derpina->data[i]);
         }
         Derpina = Derpina->next;
     }
 
     for(int i = 0; i < offset; i++){
-        printf("%x", Derpina->data[i]);
+        fprintf(stdout, "%02X", (unsigned char)Derpina->data[i]);
     }
 
     return;
