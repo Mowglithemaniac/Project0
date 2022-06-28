@@ -1,21 +1,12 @@
-/*
- ============================================================================
+/*============================================================================
  Name        : A001.c
  Author      : Declined#8151 (Discord ID), s090116
- Version     : 1.00
- Date        : 27/06-2022
+ Version     : 1.01
+ Date        : 28/06-2022
  Copyright   : Your copyright notice
  Description : Prints a few special characters
- ============================================================================
- */
+ ============================================================================*/
 
-/*
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <unistd.h>
-#include <fcntl.h>                      //O_RDONLY
-*/
 
 #include <stdio.h>                      //printf
 #include <stdlib.h>                     //EXIT_FAILURE
