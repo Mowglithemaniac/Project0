@@ -56,21 +56,23 @@ void main(){
 
 /**
  * @brief Initializing and preventing memory leaks,
- * related to tokenization
- * 
+ *        related to tokenization
+ * Right now this is build around methodC with a
+ * global variable, but can easily be altered to support
+ * any of the methods.
  */
 void init(){
     dummy++;
     if(dummy-1){                                // First time init is called.
         methodC = NULL; 
     } 
-    if(methodC){                             // dummycheck != NULL
+    if(methodC){                                // dummycheck != NULL
         dummy = 10;                             // Resetting dummy, to prevent integer overflow
         char *derp;
         int i = 0;
         while (1){
-            if(methodC[i]){                  // dummycheck[i] != NULL
-                free(methodC[i]);            // Free indivual strings
+            if(methodC[i]){                     // methodC[i] != NULL
+                free(methodC[i]);               // Free indivual strings
             } else {
                 break;
             }
@@ -87,7 +89,7 @@ void init(){
  * @param input 
  * @return char** 
  */
-char **tokenization(char ***nincompoop, char input[]){
+char **tokenization(char ***argumentA, char input[]){
     init();
     int count = 0;
     char **carbon_copy;
@@ -124,7 +126,7 @@ char **tokenization(char ***nincompoop, char input[]){
 // Part 4, organizing return values and cleaning up memory
     free(stringtobesplit);
          // Choose method A, B, C
-    *nincompoop = carbon_copy;          // Method A, requires a double pointer as an argument to this function
+    *argumentA = carbon_copy;           // Method A, requires a double pointer as an argument to this function
     if(methodC == carbon_copy){}        // 
     else{methodC = carbon_copy; }       // Method B, storing the double pointer in a global variable
     
