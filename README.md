@@ -3,10 +3,12 @@ Name        : README.md
 Author      : s090116, Declined#8151 (Discord ID) 
 Date        : 29/09-20
 Last Updated: 11/12-21
-Description : This repository is created to include an introduction and overview
-              into a number of subjects.
-              If I'm the author the file is on copyright, else the source should
-              be clearly defined within the folder
+Description : This repository is created to include an
+              introduction and overview into a number of
+              subjects.
+              If I'm the author the file is on copyright,
+              else the source should be clearly defined
+              within the folder or document.
 Copyright   : All rights reserved
 ```
 
