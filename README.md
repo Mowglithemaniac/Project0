@@ -28,7 +28,7 @@ Copyright   : All rights reserved
 
 ***
 
-**Exercises**
+## Exercises
 Setup to help the user gain some practical experience in some specific way shape or form.
 
 | Name | Description |
@@ -42,7 +42,7 @@ Setup to help the user gain some practical experience in some specific way shape
 
 ***
 
-**Guides**
+## Guides
 Condensed information about topics.
 
 | Name | Description |
@@ -52,7 +52,7 @@ Condensed information about topics.
 | cmd commands.txt | A brief list regarding some of the most commonly used cmd command options. |
 | Command tool help list.txt | A file explaining detailed use about a few useful and very specific commands, such as nslookup, gcc, MPI, OpenMP, git |
 
-**Shell Examples**
+## Shell Examples
 Copy pasted of the net and from places.
 A lot of shell files to highlight syntax.
 Note that file "B003 bsub.h" is to be used specifically on the LSF 10 cluster.
@@ -68,7 +68,7 @@ After a minute or two expect that the job will disappear, so you have a limited 
 
 ***
 
-**Tools**
+## Tools
 Setup to contain useful programs
 
 | Name | Description |
