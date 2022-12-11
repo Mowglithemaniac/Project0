@@ -5,10 +5,12 @@ Date        : 29/09-20
 Last Updated: 11/12-21
 Description : This repository is created to include an introduction and overview
               into a number of subjects.
-              If I'm the author the file is on copyright, else the source should be clearly defined within the folder
+              If I'm the author the file is on copyright, else the source should
+              be clearly defined within the folder
 Copyright   : All rights reserved
 ```
 
+***
 
 # Directory information
 
@@ -24,7 +26,9 @@ Copyright   : All rights reserved
 | C[0??]     | Basic topics regarding pointers |
 | D[0??]     | Files regarding Linked lists |
 
-** Exercises **
+***
+
+**Exercises**
 Setup to help the user gain some practical experience in some specific way shape or form.
 
 | Name | Description |
@@ -35,6 +39,8 @@ Setup to help the user gain some practical experience in some specific way shape
 | Exercise 4 | Practical experience with stdout and stderr
 | Exercise 5 | A brief exercise to test your knowledge of using a commandline and redirection
 | Exercise 6 | (Not published) A semi programmable exercise with multiple aspects containing both analytical and programming skill.
+
+***
 
 **Guides**
 Condensed information about topics.
@@ -60,6 +66,7 @@ To view the job queue, use the command '`bjobs`'
 
 After a minute or two expect that the job will disappear, so you have a limited amount of time to test it.
 
+***
 
 **Tools**
 Setup to contain useful programs
