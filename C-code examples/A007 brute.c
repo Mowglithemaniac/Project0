@@ -8,15 +8,6 @@
  Description : A program that can brute force all permutations of a
                characterset, up to a defined number of characters.
  ============================================================================*/
- /*============================================================================
- Name        : A027.c
- Author      : Declined#8151 (Discord ID)
- Edited by   : 
- Version     : v1.01
- Copyright   : 
- Description : How many bits are used for a specific datatype.
- ============================================================================*/
-
 
 #include <stdio.h>
 #include <string.h>
