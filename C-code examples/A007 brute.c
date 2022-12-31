@@ -4,7 +4,7 @@
  Version     : v1.00
  Copyright   : All rights reserved
  Date		 : 11/12-2022
- Last updated: 12/12-2022
+ Last updated: 31/12-2022
  Description : A program that can brute force all permutations of a
                characterset, up to a defined number of characters.
  ============================================================================*/
@@ -79,7 +79,7 @@ void main1(){
     if(CHARSETLENGTH != strlen(characterset)){
         fprintf(stderr,"[!] Updating CHARSETLENGTH\n");
         printf("MAXLENGTH : %i \t\t characterset : %i\n", CHARSETLENGTH, (int)strlen(characterset));
-        CHARSETLENGTH == strlen(characterset);
+        CHARSETLENGTH = strlen(characterset);
     }
     output[0] = characterset[0];
     output[1] = characterset[0];
