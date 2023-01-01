@@ -1,7 +1,7 @@
 /*============================================================================
  Name        : brute
  Author      : Declined#8151 (Discord ID), s090116
- Version     : v1.00
+ Version     : v1.01
  Copyright   : All rights reserved
  Date		 : 11/12-2022
  Last updated: 31/12-2022
