@@ -17,7 +17,7 @@
  * @brief This code is built to test argument usage 
  * @optarg This variable is used to catch additional arguments
  * @optopt This variable is used to manually catch any incorrectly passed options
- * @optind this integer
+ * @optind this integer, which is used to access the unused arguments, the example arguments showcase the result somewhat clearly
  */
 int main(int argc, char *argv[]){
     /**
