@@ -9,18 +9,23 @@
                characterset, up to a defined number of characters.
  ============================================================================*/
 
+/**  Libraries  **/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
+/** Global variables  **/
 int MAXLENGTH = 24;
 int CHARSETLENGTH = 26;
-int desiredlength = 8;
+int desiredlength = 5;
 char characterset[] = "abcdefghijklmnopqrstuvwxyz";
-//Function prototypes
+
+/**  Functions prototypes **/
 void printing(char printthis[]);
 void increment(char current[]);
 int findIndex(char character);
+
+/**  Functions  **/
 
 void printing(char printthis[]){
     printf("\r%s", printthis);
@@ -34,7 +39,6 @@ void increment(char current[]){
     int CHARINDEX;
     while (check){
         tmp = current[position];
-//        printf("%c\n", characterset[CHARSETLENGTH-1]);
         if(tmp == characterset[CHARSETLENGTH-1]){
             current[position] = characterset[0];
             if(position == 0){
@@ -46,23 +50,17 @@ void increment(char current[]){
                 return;
             }
             position--;
-//            printf("\nReached end of characterset\n");
-//            printf("Position : %i\n%s\n", position, current);
         }
         else {
             CHARINDEX = findIndex(tmp);
             current[position] = characterset[CHARINDEX+1];
-//            check = 0;
             return;
         }
     }
-//    printf("test string %s\n", current);
-//    exit(1);
 }
 
 int findIndex(char character){
     for(int i = 0; i < CHARSETLENGTH; i++){
-//        printf("\nchar : %c\t\tposition : %i\n", character, i);
         if(character == characterset[i]){ return i;}
 
     }
@@ -83,20 +81,13 @@ void main1(){
     }
     output[0] = characterset[0];
     output[1] = characterset[0];
-//    printf("%s\n", output);
-//    exit(1);
     while(output[desiredlength] == 0){
         printing(output);
         increment(output);
     }
-    printf("\nderp\n");
-}
-
-void test(){
-
+//    printf("\nderp\n");
 }
 
 int main(void){
     main1();
-    test();
 }

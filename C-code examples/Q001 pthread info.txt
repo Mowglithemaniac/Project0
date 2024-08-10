@@ -1,0 +1,7 @@
+To research:
+https://docs.oracle.com/cd/E19205-01/820-0619/geosb/index.html
+https://code-vault.net/course/6q6s9eerd0:1609007479575/lesson/18ec1942c2da46840693efe9b51eabf6
+https://riptutorial.com/pthreads/example/32383/returning-result-from-thread
+https://stackoverflow.com/questions/2251452/how-to-return-a-value-from-pthread-threads-in-c
+https://stackoverflow.com/questions/20196121/passing-struct-to-pthread-as-an-argument
+
