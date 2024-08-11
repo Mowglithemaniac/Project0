@@ -1,10 +1,10 @@
 /*============================================================================
  Name        : brute
  Author      : Declined#8151 (Discord ID), s090116
- Version     : v1.01
+ Version     : v1.02
  Copyright   : All rights reserved
  Date		 : 11/12-2022
- Last updated: 31/12-2022
+ Last updated: 11/08-2024
  Description : A program that can brute force all permutations of a
                characterset, up to a defined number of characters.
  ============================================================================*/
@@ -17,10 +17,11 @@ int MAXLENGTH = 24;
 int CHARSETLENGTH = 26;
 int desiredlength = 8;
 char characterset[] = "abcdefghijklmnopqrstuvwxyz";
+
 //Function prototypes
-void printing(char printthis[]);
-void increment(char current[]);
-int findIndex(char character);
+void printing(char printthis[]);        //
+void increment(char current[]);         //
+int findIndex(char character);          //
 
 void printing(char printthis[]){
     printf("\r%s", printthis);
@@ -72,31 +73,32 @@ int findIndex(char character){
 }
 
 
-void main1(){
+int main(int argc, char * argv[]){
+    /** Checking argument usage to update the desired length
+    * Argument should be an integer between 1-9, taking some liberty with verification
+    * To properly check all potential edge cases (hex, octal, overflow(INT_MAX) or underflow(INT_MIN))
+    * would require using strtol() along with errno.
+    */
+    if (argc == 2){
+        if (strlen(argv[1]) == 1){ //Only 1 character was supplied
+            if (argv[1][0] >= '1' && argv[1][0] <= '9'){ //Verifying via ASCII values
+                desiredlength = argv[1][0] - '0';
+            }
+        }
+    }
+
     char *output = malloc(sizeof(char)*MAXLENGTH);
     //Initialize the array needed to store the output string
     memset(output, 0, MAXLENGTH*sizeof(char));
     if(CHARSETLENGTH != strlen(characterset)){
-        fprintf(stderr,"[!] Updating CHARSETLENGTH\n");
-        printf("MAXLENGTH : %i \t\t characterset : %i\n", CHARSETLENGTH, (int)strlen(characterset));
+        fprintf(stderr, "[!] Updating CHARSETLENGTH\n");
+        fprintf(stderr, "MAXLENGTH : %i \t\t characterset : %i\n", CHARSETLENGTH, (int)strlen(characterset));
         CHARSETLENGTH = strlen(characterset);
     }
     output[0] = characterset[0];
-    output[1] = characterset[0];
-//    printf("%s\n", output);
-//    exit(1);
     while(output[desiredlength] == 0){
         printing(output);
         increment(output);
     }
-    printf("\nderp\n");
-}
-
-void test(){
-
-}
-
-int main(void){
-    main1();
-    test();
+    printf("\n");
 }
