@@ -1,25 +1,20 @@
 /*============================================================================
- Name        : A042 base64 varations.c
+ Name        : A042 base64
  Author      : Declined#8151 (Discord ID)
- Version     : 1.00
- Date        : 23/6-2024
- Copyright   : This is my file.
+ Version     : 0.06
+ Date        : 11/08-2024
  Description : Encryption and decryption of base64
-               Additional variants are included and showcased,
-               but not converted supported.
- ============================================================================*/
+               Additional variants are included and supported if need be.
+               However it is not currently implemented
+============================================================================*/
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
-//************** Global struct **************
-/**
- * @brief Structure to hold information about different base64 variants.
- * 
- * Linked for easy traversal.
- */
+
+// Variant string formats
 struct base64_variant{
     char name[20];
     char string[65];
@@ -27,47 +22,37 @@ struct base64_variant{
     struct base64_variant * prev;
 };
 
-// ************** Global variables **************
-//! Base64 standard character set
+// Global variables
 char BASE64[]          = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-//! Base64 URL-safe character set
 char BASE64_URL[]      = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
-//! Bcrypt Base64 character set
 char BCRYPT_BASE64[]   = "./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-//! Filename safe Base64 character set
 char FILENAME_BASE64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-";
-
-
 int ENCODING_LENGTH = 64;
 struct base64_variant *head, *selected_node;
 
 
-// ************** Prototype functions **************
-void initialize_list();                              // Initializing data structure
-void determine_method(char method[]);       // Determining which base64_method to use
-int validate_encoding(char *encoded,        // Validate encoding integrity
-        int length);
-void encode(char content[], int length);    // Encode content to selected base64_method
-void decode(char method[], char content[],  // Decode content from selected base64_method
-        int length);
+// ************ Prototype functions
+void create();                              // Data structure
 
 
-// ************** Functions **************
+void determine_method(char method[]);
+int validate_encoding(char *encoded,  
+        int length);
+void encode(char content[], int length);
+void decode(char method[], char content[], int length);
 
 /**
- * @brief Initializes the linked list of base64 variants.
- *
  * Initialize doubly linked list, with each node
  * containing a flavor of base64.
  */
-void initialize_list(){
+void create(){
 
     //Initialize the list, and keep nodes connected
     head = malloc(sizeof(struct base64_variant));
     head->prev = NULL;
     selected_node = head;
 
-    for(int i = 1; i < 4; i++){ // Create and connect additional nodes
+    for(int i = 1; i < 4; i++){ // Create and connect 3 additional nodes
         selected_node->next = malloc(sizeof(struct base64_variant));
         selected_node->next->prev = selected_node;
         selected_node = selected_node->next;
@@ -89,12 +74,6 @@ void initialize_list(){
     selected_node = NULL;
 }
 
-/**
- * @brief Determines the encoding method by comparing provided method name with known variants.
- * Exits if the specified method is not found.
- * 
- * @param method The based64 variant to be used.
- */
 void determine_method(char method[]){
     //Find the correct variant to be used
     selected_node = head;
@@ -110,7 +89,7 @@ void determine_method(char method[]){
         }
     }
     if (variant <= 0){
-        fprintf(stderr, "[!] Method \"%s\" not found.\n", method);
+        printf("Method \"%s\" not found.\n", method);
         exit(1);
     }
 }
@@ -199,22 +178,17 @@ void encode(char content[], int length){
 }
 
 
-/**
- * @brief Decodes a base64-encoded string using the selected variant.
- * 
- * Handles padding appropriately and converts four
- * base64 characters back to three bytes.
- * 
- * @param method The method to use for decoding.
- * @param content The encoded content to decode.
- * @param length The length of the encoded content.
+ /**
+ * @brief derp
+ * @return foobar
+ *  
  */
 void decode(char method[], char content[], int length){
-    int i = 0, pad_count = 0;
+    int i = 0, bytes_to_print = 3; //bytes_to_print, will only be relevant when checking for padding
     unsigned char buffer[3];
 
     if (!validate_encoding(content, length)){
-        fprintf(stderr, "[!] Encoding invalid.\n");
+        printf("Encoding invalid.\n");
         exit(1);
     }
 
@@ -239,41 +213,29 @@ void decode(char method[], char content[], int length){
         buffer[2] = (unsigned char)(content[i+3] == '=') ? 0 : find_index(content[i+3]) ;
 
 
-        if (i + 4 == length){
-            if (content[i+3] == '='){
-                pad_count++;
-                if (content[i+2] == '='){
-                    pad_count++;
+        if (i + 4 == length) {  // Check if it's the last block of data
+            // Start assuming all three bytes need to be printed
+            if (content[i+3] == '=') {
+                bytes_to_print--;  // Reduce print count for each padding character
+                if (content[i+2] == '=') {
+                    bytes_to_print--;
                 }
             }
-        }
-
-        // Print the decoded bytes based on the padding count
-        if (pad_count == 0) {
+            for (int j = 0; j < bytes_to_print; j++) {
+                putchar(buffer[j]);
+            }
+        } else {
             putchar(buffer[0]);
             putchar(buffer[1]);
             putchar(buffer[2]);
-        } else if (pad_count == 1) {
-            putchar(buffer[0]);
-            putchar(buffer[1]);
-        } else if (pad_count == 2) {
-            putchar(buffer[0]);
-        }
-    } // end for-loop
+       }
+    }
         
 }
 
 
-/**
- * @brief Finds the index of a given base64 character in the selected encoding string.
- *
- * Note: Relies on a valid encoded string, hence why validation
- * be handled before calling this function.
- * 
- * @param c The character to find.
- * @return Returns the index of the character if found; -1 if not found or if it is a padding character.
- */
-int find_index(unsigned char c) {
+// Helper function to find the index of a character in the base64 string
+int find_index(char c) {
     if (c == '=') {
         return -1;  // Immediately return -1 for padding characters
     }
@@ -291,15 +253,15 @@ int find_index(unsigned char c) {
  /**
  * @about: 
  *      Parse arguments supplied via the commandline.
- * @param '-d'|'--decode'
+ * 
  */
 int main(int argc, char* argv[]){
     //supported arguments
     head = NULL;
     selected_node = NULL;
-    initialize_list();
+    create();
 
-    char *supported = ":divb:";
+    char *supported = ":d:eivb:";
     int opt = 0;
     int result = 0;
 
@@ -310,12 +272,8 @@ int main(int argc, char* argv[]){
 //        }
 //
 //    }
-
-// 
     char derp[] = "some arbitrary content";
     encode(derp, strlen(derp));
 
-
     return 0;
 }
-

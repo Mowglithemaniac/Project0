@@ -3,7 +3,6 @@
  Author      : Declined#8151 (Discord ID)
  Version     : v1.00
  Date        : 28/12-20
- Last updated: 10/08-24
  Copyright   : Your copyright notice
  Description : printf operators
 ============================================================================*/
@@ -57,17 +56,17 @@ void printf_info(){
      * the last character MUST be NULL (aka '\0')
      */
     printf( "=======================\n"
-            "Basic printf conversions:\n"
+            "Format specificers:\n"
             "=======================\n"
-            "%%c   \t- int; single character\n"
-            "%%d,i \t- Decimal (integer) number (base 10)\n"
-            "%%e,E \t- double; Exponential floating-point number\n"
-            "%%f \t- double; Floating-point number\n"    
+            "%%c \t- Character\n"
+            "%%d \t- Decimal (integer) number (base 10)\n"
+            "%%e \t- Exponential floating-point number\n"
+            "%%f \t- Floating-point number\n"
             "%%i \t- Integer (base 10)\n"
-            "%%o \t- int; unsigned octal number (base 8)\n"
-            "%%s \t- char *; String of characters\n"
-            "%%u \t- int; Unsigned decimal (integer) number\n"
-            "%%x,X \t- int; Number in hexadecimal (base 16)\n"
+            "%%o \t- Octal number (base 8)\n"
+            "%%s \t- String of characters\n"
+            "%%u \t- Unsigned decimal (integer) number\n"
+            "%%x \t- Number in hexadecimal (base 16)\n"
             "%%p \t- Printes the addresss that a pointer points to\n"
             "%%%% \t- Print a percent sign\n"
             "\\%% \t- Print a percent sign\n\n");
@@ -83,11 +82,7 @@ void printf_info(){
             "\\r \t- Carriage return\n"         // Move cursor to the start of the line
             "\\t \t- tab\n"
             "\\v \t- Vertical tab\n"
-            "\\\\ \t- Backslash\n"
-            "\\\" \t- Double quote\n"
-            "\\000 \t- Octal number (represents 8 bits)\n"
-            "\\xhh \t- Hexadecimal number (represents 8 bits)\n\n"
-            );
+            "\\\\ \t- Backslash\n\n");
 
     /**Controlling width
      */

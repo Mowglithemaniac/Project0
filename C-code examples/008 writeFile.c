@@ -3,7 +3,6 @@
  Author      : Declined#8151 (Discord ID), s090116
  Version     : 1.01 (included a warning)
  Date        : 24/12-2020
- Last updated: 10/08-2024
  Copyright   : Your copyright notice
  Description : Example of writing to a file.
  ============================================================================*/
@@ -11,16 +10,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h>
 
 const int maxArraySize = 128;
 
-int main(){
-    FILE *fp;
+void main(){
     char tempArray[maxArraySize];
-    int i = strlen(tempArray);
-    char *test = "test1\ntest2\ntest3";
-
     printf("Enter a filename that you want to write something to.\n"
            "=======================WARNING=======================\n"
            "Choose a file that does NOT already exist!!!\n"
@@ -34,19 +28,14 @@ int main(){
     /** with fgets, the last character is '\n'
      * the last char needs to be changed to NULL 
      */
+    int i = strlen(tempArray);
     tempArray[i-1] = '\0';
 
-    // Inserting error handling, check if file exist
-    struct stat buffer;
-    if (stat(tempArray, &buffer) == 0) {
-        fprintf(stderr, "[!] File already exist, terminating program!\n");
-        return 1;
-    }
-
+    FILE *fp;
     fp = fopen(tempArray, "w");
+    char *test = "test1\ntest2\ntest3";
     fprintf(fp, "%s", test);
     fclose(fp);
-    return 0;
 }
 
 /*

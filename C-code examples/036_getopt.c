@@ -5,7 +5,7 @@
  Date        : 11/07-2021
  Copyright   : Your copyright notice
  Description : gcc -o test 036_getopt.c
-             $ ./test -aderpf derp bad "invalid input" 
+             $ ./test-aderpf derp bad "invalid input" 
  ============================================================================*/
 //#include "filename.h"
 
@@ -14,11 +14,10 @@
 
 
 /**
- * @brief This code is built to test argument usage
- *  
- * @param optarg This variable is used to catch additional arguments
- * @param optopt This variable is used to manually catch any incorrectly passed options
- * @param optind this integer, which is used to access the unused arguments, the example arguments showcase the result somewhat clearly
+ * @brief This code is built to test argument usage 
+ * @optarg This variable is used to catch additional arguments
+ * @optopt This variable is used to manually catch any incorrectly passed options
+ * @optind this integer, which is used to access the unused arguments, the example arguments showcase the result somewhat clearly
  */
 int main(int argc, char *argv[]){
     /**

@@ -4,7 +4,7 @@
  Version     :
  Date        : 28/12-2020
  Copyright   : Your copyright notice
- Description : 
+ Description : Main program of the folder that ties everything together
  ============================================================================*/
 
 #include <stdio.h>
@@ -12,7 +12,7 @@
 
 void main(){
     char temp[20] = "Hello";
-    printf("Length of string 'Hello' is : %ld\n", strlen(temp));
+    printf("Length of 'Hello' is : %ld\n", strlen(temp));
     //Hint it's 5
 }
 

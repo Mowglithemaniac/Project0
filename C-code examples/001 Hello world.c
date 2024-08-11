@@ -4,11 +4,13 @@
  Version     :
  Date        :
  Copyright   : Your copyright notice
- Description : Hello World in C, ANSI-style
+ Description : Hello World in C, Ansi-style
 ============================================================================*/
 
 #include <stdio.h>
+#include <stdlib.h>
 
-main(void) {
-	printf("hello, world\n"); /* prints "hello, world" */
+int main(void) {
+	printf("Hello World"); /* prints !!!Hello World!!! */
+	return 0;
 }

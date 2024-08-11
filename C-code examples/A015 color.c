@@ -1,21 +1,21 @@
 /*============================================================================
  Name        : A015 color
- Author      : mowglithemaniac
+ Author      : Declined#8151 (Discord ID)
  Version     : 1
  Date        : 11/08-2024
  Copyright   : Your copyright notice
- Description : Color coding showcases.
- ============================================================================*/
+ Description : Showcasing various colors
+============================================================================*/
 
-#include <stdio.h>
 
 /**
  * @brief
- * \0x1b
- * "\x1b[41m[!] %s\x1b[0m ", (char *) red_error_description);
- * "\x1b[44m[?] %s\x1b[0m ", (char *) blue_info_message);
- * "\x1b[42m[+] %s\x1b[0m ", (char *) green_info_message);
+ * \x1b[41m[!] <STRING>\x1b[0m " Error_message
+ * \x1b[44m[?] <STRING>\x1b[0m " Info_message
+ * \x1b[42m[+] <STRING>\x1b[0m " Success_message
  */
+
+#include <stdio.h>
 
 void print_basic_colors();
 void print_extended_colors();
@@ -43,7 +43,7 @@ int main() {
 
     printf("\n==============================\n");
     printf("\x1b[1;34;40mShowcasing colors with this format:\x1b[0m\n");
-    printf("\x1b[<STYLE>;<VALUE>;<VALUE>m<STRING>\\x1b[0m\n");
+    printf("\\x1b[<STYLE>;<VALUE>;<VALUE>m<STRING>\\x1b[0m\n");
     printf("Character style: 0-7 representing\n");
     printf(" - 0: Reset all attributes (normal)\n");
     printf(" - 1: Bold or increased intensity\n");
@@ -55,8 +55,6 @@ int main() {
     printf(" - 7: Reverse video (swap foreground and background colors)\n");
     printf(" - 8: Concealed (invisible)\n");
     printf(" - 9: Strikethrough\n");
-    printf("Foreground:\n");
-    printf("Background:\n\n");
 
     print_combined_styles();
 
@@ -79,7 +77,7 @@ void print_extended_colors() {
     int i;
     for (i = 0; i < 256; i++) {
         printf("\x1b[48;5;%dm%03d\x1b[0m", i, i);
-        if ((i + 1) % 6 != 0) {
+        if ((i + 1) % 8 != 0) {
             printf(" ");
         } else {
             printf("\n");
