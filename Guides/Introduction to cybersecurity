@@ -1,0 +1,415 @@
+---
+title: Introduction to Cybersecurity
+---
+Providing some general knowledge of what Cybersecurity
+is as a whole, and presenting some general knowledge
+and frameworks used in the industry.
+
+No system is ever completely secure and able to protect against a dedicated
+attacker with sufficient funding and knowledge. From a security standpoint the
+goal of protecting your assets can be achieved by turning it into a war of
+attrition where the resources required by a malicious 3rd party to compromize
+the services is unfeasable.
+Having strong security policies, security updates, training of personel and
+monitoring should be somewhat sufficient measures except against the most
+dedicated malicious entities.
+
+A recurring concept is "Lowest Common Denominator".
+Adversaries tend to focus on 'low hanging fruit', meaning easy to explore weaknesses,
+such as; previous passwords found in breaches or wordlists, known exploits in the
+software being used, lacking or substandard security training.
+
+
+***
+
+### "Ten Commandments for Ethical Hackers."
+
+*    Thou shalt not harm the computer systems or networks you are testing.
+*    Thou shalt not disclose vulnerabilities without proper authorization and coordination.
+*    Thou shalt not engage in illegal activities.
+*    Thou shalt respect the privacy of others.
+*    Thou shalt not covet thy neighbor's tools, scripts, or data.
+*    Thou shalt maintain integrity and confidentiality.
+*    Thou shalt use your skills for good, not for malice.
+*    Thou shalt obtain proper authorization before testing.
+*    Thou shalt report vulnerabilities responsibly and ethically.
+*    Thou shalt educate others about the importance of cybersecurity and ethical hacking.
+
+***
+
+### People
+*Paraphrased: People are lazy and would rather sacrifice security for convenience.*
+
+In the vast majority of examples, vulnerabities have been introduced by human hands.
+
+* When forced to use multiple passwords and asked to rotate them frequently, people have a tendency to get around such cumbersome restrictions by reusing, or choosing incredibly simple passwords. Password managers mitigate this issue to an extend, but does not address the underlying concern.
+* Knowledge is a learning curve, the average user is only able to account for the things they know about. Using known frameworks such as Kerberos is a good start, but in order to be fully secure, it require a plethora of configurations, which the average system administrator might not be aware of.
+* Less security conscientious administrators, may settle for default settings, or be lax in security updates.
+
+Adding psychology into the mix, the biggest threat from a defensive standpoint is people.
+They can be; manipulated, tricked, bribed, incompetent, vindictive, unaware, lax, and so on.
+
+That is why, the primary focus should be on educating employees, as well as executives.
+
+
+***
+
+### From a business perspective
+The goal of cybersecurity is to allow only authorized users access to a system or resources.
+Attacking and defending systems require knowledge of a vast amount of different subjects.
+
+Assume there are hundreds different methods to attack a system, a defender would
+require knowledge about all possible methods, while an attacker only needs to
+know about one.
+
+Increased **system complexity**, also increase the probability that; errors, faulty
+logic, supply chain vulnerability, incorrect misconfiguration, reintroduction of old
+vulnerabilities, and similar, can sneak in. While there are many frameworks with
+integrated security, it is usually left up to the implementer to connect the systems
+securely.
+
+This is presented most acutely in Windows where newer versions are built upon previous
+versions and backward compatibility. A prime example is Kerberos[^kerberos1][^kerberos2],
+Active Directory[^AD], and Windows Technology LAN Manager (NTLM)[^NTLM].
+
+**Cryptography** is a method that alters the format of data, to only allow
+authorized users the ability to alter the format back into something legible.
+In order to decipher a message, a key of some kind of format is usually used.
+This key is to be protected otherwise it renders the whole cryptographic process
+irrelevant.
+The use of certificates and message digest which relies on cryptographic
+principles, are used to validate the authentiity and integrity of information.
+
+### Foundational concepts
+To better grasp the mindset needed with determining how to attack a system to
+determine how to defend it and vice versa, a couple of key tenets needs to be addressed.
+
+| Security Concepts  |  Description |
+|:---|:---|
+| Least privilege                     | (Principle) If someone do not require access to a resource, do not give it to them. Ensure that access is removed if it is no longer necessary. |
+| Need to know                        | (Principle) Do not divulge needless information about your corporation. |
+| Security by Obscurity               | Based on Kerckhoffs’ principle “A systems security should not rely on its obscurity”. Refers to cryptographic systems. |
+| Restrict access between systems     | Systems should clearly be cordoned off, from other parts of the networking infrastructure. |
+| Basis of cybersecurity              | Six tenets, that provide the basis for access to a secure system: Confidentiality, Integrity, Availability, Nonrepudiation, Authorization, Authentification. |
+| IDS                                 | Intrusion Detection System, 3 types of detection: Signature-based, Anomaly-based, hybrid. Can be either Host based or Network based.  |
+| IPS                                 | Intrusion Prevention System, host based or networking based |
+| Risk assessment of 'services used'  | 3rd party vendors, contractors, and more |
+| Logging tools                       | For forensic investigations |
+| Firewalls                           | Change format from allowed to disallowed and whitelisting |
+| Policies and guidelines             | For different scenarios (do this, when XXX happens) |
+
+
+The concept of cybersecurity is defined by six principles.
+The first three of which, are commonly referred to as the CIA triad. (More on that later.)
+The latter three are often overlooked.
+
+
+| Basis of Cybersecurity  |  Description  |
+|:---|:---|
+| Confidentiality       | Data can be read only by authorized users
+| Integrity             | Data can only be modified by authorized users. Verifiable, reliable, accurate. Relates to both system and data integrity.
+| Availability          | Access when and where it is needed
+| Authentication        | Uniquely and positively identifying an individual
+| Authorization         | Verifying access to resources, often mixed up with Authentication.
+| Nonrepudiation        | Prove who made what changes. Validating the source of information. 
+
+Integrity is a twopart problem, related to both system and data integrity.
+In order to uniquely identify the owner of a request, a method of verification must be applied.
+
+| Means of authenticating a users identity | Explanation and example |
+|:-----|:-----|
+|  Knowledge           | Something the individual knows, which should be unique to that person <br> Password, Personal Identification Number, Answers to specific questions |
+|  Token               | Something the individual possess <br> Cryptographic keys, electronic keycards, smart cards, physical keys |
+|  Static biometrics   | Something the individual is <br> Fingerprints, retina, medical history |
+|  Dynamic biometrics  | Something the individual does <br> Voice pattern, handwriting characteristics, typing rythm. <br> (Behavioral biometrics) Behavior profiling, keystrone dynamics, touch dynamics |
+
+> Note: Once access have been granted, it is imperative to add some form of expiration to limit potential abuse of unexpired credentials.
+> Similarly, data protected by encryption should be perishable, meaning that by the time it would take to break an encryption the business value of the data have long since degraded.
+> Due to the emergence of quantum computing, the expected lifetime of msome forms of encryption is decreasing significantly.
+
+Two-factor authentication entails using something from two different categories (know, possess, is, does).
+
+***
+
+### CIA Triad
+
+The CIA Triad (Confidentiality, Integrity, Availability)
+is considered a stable within the field of **Information security**.
+
+Due to this limited scope, there are a lot of areas which
+are not covered. It does however serve as an excellent tool
+to illustrate how certain attack strategies can impact the
+safety of a solution, and highlighting the impacted areas
+of the CIA triad.
+
+Not only related to cyber security, but also physical security.
+Confidentiality relates to secrecy and privacy.
+Integrity relates to data not having been tampered with during storage or transit.
+
+
+Concepts of how they can be attacked:[^CIA_Triad]:
+
+```txt
+┌───────────────────┬───────────────────────────┐
+│:SECURITY ATTACKS :│:        THREAT TO        :│
+├───────────────────┼───────────────────────────┤
+│ Snooping          │                           │
+├───────────────────┤      Confidentiality      │
+│ Traffic Analysis  │                           │
+├───────────────────┼───────────────────────────┤
+│ Modification      │                           │
+├───────────────────┤                           │
+│ Masquerading      │                           │
+├───────────────────┤         Integrity         │
+│ Replaying         │                           │
+├───────────────────┤                           │
+│ Repudiation       │                           │
+├───────────────────┼───────────────────────────┤
+│ Denial of Service │        Availability       │
+└───────────────────┴───────────────────────────┘
+```
+
+| Security attacks  | Description |
+|:---|:---|
+| Snooping                  | Unauthorized access to target data, not limited solely to eavesdropping.
+| Traffic Analysis          | Analyzing available data in some way shape or form, such as analyzing the frequencies that the physical hardware create when decoding RSA keys.
+| Modification              | An attack on 'Integrity' by taking information, modifying it and then retransmitting it.
+| Masquerading              | Pretending or appearing as someone else to a system.
+| Replaying                 | Resending of identical packets.
+| Repudiation               | An attack against the control organ, meaning that the system will be unable to verify who made what changes, and when.
+| Denial of Service (DoS)   | Preventing the service from being accessible.
+
+### DAD triad
+
+Directly linked to the tenets of the CIA triad, it display the threats to that model.
+
+* **Disclosure** is the exposure of sensitive information to unauthorized individuals, otherwise known as data loss. Disclosure is a violation of the principle of confidentiality. Attackers who gain access to sensitive information and remove it from the organization are said to be performing data exfiltration. Disclosure may also occur accidentally, such as when an administrator misconfigures access controls or an employee loses a device.
+* **Alteration** is the unauthorized modification of information and is a violation of the principle of integrity. Attackers may seek to modify records contained in a system for financial gain, such as adding fraudulent transactions to a financial account. Alteration may occur as the result of natural activity, such as a power surge causing a "bit flip" that modifies stored data. Accidental alteration is also a possibility, if users unintentionally modify information stored in a critical system as the result of a typo or other unintended activity.
+* **Denial** is the disruption of an authorized user’s legitimate access to information. Denial events violate the principle of availability. This availability loss may be intentional, such as when an attacker launches a distributed denial-­of-­service (DDoS) attack against a website. Denial may also occur as the result of accidental activity, such as the failure of a critical server, or as the result of natural activity, such as a natural disaster impacting a communications circuit.
+
+Can be used for risk assessments, among other things.
+
+###  Attack life cycle 
+A model for advanced entities such as cybercriminals, elite hacker organizations
+and nation states. The model itself has undergone numerous revisions.
+
+**Attack life cycle** (From '_Cybersecurity Ops with Bash_')
+
+1. _Reconnaissance:_ <br> Passive reconnaissance(packet sniffing, whois, internet searches, OSINT),
+                        Active reconnaissance(port scanning, vulnerability scanning, website crawling)
+                        Acquire network layout, users, potential vulnerabilities,
+                        possibly valid credentials for the network
+2. _Initial Exploitation:_ <br> Techniques for gaining initial access to a system such as; SLQ injection, cross-site scripting, Buffer overflows, brute forcing, phishing and so on.
+3. _Establish Foothold:_ <br> Activate methods for continued access such as; RATs, RDP, SSH, Telnet,
+                        add user, LKM (Loadable Kernel Module), system services
+4. _Escalate Privileges:_ <br> Gaining root user or administrator access.
+5. _Internal Reconnaissance:_ <br> Have a look at networking layout, protocols, running services, data storage,
+                        log files, databases and more
+6. _Lateral Movement:_ <br> Moving around the system, using various means. Theft of credentials,
+                        pass-the-hash, keys, direct access.
+                        Often leaving persistent backdoors during this stage.
+7. _Maintain Presence:_ <br> A persistent connection is bad and easy to detect. Instead setup a callback to
+                        a C&C (Command and Control) server. This is known as beaconing.
+8. _Complete Mission:_ <br> Collecting and exfiltrating data, executing a payload.
+
+
+### Cyber Kill Chain
+A common framework is called 'Cyber Kill Chain', designed by Lockheed Martin.
+It is used from a blue team standpoint, the original model has 7 stages.
+Unfortunately the model has been altered numerous times, with the shortest model
+containing 6 steps, and the longest containing 9.
+To illustrate this discrepancy I will list four versions, two of which are from books published by the same company.
+
+#### Example 1: From Cyber Warfare - Truth, Tactics, and Strategies_"[^CyberKillChain1]:
+Incidentally this is identical to the original from Lockheed Martin.
+
+| Cyber kill chain  |  Description|
+|:------|:-----|
+| 1. Reconnaissance        | Passive or active |
+| 2. Weaponization         | Building specialized tools (Prepare attack based on gathered intelligence) |
+| 3. Delivery              | Infiltrate target to delive payload |
+| 4. Exploitation          | Exploit vulnerabilities to execute code on target |
+| 5. Installation          | Install malware on target systems |
+| 6. Command & Control     | Establish channel to remote control of infiltrated systems |
+| 7. Actions on Objectives | Complete actions to achieve original objetive |
+
+
+#### Example 2: From Cybersecurity Attack and Defense Strategies[^CyberKillChain2]
+
+| Cyber kill chain | Description |
+|:------|:-----|
+| 1. Reconnaissance       | Active and passive gathering of information about a target |
+| 2. Weaponization        | Building oools  |
+| 3. Privilege Escalation | Gain access to more |
+| 4. Exfiltration         | Extracting data of interest |
+| 5. Installation         | Install offensive payload on target system |
+| 6. Command & Control    | Communicate to an active server setup by the attackers. |
+
+
+#### Example 3: By CEH Certification[^CyberKillChain3]:
+
+| Cyber kill chain | Description |
+|:------|:-----|
+| 1. Reconnaissance         | Active and passive information gathering
+| 2. Intrusion              | Gaining access
+| 3. Exploitation           | Taking control of a system, service, or application
+| 4. Privilege escalation   | Gaining elevated access
+| 5. Lateral movement       | Moving from system to system to expand access
+| 6. Obfuscation            | Hiding or covering your tracks
+| 7. Denial of service      | Preventing legitimate access by flooding or over- whelming the service
+| 8. Exfiltration           | Unauthorized data transfer by the threat actor
+
+***
+
+### NIST
+
+Another well known[^NISTframework]: framework is "**NIST** (National Institute of Standards and Technology) Cybersecurity Framework (csf)".
+It provides a structured approach for organizations to manage and enhance their cybersecurity practices.
+
+1.    Identify: Understand and catalog assets, risks, and vulnerabilities.
+2.    Protect: Implement safeguards to secure systems and data.
+3.    Detect: Develop capabilities to identify cybersecurity incidents promptly.
+4.    Respond: Establish procedures for responding to and mitigating cybersecurity incidents.
+5.    Recover: Develop strategies to recover from cybersecurity incidents and restore normal operations.
+
+> NIST also have a Computer Security Incident Handling Guide ('SP 800-­61'), which is somewhat out of the current scope.
+
+***
+
+### CIS Benchmarks
+
+The CIS (Center for Internet Security) Benchmarks are a set of globally
+recognized best practices for securing IT systems and data. These benchmarks
+provide configuration guidelines designed to improve an organization’s
+security posture by reducing vulnerabilities and hardening systems. CIS
+offers specific benchmarks for various platforms, including Windows, Linux,
+macOS, cloud providers (AWS, Azure), and even network devices like routers
+and firewalls.
+
+The benchmarks are categorized into CIS Controls, which are further grouped
+into three implementation groups (IG) based on an organization’s maturity
+level and risk profile:
+
+1. Implementation Group 1 (IG1): Basic cybersecurity hygiene. Focused on small organizations with limited IT and cybersecurity expertise. The controls in this group are considered foundational and can be implemented with minimal resources.
+2. Implementation Group 2 (IG2): Organizations with moderate IT and cybersecurity resources. IG2 focuses on defending against more targeted threats and typically applies to mid-sized organizations.
+3. Implementation Group 3 (IG3): Aimed at organizations that are at high risk or have the capacity to protect against advanced cyber threats. IG3 is usually applied to large enterprises or organizations handling sensitive information, such as government agencies.
+
+The CIS Benchmarks also provide specific configurations for securing systems like:
+
+* Operating Systems (Windows, Linux, etc.)
+* Cloud Platforms (AWS, Azure, Google Cloud)
+* Web Browsers
+* Network Devices
+
+By implementing CIS Benchmarks, organizations can ensure their systems
+are configured according to the latest security best practices, reducing
+the attack surface available to cybercriminals.
+
+> Not to be confused with CIS 18, which is more about governance than technical
+
+***
+
+### OODA Loop
+The **OODA Loop** is a strategic decision-making framework developed by
+US Air Force Colonel John Boyd. It stands for Observe, Orient, Decide,
+Act and is widely used in cybersecurity for both defense and attack
+strategies. The framework emphasizes speed and adaptability, allowing
+security teams to react to incidents more effectively.
+
+| OODA | Description |
+|:---|:---|
+| Observe | Gather information about the current situation, including threat intelligence, system logs, and network behavior. In cybersecurity, this step involves monitoring networks, systems, and endpoints to identify potential threats.
+| Orient  | Analyze the data collected in the "Observe" phase, place it in the context of your security environment, and understand the significance of what you are observing. This phase may involve understanding the attack patterns or tactics being used.
+| Decide  | Based on the information from the "Orient" phase, determine the best course of action. This could involve blocking an IP address, isolating a compromised system, or alerting relevant stakeholders.
+| Act     | Execute the chosen response and take action to neutralize the threat or mitigate the risk. After action is taken, return to the observation phase to assess the outcome and look for further threats.
+
+
+***
+
+### OWASP Top 10
+A list of the most commonly found genres of vulnerabilities on web applications.
+
+There have been numerous iterations of this list, as the technology advances this relates to both offensie and defensive capabilities.
+The most commonly referenced is the 2017 version, both the newer 2021 and 2023 versions are not as known.
+
+#### MITRE ATT&CK Framework[^MitreAttack]
+The MITRE ATT&CK (Adversarial Tactics, Techniques, and Common Knowledge) framework is a comprehensive, structured knowledge base of adversary tactics and techniques that are used in cyberattacks. It’s based on real-world observations and is continuously updated with data from new attack campaigns. The framework is widely used by security teams to understand, detect, and mitigate cyberattacks by mapping out adversary behaviors. It is divided into several components:
+
+* Tactics: High-level objectives of attackers during different phases of an attack. Examples include Initial Access, Execution, Persistence, Privilege Escalation, and Exfiltration.
+* Techniques: Specific methods used by attackers to achieve each tactic. For instance, under the Execution tactic, techniques might include using PowerShell or malicious scripts to execute code on a target system.
+* Sub-Techniques: More granular ways of achieving a particular technique. For example, under the technique of Phishing, sub-techniques might include Spearphishing Attachment or Spearphishing Link.
+* Procedures: Actual implementations of techniques and sub-techniques by attackers in specific campaigns. These are tied to real-world examples, making them highly relevant to defensive operations.
+
+MITRE ATT&CK is used for a variety of purposes in cybersecurity, including:
+
+* Threat Hunting: By mapping out which techniques are used by different threat actors, security teams can proactively search for signs of malicious activity within their networks.
+* Detection and Response: Security teams can create detection rules and response playbooks based on the known tactics and techniques, helping them to better anticipate and respond to adversarial behavior.
+* Adversary Emulation: Red and blue teams use ATT&CK to simulate specific attack scenarios and test organizational defenses.
+
+***
+
+### CVE (Common Vulnerabilities and Exposures)
+CVE is a publicly available list of known security vulnerabilities in software and hardware. Managed by MITRE, CVE assigns unique identifiers (CVE IDs) to each vulnerability, making it easier for security teams to share and track vulnerabilities consistently across different systems. Each CVE entry includes a brief description of the vulnerability, its potential impact, and references to patches or mitigation strategies.
+
+The purpose of the CVE system is to create a standardized reference point for identifying and communicating about vulnerabilities. It ensures that different organizations, researchers, and vendors can speak the same language when addressing specific vulnerabilities, simplifying vulnerability management.
+
+***
+
+### CVSS (Common Vulnerability Scoring System)
+
+CVSS is a framework for assessing the severity of software vulnerabilities. It provides a numerical score (ranging from 0 to 10) that reflects how critical a vulnerability is, helping organizations prioritize patching and mitigation efforts. CVSS considers factors such as how easily a vulnerability can be exploited, the potential impact on confidentiality, integrity, and availability, and the complexity of the required attack.
+
+CVSS scores are divided into categories:
+
+* **Low** (0.1 – 3.9): Vulnerabilities with a minor impact on systems or that are difficult to exploit.
+* **Medium** (4.0 – 6.9): Vulnerabilities that present a moderate risk, with potential for significant impact if exploited.
+* **High** (7.0 – 8.9): Vulnerabilities that are easier to exploit and can lead to serious damage.
+* **Critical** (9.0 – 10.0): The most severe vulnerabilities, often easily exploitable with catastrophic consequences if not addressed.
+
+Together, CVE provides a way to identify vulnerabilities, and CVSS helps organizations understand the risk associated with those vulnerabilities so they can prioritize remediation efforts.
+
+***
+
+### PTES[^PTES]
+The Penetration Testing Execution Standard defines seven main steps for conducting penetration tests.
+
+* Pre-engagement Interactions: Establish the scope, objectives, and rules of engagement with the client. This ensures both parties understand the boundaries and expectations of the test.
+* Intelligence Gathering: Collect information about the target environment using passive and active methods. The goal is to understand the systems, networks, and potential entry points.
+* Threat Modeling: Analyze the gathered intelligence to identify likely attack paths and the assets most at risk. This step helps prioritize efforts during testing.
+* Vulnerability Analysis: Identify weaknesses in systems, applications, and configurations that could be exploited. This often involves scanning, manual inspection, and reviewing known issues.
+* Exploitation: Actively attempt to exploit identified vulnerabilities to determine if they can provide unauthorized access or control. This demonstrates the real-world impact of the weaknesses.
+* Post Exploitation: Assess what can be done once access is gained, such as privilege escalation, data exfiltration, or persistence. The aim is to show the depth of potential compromise.
+* Reporting: Document the findings, detailing vulnerabilities, exploitation methods, and the impact on the organization. The report also provides recommendations for remediation.
+
+
+
+***
+
+#### Vulnerability management lifecycle
+This is a cyclic method, used to asses assets for vulnerabilities.[^VML_CBT]
+
+1. Verification: Figure out what is on your network, what devices exist, and how they communicate. This establishes the asset inventory you need before looking for weaknesses.
+2. Discovery: Identify vulnerabilities within those assets by scanning, probing, or gathering threat intelligence. This step reveals potential entry points an attacker could use.
+3. Prioritization: Rank the discovered vulnerabilities by severity, exploitability, and business impact. Not every issue can be fixed at once, so attention goes first to what poses the greatest risk.
+4. Assessment: Evaluate the actual risk by analyzing how likely exploitation is and what the consequences would be. This helps filter out false positives and ensures resources are used effectively.
+5. Reporting: Communicate findings in a clear way to both technical teams and decision-makers. The report should outline the risks, affected systems, and recommended actions.
+6. Remediation: Apply the fixes, such as patching, configuration changes, or compensating controls. After changes are made, verify that the vulnerabilities are resolved and the cycle can begin again.
+
+
+CVSS scores are used to determine the threat level, and thereby the priority.
+
+
+
+[^kerberos1]: https://kerberos.org/about/FAQ.html
+[^kerberos2]: RFC 4120
+[^AD]: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-adod/5ff67bf4-c145-48cb-89cd-4f5482d94664
+[^NTLM]: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-nlmp/b38c36ed-2804-4868-a9ff-8dd3182128e4
+[^CIA_Triad]: "_Cryptography and Network Security An Introduction_" by R. Archary, from MercuryLearning
+[^CyberKillChain1]: "_Cyber Warfare - Truth, Tactics, and Strategies_" By Dr. Chase Cunningham, from Packt publishing, page 146
+[^CyberKillChain2]: "_Cybersecurity Attack and Defense Strategies_" second edition, By Yuri Diogenes and  Erdal Ozkaya, from Packt publishing, page 50.
+[^CyberKillChain3]: "_CEH Certified Ethical Hacker Cert Guide_" 4th edition, page 20, ISBN-13: 978-0-13-748998-5
+[^NISTframework]: https://www.nist.gov/cyberframework
+[^CISbenhcmarks]: https://www.cisecurity.org/cis-benchmarks
+[^MitreAttack]: https://attack.mitre.org/
+[^PTES]: http://www.pentest-standard.org/index.php/Main_Page
+[^VML_CBT]: Cybersecurity Blue Team Toolkit
